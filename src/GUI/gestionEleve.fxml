@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="270.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GestionEleveController">
+   <children>
+      <StackPane prefHeight="468.0" prefWidth="587.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <BorderPane prefHeight="320.0" prefWidth="766.0">
+               <top>
+                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="62.0" prefWidth="587.0" text="Gestion des élèves">
+                           <font>
+                              <Font name="Arial Bold Italic" size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="34.0" prefWidth="587.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#click_ajouter" prefHeight="103.0" prefWidth="158.0" text="Ajouter">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#click_recherche" prefHeight="103.0" prefWidth="158.0" text="Recherche">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#click_lister" prefHeight="103.0" prefWidth="158.0" text="Lister">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button disable="true" mnemonicParsing="false" onAction="#click_modifier" prefHeight="103.0" prefWidth="158.0" text="Modifier">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button disable="true" mnemonicParsing="false" onAction="#click_supprimer" prefHeight="103.0" prefWidth="158.0" text="Supprimer">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </top>
+            </BorderPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>
