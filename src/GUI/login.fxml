@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="650.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+    <stylesheets>
+        <URL value="@/GUI/CSS/mainStage.css" />
+    </stylesheets>
+    <children>
+      <JFXButton alignment="CENTER" contentDisplay="TOP" onAction="#lunchapp" prefHeight="102.0" prefWidth="437.0" styleClass="lunchbtn" stylesheets="@css/mainStage.css" text="LUNCH APPLICATION" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="417.0" AnchorPane.rightAnchor="346.0" AnchorPane.topAnchor="213.0">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

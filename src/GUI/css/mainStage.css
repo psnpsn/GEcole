@@ -18,7 +18,7 @@
     }
  
 .setup-hboxbottom{
-         -fx-border-style:solid solid solid solid;
+         -fx-border-style:hidden solid solid solid;
         -fx-border-width: 1px;
         -fx-border-color:gray;
         
@@ -30,12 +30,17 @@
         
     }
     
-    .buttonC:hover{
-        -fx-background-color:#EEEEEE;
-
-        -fx-text-fill:lightskyblue;
-    }
     
     .buttonD:hover{
         -fx-background-color:lightgrey;
+    }
+    
+    .lunchbtn{
+        -fx-background-color:lightblue;
+        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 10, 0.0 , 0 , 1 );
+        -fx-border-radius:8px;
+    }
+    
+    .lunchbtn:hover{
+        -fx-background-color:lightskyblue;
     }

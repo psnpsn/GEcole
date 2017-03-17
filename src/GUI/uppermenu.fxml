@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="box" nodeOrientation="RIGHT_TO_LEFT" prefHeight="33.0" prefWidth="1200.0" styleClass="setup-hboxup" stylesheets="@CSS/mainwindow.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.UppermenuController">
+   <children>
+      <JFXButton onAction="#click_exit" prefHeight="43.0" prefWidth="51.0" styleClass="buttonX" stylesheets="@CSS/mainwindow.css" text="X">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton onAction="#click_reduire" prefHeight="45.0" prefWidth="54.0" styleClass="buttonD" stylesheets="@CSS/mainwindow.css" text="_">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton prefHeight="44.0" prefWidth="52.0" styleClass="buttonD" stylesheets="@CSS/mainwindow.css" text="?">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </JFXButton>
+      <Label alignment="CENTER_RIGHT" contentDisplay="BOTTOM" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="31.0" prefWidth="1042.0" text="  Gestion d'Ecole Primaire">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </Label>
+   </children>
+</HBox>
