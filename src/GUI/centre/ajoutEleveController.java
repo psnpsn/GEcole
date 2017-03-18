@@ -7,6 +7,7 @@ package GUI.centre;
 
 import GUI.LoginController;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.awt.image.BufferedImage;
@@ -22,7 +23,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -73,7 +73,7 @@ public class ajoutEleveController implements Initializable {
     private JFXTextField profMere;
 
     @FXML
-    private DatePicker dnaissance;
+    private JFXDatePicker dnaissance;
 
     @FXML
     private JFXTextField codepostal;
@@ -98,7 +98,6 @@ public class ajoutEleveController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         ToggleGroup group = new ToggleGroup();
         garcon.setToggleGroup(group);
         fille.setToggleGroup(group);
