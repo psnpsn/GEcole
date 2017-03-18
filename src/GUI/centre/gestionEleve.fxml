@@ -15,7 +15,7 @@
          <left>
             <VBox prefHeight="584.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton prefHeight="70.0" prefWidth="212.0" text="Trouver un élève" />
+                  <JFXButton onAction="#click_voir" prefHeight="70.0" prefWidth="212.0" text="Trouver un élève" />
                   <JFXButton onAction="#click_ajouter" prefHeight="70.0" prefWidth="212.0" text="Ajouter un élève" />
                </children></VBox>
          </left>
