@@ -17,6 +17,7 @@
                <children>
                   <JFXButton onAction="#click_voir" prefHeight="70.0" prefWidth="212.0" text="Trouver un élève" />
                   <JFXButton onAction="#click_ajouter" prefHeight="70.0" prefWidth="212.0" text="Ajouter un élève" />
+                  <JFXButton onAction="#click_modifier" prefHeight="70.0" prefWidth="212.0" text="Modifier un élève" />
                </children></VBox>
          </left>
          <top>
