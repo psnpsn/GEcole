@@ -79,6 +79,15 @@ public class GestionEleveController implements Initializable {
 
     @FXML
     private void click_modifier(ActionEvent event) {
+                try {
+            URL loader = getClass().getResource("modEleve.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
