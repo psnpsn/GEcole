@@ -61,7 +61,18 @@ public class EleveDAO implements DAO<Eleve> {
 
     @Override
     public boolean delAll() {
-        return false;
+        valide = false;
+        try {
+            requete = "DELETE FROM " + nomTable;
+            statement = session.prepareStatement(requete);
+           if ( statement.executeUpdate()!=0)
+                valide = true;
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : delAll()\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
     }
 
     @Override
