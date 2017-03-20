@@ -5,7 +5,10 @@
  */
 package GUI.centre;
 
+import DAO.DAO;
+import DAO.EleveDAO;
 import GUI.LoginController;
+import Models.Eleve;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
@@ -45,19 +48,19 @@ public class ajoutEleveController implements Initializable {
     private JFXComboBox<String> ville;
 
     @FXML
-    private JFXTextField telp;
+    private JFXTextField telP;
 
     @FXML
     private JFXRadioButton garcon;
 
     @FXML
-    private JFXTextField profp;
+    private JFXTextField profP;
 
     @FXML
     private JFXTextField addresse;
 
     @FXML
-    private JFXTextField profm;
+    private JFXTextField profM;
 
     @FXML
     private JFXRadioButton fille;
@@ -66,10 +69,10 @@ public class ajoutEleveController implements Initializable {
     private JFXTextField nom;
 
     @FXML
-    private JFXTextField nomm;
+    private JFXTextField nomM;
 
     @FXML
-    private JFXTextField emailp;
+    private JFXTextField emailP;
 
     @FXML
     private JFXDatePicker dnaissance;
@@ -125,7 +128,22 @@ public class ajoutEleveController implements Initializable {
     }
 
     @FXML private void click_ajouter(ActionEvent event) {
-        //DAO here
+        DAO elevedao = new EleveDAO();
+        Eleve  eleve = new Eleve();
+        eleve.setNom(nom.getText());
+        eleve.setPrenom(prenom.getText());
+        eleve.setAdresse(addresse.getText());
+        eleve.setVille(ville.getSelectionModel().getSelectedItem().toString());
+        eleve.setCodeP(Integer.parseInt(codepostal.getText()));
+        eleve.setDateNaiss(new java.util.Date());
+        eleve.setLieuNaiss(lnaissance.getText());
+        if (garcon.isSelected())eleve.setSex("M");else
+        eleve.setSex("F");
+        eleve.setEmail(email.getText());
+        eleve.setRef_niv(0);
+        eleve.setRef_c(0);
+        eleve.setRef_p(0);
+        elevedao.create(eleve);
     }
 
     @FXML private void click_reinitialiser(ActionEvent event) {
@@ -138,17 +156,19 @@ public class ajoutEleveController implements Initializable {
         addresse.setText("");
         codepostal.setText("");
         nomP.setText("");
-        profp.setText("");
-        nomm.setText("");
-        profm.setText("");
-        telp.setText("");
+        profP.setText("");
+        nomM.setText("");
+        profM.setText("");
+        telP.setText("");
         email.setText("");
+        lnaissance.setText("");
+        emailP.setText("");
         try {
             BufferedImage bufferedImage = ImageIO.read(getClass().getResource("../image/default-eleve.jpg"));
             Image i = SwingFXUtils.toFXImage(bufferedImage, null);
             image.setImage(i);
         } catch (IOException x) {
-            System.out.println(x);
+            System.out.println("ERERER : " + x);
         }
 
 

@@ -115,11 +115,11 @@
                   </GridPane>
                   <JFXTextField fx:id="email" promptText="Email*" GridPane.rowIndex="4" />
                   <JFXTextField fx:id="nomP" promptText="Nom et Prenom du Pere*" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="profp" promptText="Pofession du Pere*" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="nomm" promptText="Nom et Prenom de la Mere*" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="profm" promptText="Pofession de la Mere*" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="telp" promptText="Telephone Parents*" GridPane.rowIndex="7" />
-                  <JFXTextField fx:id="emailp" promptText="Email Parents*" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="profP" promptText="Pofession du Pere*" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <JFXTextField fx:id="nomM" promptText="Nom et Prenom de la Mere*" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="profM" promptText="Pofession de la Mere*" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="telP" promptText="Telephone Parents*" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="emailP" promptText="Email Parents*" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <Label styleClass="legendtext" stylesheets="@../css/menusdef.css" text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.rowIndex="11">
                      <font>
                         <Font size="9.0" />
