@@ -20,19 +20,18 @@ public class Eleve {
     private SimpleObjectProperty<Date> dateNaiss;
     private SimpleStringProperty lieuNaiss;
     private SimpleStringProperty sex;
-    private SimpleIntegerProperty tel;
-    private SimpleIntegerProperty tel2;
     private SimpleStringProperty email;
     private SimpleIntegerProperty ref_niv;
     private SimpleIntegerProperty ref_c;
     private SimpleIntegerProperty ref_p;
+    private SimpleObjectProperty<Date> dateIns;
 
 
 // constructeurs;
         public Eleve() {
     }
 
-    public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, int tel, int tel2, String email, int ref_niv, int ref_c, int ref_p) {
+    public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, int tel, int tel2, String email, int ref_niv, int ref_c, int ref_p, Date dateIns) {
         this.id_e = new SimpleIntegerProperty(id_e);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
@@ -42,12 +41,12 @@ public class Eleve {
         this.dateNaiss = new SimpleObjectProperty<Date>(dateNaiss);
         this.lieuNaiss = new SimpleStringProperty(lieuNaiss);
         this.sex = new SimpleStringProperty(sex);
-        this.tel = new SimpleIntegerProperty(tel);
-        this.tel2 = new SimpleIntegerProperty(tel2);
         this.email = new SimpleStringProperty(email);
         this.ref_niv = new SimpleIntegerProperty(ref_niv);
         this.ref_c = new SimpleIntegerProperty(ref_c);
         this.ref_p = new SimpleIntegerProperty(ref_p);
+        this.dateIns = new SimpleObjectProperty<Date>(dateIns);
+        
     }
 
     // getters
@@ -88,13 +87,6 @@ public class Eleve {
         return sex.get();
     }
 
-    public int getTel() {
-        return tel.get();
-    }
-
-    public int getTel2() {
-        return tel2.get();
-    }
 
     public String getEmail() {
         return email.get();
@@ -110,6 +102,10 @@ public class Eleve {
 
     public int getRef_p() {
         return ref_p.get();
+    }
+    
+    public Date getDateIns() {
+        return dateIns.get();
     }
 
     // Setters
@@ -150,13 +146,6 @@ public class Eleve {
         this.sex.set(sex);
     }
 
-    public void setTel(int tel) {
-        this.tel.set(tel);
-    }
-
-    public void setTel2(int tel2) {
-        this.tel2.set(tel2);
-    }
 
     public void setEmail(String email) {
         this.email.set(email);
@@ -173,6 +162,10 @@ public class Eleve {
     public void setRef_p(int ref_p) {
         this.ref_p.set(ref_p);
     }
+    
+    public void setDateIns(Date dateIns) {
+        this.dateIns.set(dateIns);
+    }
 
 
     // methodes utiles...
@@ -186,12 +179,7 @@ public class Eleve {
         if (this.sex != other.sex) {
             return false;
         }
-        if (this.tel != other.tel) {
-            return false;
-        }
-        if (this.tel2 != other.tel2) {
-            return false;
-        }
+
         if (this.ref_niv != other.ref_niv) {
             return false;
         }
@@ -220,6 +208,9 @@ public class Eleve {
             return false;
         }
         if (!Objects.equals(this.dateNaiss, other.dateNaiss)) {
+            return false;
+        }
+        if (!Objects.equals(this.dateIns, other.dateIns)) {
             return false;
         }
         return true;

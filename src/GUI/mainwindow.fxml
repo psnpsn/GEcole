@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="584.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.MainwindowController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="584.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainwindowController">
     <stylesheets>
         <URL value="@/GUI/CSS/mainwindow.css" />
     </stylesheets>
@@ -45,7 +45,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@../css/mainwindow.css" text="Classes" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gclasses" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@../css/mainwindow.css" text="Classes" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Créer des classes et gérer leurs contenus." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>

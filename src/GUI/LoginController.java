@@ -63,7 +63,7 @@ public class LoginController implements Initializable  {
     @FXML
     private void lunchapp(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("centre/mainwindow.fxml");
+            URL loader = getClass().getResource("mainwindow.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
             
             BorderPane border = Main_class.getRoot();   

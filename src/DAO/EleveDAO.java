@@ -41,12 +41,11 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setDateNaiss(resultat.getDate("DATENAISS"));
                 eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
                 eleve.setSex(resultat.getString("SEX"));
-                eleve.setTel(resultat.getInt("TEL"));
-                eleve.setTel2(resultat.getInt("TEL2"));
                 eleve.setEmail(resultat.getString("EMAIL"));
                 eleve.setRef_niv(resultat.getInt("REF_NIV"));
                 eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
+                eleve.setDateIns(resultat.getDate("DATEINS"));
                // eleve.set(resultat.getDate("DATEINSCRIPTION"));
                 liste.add(eleve);
 
@@ -90,8 +89,6 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setDate(6, new java.sql.Date(instance.getDateNaiss().getTime()));
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8, String.valueOf(instance.getSex()));
-            statement.setInt(9, instance.getTel());
-            statement.setInt(10, instance.getTel2());
             statement.setString(11, instance.getEmail());
             statement.setInt(12, instance.getRef_niv());
             statement.setInt(13, instance.getRef_c());
@@ -129,8 +126,6 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setDateNaiss(resultat.getDate("DATENAISS"));
                 eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
                 eleve.setSex(resultat.getString("SEX"));
-                eleve.setTel(resultat.getInt("TEL"));
-                eleve.setTel2(resultat.getInt("TEL2"));
                 eleve.setEmail(resultat.getString("EMAIL"));
                 eleve.setRef_niv(resultat.getInt("REF_NIV"));
                 eleve.setRef_c(resultat.getInt("REF_C"));
@@ -175,8 +170,6 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setDate(6,  new java.sql.Date(instance.getDateNaiss().getTime()));
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8, instance.getSex());
-            statement.setInt(9, instance.getTel());
-            statement.setInt(10, instance.getTel2());
             statement.setString(11, instance.getEmail());
             statement.setInt(12, instance.getRef_niv());
             statement.setInt(13, instance.getRef_c());

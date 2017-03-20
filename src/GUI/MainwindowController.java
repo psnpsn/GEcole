@@ -1,4 +1,4 @@
-package GUI.centre;
+package GUI;
 
 
 import GUI.LoginController;
@@ -34,7 +34,7 @@ public class MainwindowController implements Initializable  {
     @FXML
     void click_geleves(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("gestionEleve.fxml");
+            URL loader = getClass().getResource("centre/gestionEleve.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
             
             BorderPane border = Main_class.getRoot();   
@@ -48,6 +48,19 @@ public class MainwindowController implements Initializable  {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void click_gclasses(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("classe/ajoutClasse.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+            
+            BorderPane border = Main_class.getRoot();   
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
    
 
