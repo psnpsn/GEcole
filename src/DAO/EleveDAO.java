@@ -148,7 +148,50 @@ public class EleveDAO implements DAO<Eleve> {
 
     @Override
     public boolean update(Eleve instance) {
-        return false;
+    valide = false;
+        try {
+            requete = "UPDATE " + nomTable + " SET  ( "
+                    + "NOM           =  ?  ,"
+                    + "PRENOM        =  ?  ,"
+                    + "ADDRESSE      =  ?  ,"
+                    + "VILLE         =  ?  ,"
+                    + "CODEPOSTAL    =  ?  ,"
+                    + "DATENAISSANCE =  ?  ,"
+                    + "LIEUNAISSANCE =  ?  ,"
+                    + "SEXE          =  ?  ,"
+                    + "TEL_DOMICILE  =  ?  ,"
+                    + "TEL_PORTABLE  =  ?  ,"
+                    + "EMAIL         =  ?  ,"
+                    + "REF_NIVEAU    =  ?  ,"
+                    + "REF_CLASSE    =  ?  ,"
+                    + "REF_PARENTS   =  ? )"
+                    + "WHERE  IDENTIFIANT = ? ";
+            statement = session.prepareStatement(requete);
+            statement.setString(1, instance.getNom());
+            statement.setString(2, instance.getPrenom());
+            statement.setString(3, instance.getAdresse());
+            statement.setString(4, instance.getVille());
+            statement.setInt(5, instance.getCodeP());
+            statement.setDate(6,  new java.sql.Date(instance.getDateNaiss().getTime()));
+            statement.setString(7, instance.getLieuNaiss());
+            statement.setString(8, instance.getSex());
+            statement.setInt(9, instance.getTel());
+            statement.setInt(10, instance.getTel2());
+            statement.setString(11, instance.getEmail());
+            statement.setInt(12, instance.getRef_niv());
+            statement.setInt(13, instance.getRef_c());
+            statement.setInt(14, instance.getRef_p());
+            statement.setInt(15, instance.getId_e());
+
+            if(statement.executeUpdate()!=0){
+                valide = true;
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveODB.java\n"
+                    + "Methode : update(Eleve instance)\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
     }
 
     @Override
