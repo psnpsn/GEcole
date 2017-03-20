@@ -111,7 +111,39 @@ public class EleveDAO implements DAO<Eleve> {
 
     @Override
     public Eleve find(int id) {
-        return null;
+    Eleve eleve = null;
+        try {
+            requete = "SELECT * FROM " + nomTable +" WHERE ( IDENTIFIANT = ? )";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, id);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                valide = true;
+                eleve = new Eleve();
+                eleve.setId_e(resultat.getInt("IDENTIFIANT"));
+                eleve.setNom(resultat.getString("NOM"));
+                eleve.setPrenom(resultat.getString("PRENOM"));
+                eleve.setAdresse(resultat.getString("ADDRESSE"));
+                eleve.setVille(resultat.getString("VILLE"));
+                eleve.setCodeP(resultat.getInt("CODEPOSTAL"));
+                eleve.setDateNaiss(resultat.getDate("DATENAISSANCE"));
+                eleve.setLieuNaiss(resultat.getString("LIEUNAISSANCE"));
+                eleve.setSex(resultat.getString("SEXE"));
+                eleve.setTel(resultat.getInt("TEL_DOMICILE"));
+                eleve.setTel2(resultat.getInt("TEL_PORTABLE"));
+                eleve.setEmail(resultat.getString("EMAIL"));
+                eleve.setRef_niv(resultat.getInt("REF_NIVEAU"));
+                eleve.setRef_c(resultat.getInt("REF_CLASSE"));
+                eleve.setRef_p(resultat.getInt("REF_PARENTS"));
+             //   eleve.setDateInscription(resultat.getDate("DATEINSCRIPTION"));
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : findByID()\n"
+                    + "Exception : " + exception);
+        }
+        return eleve;
     }
 
     @Override
