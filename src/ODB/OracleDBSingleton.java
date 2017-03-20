@@ -2,6 +2,9 @@ package ODB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 //
 //There are two forms of singleton design pattern
@@ -12,32 +15,60 @@ import java.sql.DriverManager;
 // Class Singleton simple
 
 public class OracleDBSingleton {
-    static String username       ;
-    static String password       ;
-    static String url            ;
-    static String driver         ;
-    static Connection connection ;
+    private static String username;
+    private static String password;
+    private static String url ;
+    private static String driver = "";
+    private static String sql_cmd = "";
+    private static Connection session;
 
     private OracleDBSingleton() {
 
     }
-    
-    // configure Oracle avant connection
-    public static void setup(String username,String password /*,String driver,String url */ )
-    {
-        OracleDBSingleton.connection = null;
-        OracleDBSingleton.url = "jdbc:oracle:thin:@localhost:1521:xe";
-        OracleDBSingleton.driver = "oracle.jdbc.driver.OracleDriver";
+    public static boolean seConnecter(String url,String driver ,String username, String password) {
+        boolean ok = false;
+        sql_cmd = "";
         OracleDBSingleton.username = username;
         OracleDBSingleton.password = password;
-        // driver et url ? maybe... soon
-    }
-    
-    public static Connection getSession() throws Exception {
-        if (OracleDBSingleton.connection == null) {
-            Class.forName(driver).newInstance();
-            OracleDBSingleton.connection = DriverManager.getConnection(url, username, password);
+        OracleDBSingleton.url = url;
+        OracleDBSingleton.driver = driver;
+        if (OracleDBSingleton.session == null) {
+            OracleDBSingleton.getSession();
         }
-        return OracleDBSingleton.connection;
+        if (OracleDBSingleton.session != null) {
+            sql_cmd = "SELECT * FROM ELEVE";
+            try {
+                PreparedStatement statement = OracleDBSingleton.getSession().prepareStatement(sql_cmd);
+                ResultSet r = statement.executeQuery();
+                if (r.next()) {
+                    System.out.println("Connection a la BD reussie :") ;
+                             //  + "Username = " + username );
+                    return true;
+                }
+                return false;
+            } catch (SQLException exception) {
+                System.out.println("Classe : OracleDB.java\n"
+                        + "Methode :seConnecter()\n"
+                        + "Exception : " + exception);
+            }
+        }
+        return false;
     }
+
+    public static Connection getSession() {
+        if (OracleDBSingleton.session == null) {
+            try {
+                Class.forName(driver).newInstance();
+                OracleDBSingleton.session = DriverManager.getConnection(OracleDBSingleton.url, OracleDBSingleton.username, OracleDBSingleton.password);
+            } catch (Exception exception) {
+                System.out.println("Classe : OracleDBSingleton.java\n"
+                        + "Methode :getSession()\n"
+                        + "Exception : " + exception);
+            }
+            return OracleDBSingleton.session;
+        } else {
+            return OracleDBSingleton.session;
+        }
+    }
+
 }
