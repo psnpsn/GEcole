@@ -26,7 +26,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -39,12 +38,6 @@ import main_pack.Main_class;
  * @author Chazzone
  */
 public class ajoutEleveController implements Initializable {
-
-    @FXML
-    private JFXTextField tel1;
-
-    @FXML
-    private JFXTextField tel2;
     @FXML
     private ImageView image;
 
@@ -52,25 +45,31 @@ public class ajoutEleveController implements Initializable {
     private JFXComboBox<String> ville;
 
     @FXML
+    private JFXTextField telp;
+
+    @FXML
     private JFXRadioButton garcon;
 
     @FXML
-    private JFXTextField nomPere;
+    private JFXTextField profp;
 
     @FXML
     private JFXTextField addresse;
 
     @FXML
-    private JFXRadioButton fille;
+    private JFXTextField profm;
 
     @FXML
-    private JFXTextField nomMere;
+    private JFXRadioButton fille;
 
     @FXML
     private JFXTextField nom;
 
     @FXML
-    private JFXTextField profMere;
+    private JFXTextField nomm;
+
+    @FXML
+    private JFXTextField emailp;
 
     @FXML
     private JFXDatePicker dnaissance;
@@ -79,19 +78,16 @@ public class ajoutEleveController implements Initializable {
     private JFXTextField codepostal;
 
     @FXML
-    private JFXTextField profPere;
+    private JFXTextField nomP;
 
     @FXML
-    private JFXTextField prenomMere;
+    private JFXTextField lnaissance;
 
     @FXML
     private JFXTextField prenom;
 
     @FXML
     private JFXTextField email;
-
-    @FXML
-    private JFXTextField prenomPere;
 
     /**
      * Initializes the controller class.
@@ -108,11 +104,11 @@ public class ajoutEleveController implements Initializable {
     }
 
     @FXML
-    void click_image(MouseEvent event) {
-        if (event.isPrimaryButtonDown()) {
+    void click_image(ActionEvent event) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choisir une image pour l'eleve");
             fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Images", "*.jpeg","*.png","*.jpg"),
                     new FileChooser.ExtensionFilter("JPEG", "*.jpeg"),
                     new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                     new FileChooser.ExtensionFilter("PNG", "*.png")
@@ -125,19 +121,7 @@ public class ajoutEleveController implements Initializable {
                     image.setImage(i);
                 } catch (IOException x) {
                 }
-
-            }
         }
-        if (event.isSecondaryButtonDown()) {
-            try {
-                BufferedImage bufferedImage = ImageIO.read(getClass().getResource("../image/default-eleve.jpg"));
-                Image i = SwingFXUtils.toFXImage(bufferedImage, null);
-                image.setImage(i);
-            } catch (IOException x) {
-                System.out.println(x);
-            }
-        }
-
     }
 
     @FXML private void click_ajouter(ActionEvent event) {
@@ -153,14 +137,11 @@ public class ajoutEleveController implements Initializable {
         ville.setPromptText("Ville Naissance");
         addresse.setText("");
         codepostal.setText("");
-        tel1.setText("");
-        tel2.setText("");
-        nomPere.setText("");
-        prenomPere.setText("");
-        profPere.setText("");
-        nomMere.setText("");
-        prenomMere.setText("");
-        profMere.setText("");
+        nomP.setText("");
+        profp.setText("");
+        nomm.setText("");
+        profm.setText("");
+        telp.setText("");
         email.setText("");
         try {
             BufferedImage bufferedImage = ImageIO.read(getClass().getResource("../image/default-eleve.jpg"));
