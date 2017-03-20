@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -17,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.voirEleveController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.voirEleveController">
    <children>
       <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -79,12 +86,6 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField fx:id="nom" promptText="Nom" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="prenom" promptText="Prenom" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="dnaissance" prefHeight="22.0" prefWidth="370.0" promptText="date naissance" GridPane.rowIndex="2" />
-                  <JFXTextField fx:id="ville" prefHeight="22.0" prefWidth="251.0" promptText="Ville Naissance" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <JFXTextField fx:id="addresse" promptText="Addresse" GridPane.rowIndex="3" />
-                  <JFXTextField fx:id="codepostal" promptText="Code Postal" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <GridPane GridPane.rowIndex="4">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -95,20 +96,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <JFXRadioButton fx:id="fille" text="Fille" GridPane.columnIndex="1" />
-                        <JFXRadioButton fx:id="garcon" text="Garcon" GridPane.columnIndex="2" />
+                        <JFXRadioButton fx:id="fille" disable="true" text="Fille" GridPane.columnIndex="1" />
+                        <JFXRadioButton fx:id="garcon" disable="true" text="Garcon" GridPane.columnIndex="2" />
                         <Label text="Sexe" />
                      </children>
                   </GridPane>
-                  <JFXTextField fx:id="email" promptText="Email" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="nomPere" promptText="Nom du Pere" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="prenomPere" promptText="Prenom du Pere" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="profPere" promptText="Profession du Pere" GridPane.rowIndex="7" />
-                  <JFXTextField fx:id="tel1" promptText="Telephone" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <JFXTextField fx:id="nomMere" promptText="Nom de la Mere" GridPane.rowIndex="8" />
-                  <JFXTextField fx:id="prenomMere" promptText="Prenom de la Mere" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                  <JFXTextField fx:id="profMere" promptText="Profession de la Mere" GridPane.rowIndex="9" />
-                  <JFXTextField fx:id="tel2" promptText="Telephone" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                   <ImageView fx:id="image" fitHeight="172.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <image>
                         <Image url="@../../GUI/image/default-eleve.jpg" />
@@ -119,6 +111,31 @@
                   </ImageView>
                   <JFXTextField fx:id="identifiant" layoutX="10.0" layoutY="65.0" promptText="Identifiant" />
                   <JFXButton onAction="#click_voir" prefHeight="22.0" prefWidth="63.0" text="Voir" GridPane.columnIndex="1" />
+                  <Label fx:id="nom" text="Nom :" GridPane.rowIndex="1" />
+                  <Label fx:id="dnaissance" text="Date Naissance :" GridPane.rowIndex="2" />
+                  <Label fx:id="lnaissance" text="Lieu Naissance :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label fx:id="prenom" text="Prenom :" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="addresse" text="Adresse :" GridPane.rowIndex="3" />
+                  <GridPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="ville" text="Ville :" />
+                        <Label fx:id="codepostal" layoutX="10.0" layoutY="25.0" text="Code Postal :" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <Label fx:id="email" text="Email :" GridPane.rowIndex="5" />
+                  <Label fx:id="nomp" text="Nom et Prenom du Pere :" GridPane.rowIndex="6" />
+                  <Label fx:id="profp" layoutX="10.0" layoutY="285.0" text="Profession du Pere :" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Label fx:id="nomm" layoutX="10.0" layoutY="285.0" text="Nom et Prenom de la Mere :" GridPane.rowIndex="7" />
+                  <Label fx:id="profm" text="Profession de la Mere :" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <Label fx:id="telp" text="Telephone Parents :" GridPane.rowIndex="8" />
+                  <Label fx:id="emailp" layoutX="10.0" layoutY="371.0" text="Email Parents :" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                </children>
                <BorderPane.margin>
                   <Insets left="15.0" />
