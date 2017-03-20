@@ -6,6 +6,10 @@
 package GUI.centre;
 
 import GUI.LoginController;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import main_pack.Main_class;
@@ -25,6 +30,7 @@ import main_pack.Main_class;
  * @author DELL
  */
 public class GestionEleveController implements Initializable {
+
 
     /**
      * Initializes the controller class.
@@ -48,7 +54,6 @@ public class GestionEleveController implements Initializable {
         }
     }
 
-    @FXML
     private void click_voir(ActionEvent event) {
                try {
             URL loader = getClass().getResource("voirEleve.fxml");
@@ -62,9 +67,6 @@ public class GestionEleveController implements Initializable {
     }
 
     @FXML
-    private void click_lister(ActionEvent event) {
-    }
-    @FXML
     private void click_retour(ActionEvent event) {
         try {
             URL loader = getClass().getResource("mainwindow.fxml");
@@ -77,12 +79,18 @@ public class GestionEleveController implements Initializable {
         }
     }
 
+  
     @FXML
-    private void click_modifier(ActionEvent event) {
+    private void click_chercher(ActionEvent event) {
     }
 
     @FXML
-    private void click_supprimer(ActionEvent event) {
+    private void click_supp(ActionEvent event) {
     }
+
+    @FXML
+    private void click_supptout(ActionEvent event) {
+    }
+
 
 }

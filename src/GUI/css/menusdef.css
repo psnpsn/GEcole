@@ -1,0 +1,71 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18 mars 2017, 20:05:42
+    Author     : DELL
+*/
+
+.upperbox{
+    -fx-border-style:solid hidden solid solid;
+        -fx-border-width: 1px;
+        -fx-border-color:grey;
+}
+
+.backbtn:hover{
+    -fx-set-background-color:grey;
+}
+
+.leftbox{
+    -fx-border-style:hidden solid hidden solid;
+        -fx-border-width: 1px;
+        -fx-border-color:grey;
+       
+}
+
+.mainbtn{
+    -fx-text-align:center;
+    -fx-font-weight:bold;
+    -fx-text-fill:black;
+    -fx-font-size:13;
+}
+
+.mainbtn:hover{
+    -fx-text-align:center;
+    -fx-font-weight:bold;
+    -fx-text-fill:white;
+    -fx-font-size:13;
+    -fx-background-color:darkcyan;
+}
+
+.pressedbtn{
+    -fx-text-align:center;
+    -fx-font-style:oblique;
+    -fx-font-weight:bold;
+    -fx-text-fill:white;
+    -fx-font-size:13;
+    -fx-background-color:darkcyan;
+    -fx-effect: innershadow( three-pass-box , grey , 10, 0.0 , 0 , 0 );
+}
+
+.optionbtn{
+   -fx-text-align:center;
+    -fx-font-style:oblique;
+    -fx-font-weight:bold;
+    -fx-text-fill:mediumseagreen;
+    -fx-font-size:11; 
+}
+.optionbtn:hover{
+   -fx-text-align:center;
+    -fx-font-style:oblique;
+    -fx-font-weight:bold;
+    -fx-text-fill:white;
+    -fx-font-size:11; 
+    -fx-background-color:lightseagreen;
+}
+
+.legendtext{
+    -fx-text-fill:red;
+}

@@ -103,7 +103,7 @@ public class ajoutEleveController implements Initializable {
         fille.setToggleGroup(group);
         garcon.setSelected(true);
         ville.setItems(FXCollections.observableArrayList(
-                "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "tatatouine", "Tozeur", "Tunis", "Zaghouan"
+                "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tatatouine", "Tozeur", "Tunis", "Zaghouan"
         ));
     }
 
@@ -113,7 +113,7 @@ public class ajoutEleveController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choisir une image pour l'eleve");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Images", "*.*"),
+                    new FileChooser.ExtensionFilter("JPEG", "*.jpeg"),
                     new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                     new FileChooser.ExtensionFilter("PNG", "*.png")
             );
@@ -175,6 +175,19 @@ public class ajoutEleveController implements Initializable {
 
     @FXML
     private void click_retour(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("gestionEleve.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void click_trouver(ActionEvent event) {
         try {
             URL loader = getClass().getResource("gestionEleve.fxml");
             AnchorPane middle = FXMLLoader.load(loader);

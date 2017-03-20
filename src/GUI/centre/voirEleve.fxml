@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.voirEleveController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.voirEleveController">
    <children>
       <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox prefHeight="584.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton onAction="#click_imprimer" prefHeight="70.0" prefWidth="212.0" text="Imprimer" />
+                  <JFXButton onAction="#click_trouver" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" stylesheets="@../css/menusdef.css" text="Trouver un élève">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" stylesheets="@../css/menusdef.css" text="Ajouter un élève">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <Separator prefHeight="29.0" prefWidth="200.0" />
+                  <JFXButton onAction="#click_imprimer" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Imprimer">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></JFXButton>
                </children></VBox>
          </left>
          <top>
-            <HBox prefHeight="66.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton onAction="#click_retour" prefHeight="66.0" prefWidth="63.0" text="&lt;-">
+                  <JFXButton onAction="#click_retour" prefHeight="66.0" prefWidth="63.0" styleClass="backbtn" stylesheets="@../css/menusdef.css" text="&lt;-">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -64,7 +79,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField fx:id="nom"  promptText="Nom" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="nom" promptText="Nom" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="prenom" promptText="Prenom" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="dnaissance" prefHeight="22.0" prefWidth="370.0" promptText="date naissance" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="ville" prefHeight="22.0" prefWidth="251.0" promptText="Ville Naissance" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -94,7 +109,7 @@
                   <JFXTextField fx:id="prenomMere" promptText="Prenom de la Mere" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                   <JFXTextField fx:id="profMere" promptText="Profession de la Mere" GridPane.rowIndex="9" />
                   <JFXTextField fx:id="tel2" promptText="Telephone" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <ImageView fx:id="image" fitHeight="241.0" fitWidth="255.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <ImageView fx:id="image" fitHeight="172.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <image>
                         <Image url="@../../GUI/image/default-eleve.jpg" />
                      </image>
@@ -105,6 +120,9 @@
                   <JFXTextField fx:id="identifiant" layoutX="10.0" layoutY="65.0" promptText="Identifiant" />
                   <JFXButton onAction="#click_voir" prefHeight="22.0" prefWidth="63.0" text="Voir" GridPane.columnIndex="1" />
                </children>
+               <BorderPane.margin>
+                  <Insets left="15.0" />
+               </BorderPane.margin>
             </GridPane>
          </center>
       </BorderPane>
