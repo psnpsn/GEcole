@@ -69,9 +69,7 @@
                   <JFXTextField fx:id="nom" promptText="Nom*" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="prenom" promptText="Prenom*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <JFXDatePicker fx:id="dnaissance" prefHeight="22.0" prefWidth="370.0" promptText="date naissance" GridPane.rowIndex="2" />
-                  <JFXComboBox fx:id="ville" prefHeight="22.0" prefWidth="251.0" promptText="Ville Naissance*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="addresse" promptText="Addresse*" GridPane.rowIndex="3" />
-                  <JFXTextField fx:id="codepostal" promptText="Code Postal*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <GridPane GridPane.rowIndex="4">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -84,18 +82,16 @@
                      <children>
                         <JFXRadioButton fx:id="fille" text="Fille" GridPane.columnIndex="1" />
                         <JFXRadioButton fx:id="garcon" text="Garcon" GridPane.columnIndex="2" />
-                        <Label text="Sexe" />
+                        <Label text="Sex" />
                      </children>
                   </GridPane>
                   <JFXTextField fx:id="email" promptText="Email" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="nomPere" promptText="Nom du Pere*" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="prenomPere" promptText="Prenom du Pere*" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="profPere" promptText="Profession du Pere*" GridPane.rowIndex="7" />
-                  <JFXTextField fx:id="tel1" promptText="Telephone*" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <JFXTextField fx:id="nomMere" promptText="Nom de la Mere*" GridPane.rowIndex="8" />
-                  <JFXTextField fx:id="prenomMere" promptText="Prenom de la Mere*" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                  <JFXTextField fx:id="profMere" promptText="Profession de la Mere*" GridPane.rowIndex="9" />
-                  <JFXTextField fx:id="tel2" promptText="Telephone*" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <JFXTextField fx:id="nomP" promptText="Nom et Prenom du Pere*" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="profP" promptText="Profession du Pere" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="nomM" promptText="Nom et Prenom de la Mere*" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="profM" promptText="Profession de la Mere*" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="telP" promptText="Telephone Parents*" GridPane.rowIndex="8" />
+                  <JFXTextField fx:id="emailP" promptText="Email Parents*" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                   <Label text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.rowIndex="11">
                      <font>
                         <Font size="9.0" />
@@ -115,7 +111,21 @@
                      </GridPane.margin>
                   </Label>
                   <JFXTextField fx:id="identifiant" />
-                  <JFXButton prefHeight="22.0" prefWidth="66.0" text="Voir" GridPane.columnIndex="1" />
+                  <JFXButton onAction="#click_voir"  prefHeight="22.0" prefWidth="66.0" text="Voir" GridPane.columnIndex="1" />
+                  <GridPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXComboBox fx:id="ville" prefHeight="22.0" prefWidth="251.0" promptText="Ville*" />
+                        <JFXTextField fx:id="codepostal" promptText="Code Postal*" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <JFXTextField  fx:id="lnaissance" promptText="Lieu Naissance*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </center>
