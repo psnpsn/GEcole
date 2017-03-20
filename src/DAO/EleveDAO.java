@@ -187,7 +187,7 @@ public class EleveDAO implements DAO<Eleve> {
                 valide = true;
             }
         } catch (Exception exception) {
-            System.out.println("Classe : EleveODB.java\n"
+            System.out.println("Classe : EleveDAO.java\n"
                     + "Methode : update(Eleve instance)\n"
                     + "Exception : " + exception);
         }
@@ -196,7 +196,20 @@ public class EleveDAO implements DAO<Eleve> {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        valide = false;
+        try {
+            requete = "DELETE FROM " + nomTable + " WHERE ( IDENTIFIANT = ? )";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, id);
+            if (statement.executeUpdate() != 0){
+                valide = true;
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : delete(Eleve instance)\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
     }
 
 }
