@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 //type des donnes doit correspondre a la table eleve
 public class Eleve {
-    
+
      // Attributs
 
     private SimpleIntegerProperty id_e;
@@ -30,7 +30,23 @@ public class Eleve {
 
 // constructeurs;
         public Eleve() {
+        this.id_e = new SimpleIntegerProperty(-1);
+        this.nom = new SimpleStringProperty("");
+        this.prenom = new SimpleStringProperty("");
+        this.adresse = new SimpleStringProperty("");
+        this.ville = new SimpleStringProperty("");
+        this.codeP = new SimpleIntegerProperty(-1);
+        this.dateNaiss = new SimpleObjectProperty<Date>(null);
+        this.lieuNaiss = new SimpleStringProperty("");
+        this.sex = new SimpleStringProperty("");
+        this.tel = new SimpleIntegerProperty(-1);
+        this.tel2 = new SimpleIntegerProperty(-1);
+        this.email = new SimpleStringProperty("");
+        this.ref_niv = new SimpleIntegerProperty(-1);
+        this.ref_c = new SimpleIntegerProperty(-1);
+        this.ref_p = new SimpleIntegerProperty(-1);
     }
+
 
     public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, int tel, int tel2, String email, int ref_niv, int ref_c, int ref_p) {
         this.id_e = new SimpleIntegerProperty(id_e);
@@ -115,7 +131,7 @@ public class Eleve {
     // Setters
 
     public void setId_e(int id_e) {
-        this.id_e.set(id_e);   
+        this.id_e.set(id_e);
     }
 
     public void setNom(String nom) {
