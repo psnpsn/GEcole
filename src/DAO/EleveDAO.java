@@ -32,21 +32,21 @@ public class EleveDAO implements DAO<Eleve> {
             resultat = statement.executeQuery();
             while (resultat.next()) {
                 Eleve eleve = new Eleve();
-                eleve.setId_e(resultat.getInt("IDENTIFIANT"));
+                eleve.setId_e(resultat.getInt("ID_ELEVE"));
                 eleve.setNom(resultat.getString("NOM"));
                 eleve.setPrenom(resultat.getString("PRENOM"));
-                eleve.setAdresse(resultat.getString("ADDRESSE"));
+                eleve.setAdresse(resultat.getString("ADRESSE"));
                 eleve.setVille(resultat.getString("VILLE"));
-                eleve.setCodeP(resultat.getInt("CODEPOSTAL"));
-                eleve.setDateNaiss(resultat.getDate("DATENAISSANCE"));
-                eleve.setLieuNaiss(resultat.getString("LIEUNAISSANCE"));
-                eleve.setSex(resultat.getString("SEXE"));
-                eleve.setTel(resultat.getInt("TEL_DOMICILE"));
-                eleve.setTel2(resultat.getInt("TEL_PORTABLE"));
+                eleve.setCodeP(resultat.getInt("CODEP"));
+                eleve.setDateNaiss(resultat.getDate("DATENAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
+                eleve.setSex(resultat.getString("SEX"));
+                eleve.setTel(resultat.getInt("TEL"));
+                eleve.setTel2(resultat.getInt("TEL2"));
                 eleve.setEmail(resultat.getString("EMAIL"));
-                eleve.setRef_niv(resultat.getInt("REF_NIVEAU"));
-                eleve.setRef_c(resultat.getInt("REF_CLASSE"));
-                eleve.setRef_p(resultat.getInt("REF_PARENTS"));
+                eleve.setRef_niv(resultat.getInt("REF_NIV"));
+                eleve.setRef_c(resultat.getInt("REF_C"));
+                eleve.setRef_p(resultat.getInt("REF_P"));
                // eleve.set(resultat.getDate("DATEINSCRIPTION"));
                 liste.add(eleve);
 
@@ -79,7 +79,7 @@ public class EleveDAO implements DAO<Eleve> {
     public boolean create(Eleve instance) {
     valide = false;
         try {
-            requete = "INSERT INTO " + nomTable + " (IDENTIFIANT , NOM , PRENOM , ADDRESSE , VILLE , CODEPOSTAL , DATENAISSANCE , LIEUNAISSANCE , SEXE , TEL_DOMICILE , TEL_PORTABLE , EMAIL , REF_NIVEAU , REF_CLASSE , REF_PARENTS )  "
+            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , TEL , TEL2 , EMAIL , REF_NIV , REF_C , REF_P )  "
                       + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
@@ -113,28 +113,28 @@ public class EleveDAO implements DAO<Eleve> {
     public Eleve find(int id) {
     Eleve eleve = null;
         try {
-            requete = "SELECT * FROM " + nomTable +" WHERE ( IDENTIFIANT = ? )";
+            requete = "SELECT * FROM " + nomTable +" WHERE ( ID_ELEVE = ? )";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             resultat = statement.executeQuery();
             while (resultat.next()) {
                 valide = true;
                 eleve = new Eleve();
-                eleve.setId_e(resultat.getInt("IDENTIFIANT"));
+                eleve.setId_e(resultat.getInt("ID_ELEVE"));
                 eleve.setNom(resultat.getString("NOM"));
                 eleve.setPrenom(resultat.getString("PRENOM"));
-                eleve.setAdresse(resultat.getString("ADDRESSE"));
+                eleve.setAdresse(resultat.getString("ADRESSE"));
                 eleve.setVille(resultat.getString("VILLE"));
-                eleve.setCodeP(resultat.getInt("CODEPOSTAL"));
-                eleve.setDateNaiss(resultat.getDate("DATENAISSANCE"));
-                eleve.setLieuNaiss(resultat.getString("LIEUNAISSANCE"));
-                eleve.setSex(resultat.getString("SEXE"));
-                eleve.setTel(resultat.getInt("TEL_DOMICILE"));
-                eleve.setTel2(resultat.getInt("TEL_PORTABLE"));
+                eleve.setCodeP(resultat.getInt("CODEP"));
+                eleve.setDateNaiss(resultat.getDate("DATENAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
+                eleve.setSex(resultat.getString("SEX"));
+                eleve.setTel(resultat.getInt("TEL"));
+                eleve.setTel2(resultat.getInt("TEL2"));
                 eleve.setEmail(resultat.getString("EMAIL"));
-                eleve.setRef_niv(resultat.getInt("REF_NIVEAU"));
-                eleve.setRef_c(resultat.getInt("REF_CLASSE"));
-                eleve.setRef_p(resultat.getInt("REF_PARENTS"));
+                eleve.setRef_niv(resultat.getInt("REF_NIV"));
+                eleve.setRef_c(resultat.getInt("REF_C"));
+                eleve.setRef_p(resultat.getInt("REF_P"));
              //   eleve.setDateInscription(resultat.getDate("DATEINSCRIPTION"));
             }
 
@@ -153,19 +153,19 @@ public class EleveDAO implements DAO<Eleve> {
             requete = "UPDATE " + nomTable + " SET  ( "
                     + "NOM           =  ?  ,"
                     + "PRENOM        =  ?  ,"
-                    + "ADDRESSE      =  ?  ,"
+                    + "ADRESSE      =  ?  ,"
                     + "VILLE         =  ?  ,"
-                    + "CODEPOSTAL    =  ?  ,"
-                    + "DATENAISSANCE =  ?  ,"
-                    + "LIEUNAISSANCE =  ?  ,"
-                    + "SEXE          =  ?  ,"
-                    + "TEL_DOMICILE  =  ?  ,"
-                    + "TEL_PORTABLE  =  ?  ,"
+                    + "CODEP    =  ?  ,"
+                    + "DATENAISS =  ?  ,"
+                    + "LIEUNAISS =  ?  ,"
+                    + "SEX          =  ?  ,"
+                    + "TEL  =  ?  ,"
+                    + "TEL2  =  ?  ,"
                     + "EMAIL         =  ?  ,"
-                    + "REF_NIVEAU    =  ?  ,"
-                    + "REF_CLASSE    =  ?  ,"
-                    + "REF_PARENTS   =  ? )"
-                    + "WHERE  IDENTIFIANT = ? ";
+                    + "REF_NIV    =  ?  ,"
+                    + "REF_C    =  ?  ,"
+                    + "REF_P   =  ? )"
+                    + "WHERE  ID_ELEVE = ? ";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -198,7 +198,7 @@ public class EleveDAO implements DAO<Eleve> {
     public boolean delete(int id) {
         valide = false;
         try {
-            requete = "DELETE FROM " + nomTable + " WHERE ( IDENTIFIANT = ? )";
+            requete = "DELETE FROM " + nomTable + " WHERE ( ID_ELEVE = ? )";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0){
