@@ -2,6 +2,8 @@ package Models;
 
 import java.util.Date;
 import java.util.Objects;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,23 +27,26 @@ public class Eleve {
     private SimpleIntegerProperty ref_c;
     private SimpleIntegerProperty ref_p;
     private SimpleObjectProperty<Date> dateIns;
+    
+    private BooleanProperty cocher = new SimpleBooleanProperty(false);
 
 
 // constructeurs;
         public Eleve() {
-        this.id_e = new SimpleIntegerProperty(-1);
-        this.nom = new SimpleStringProperty("");
-        this.prenom = new SimpleStringProperty("");
-        this.adresse = new SimpleStringProperty("");
-        this.ville = new SimpleStringProperty("");
+        this.id_e = new SimpleIntegerProperty();
+        this.nom = new SimpleStringProperty();
+        this.prenom = new SimpleStringProperty();
+        this.adresse = new SimpleStringProperty();
+        this.ville = new SimpleStringProperty();
         this.codeP = new SimpleIntegerProperty(-1);
-        this.dateNaiss = new SimpleObjectProperty<Date>(null);
-        this.lieuNaiss = new SimpleStringProperty("");
-        this.sex = new SimpleStringProperty("");
-        this.email = new SimpleStringProperty("");
-        this.ref_niv = new SimpleIntegerProperty(-1);
-        this.ref_c = new SimpleIntegerProperty(-1);
-        this.ref_p = new SimpleIntegerProperty(-1);
+        this.dateNaiss = new SimpleObjectProperty<Date>();
+        this.lieuNaiss = new SimpleStringProperty();
+        this.sex = new SimpleStringProperty();
+        this.email = new SimpleStringProperty();
+        this.ref_niv = new SimpleIntegerProperty();
+        this.ref_c = new SimpleIntegerProperty();
+        this.ref_p = new SimpleIntegerProperty();
+        this.dateIns = new SimpleObjectProperty<Date>();
 
         
     }
@@ -182,6 +187,71 @@ public class Eleve {
     public void setDateIns(Date dateIns) {
         this.dateIns.set(dateIns);
     }
+    
+    //Property
+    public SimpleIntegerProperty id_eProperty(){
+        return id_e;
+    }
+    public SimpleStringProperty nomProperty(){
+        return nom;
+    }
+    public SimpleStringProperty fullnomProperty(){
+        return new SimpleStringProperty(nom.get()+" "+prenom.get());
+    }
+    public SimpleStringProperty prenomProperty(){
+        return prenom;
+    }
+    public SimpleStringProperty adresseProperty(){
+        return adresse;
+    }
+    public SimpleStringProperty villeProperty(){
+        return ville;
+    }
+    public SimpleIntegerProperty codePProperty(){
+        return codeP;
+    }
+    public SimpleObjectProperty<Date> dateNaissProperty(){
+        return dateNaiss;
+    }
+    public SimpleStringProperty lieuNaissProperty(){
+        return lieuNaiss;
+    }
+    public SimpleStringProperty sexProperty(){
+        return sex;
+    }
+    public SimpleStringProperty emailProperty(){
+        return email;
+    }
+    public SimpleIntegerProperty ref_nivProperty(){
+        return ref_niv;
+    }
+    public SimpleIntegerProperty ref_nProperty(){
+        return new SimpleIntegerProperty(ref_niv.get()/10000);
+    }
+    public SimpleIntegerProperty ref_cProperty(){
+        return ref_c;
+    }
+    public SimpleIntegerProperty ref_pProperty(){
+        return ref_p;
+    }
+    public SimpleObjectProperty<Date> dateInsProperty(){
+        return dateIns;
+    }
+    
+    //cocher property
+     public BooleanProperty cocherProperty() {
+            return cocher;
+        }
+
+        public void setCocher(boolean cocher) {
+            this.cocher.set(cocher);
+        }
+
+        public boolean isCocher() {
+            return cocher.get();
+        }
+      
+   
 
 
     // methodes utiles...
@@ -231,4 +301,10 @@ public class Eleve {
         }
         return true;
 }
+
+    @Override
+    public String toString() {
+        return "Eleve{" + "id_e=" + id_e.toString() + ", nom=" + nom.toString() + ", prenom=" + prenom + ", adresse=" + adresse + ", ville=" + ville + ", codeP=" + codeP + ", dateNaiss=" + dateNaiss + ", lieuNaiss=" + lieuNaiss + ", sex=" + sex + ", email=" + email + ", ref_niv=" + ref_niv + ", ref_c=" + ref_c + ", ref_p=" + ref_p + ", dateIns=" + dateIns + '}';
+    }
+   
 }

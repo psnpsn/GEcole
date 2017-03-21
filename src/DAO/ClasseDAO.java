@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -26,8 +28,8 @@ public class ClasseDAO implements DAO<Classe> {
     private boolean           valide      = false      ;
 
     @Override
-    public ArrayList<Classe> getAll() {
-        ArrayList<Classe> liste = new ArrayList<Classe>();
+    public ObservableList<Classe> getAll() {
+        ObservableList<Classe> liste = FXCollections.observableArrayList();
         try {
             requete = "SELECT * FROM " + nomTable ;
             statement = session.prepareStatement(requete);

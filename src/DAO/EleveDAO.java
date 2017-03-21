@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class EleveDAO implements DAO<Eleve> {
 
@@ -24,13 +26,13 @@ public class EleveDAO implements DAO<Eleve> {
     }
 
     @Override
-    public ArrayList<Eleve> getAll() {
+    public ObservableList<Eleve> getAll() {
         ArrayList<Eleve> liste = new ArrayList<Eleve>();
         try {
             requete = "SELECT * FROM " + nomTable ;
             statement = session.prepareStatement(requete);
             resultat = statement.executeQuery();
-            while (resultat.next()) {
+             while (resultat.next()) {
                 Eleve eleve = new Eleve();
                 eleve.setId_e(resultat.getInt("ID_ELEVE"));
                 eleve.setNom(resultat.getString("NOM"));
@@ -46,16 +48,21 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
                 eleve.setDateIns(resultat.getDate("DATEINS"));
-               // eleve.set(resultat.getDate("DATEINSCRIPTION"));
+               System.out.println("PRINT2");
                 liste.add(eleve);
+                
+                System.out.println(eleve.toString()+"SOP");
 
             }
+
+            
         } catch (Exception exception) {
             System.out.println("Classe : EleveDAO.java\n"
                     + "Methode : getAll()\n"
                     + "Exception : " + exception);
         }
-        return liste;
+        ObservableList<Eleve> list = FXCollections.observableArrayList(liste);
+        return list;
     }
 
     @Override

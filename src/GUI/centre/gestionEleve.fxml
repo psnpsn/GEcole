@@ -81,6 +81,7 @@
                         <TableColumn fx:id="classeCol" prefWidth="151.0" text="Classe" />
                         <TableColumn fx:id="modifCol" editable="false" prefWidth="132.0" sortable="false" text="Modifier" />
                         <TableColumn fx:id="cochCol" editable="false" prefWidth="62.0" text="Cocher" />
+                        <TableColumn prefWidth="75.0" text="Id élève" />
                      </columns>
                   </TableView>
                   <GridPane>
