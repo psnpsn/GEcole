@@ -234,7 +234,7 @@ public class modEleveController implements Initializable {
         // controle de saisie
         String erreur = "";
         if (!Tests.email(email.getText())) {
-            erreur += "Erreur Email\n";
+            erreur += "Erreur Email Eleve\n";
         }
         if (!Tests.telephone(telP.getText())) {
             erreur += "Erreur Numero Telephone\n";
@@ -277,17 +277,14 @@ public class modEleveController implements Initializable {
         if (!Tests.chaine(profP.getText(), 20, false)) {
             erreur += "Erreur Profession Pere\n";
         }
-        if (!Tests.email(email.getText())) {
+        if (!Tests.email(emailP.getText())) {
             erreur += "Erreur Email parent\n";
         }
         if (!Tests.telephone(telP.getText())) {
             erreur += "Erreur telephone Parent\n";
         }
-
-        //
         if (erreur.isEmpty()) {
             EleveDAO dao = new EleveDAO();
-
             if (identifiant.getText().isEmpty()) {
                 return;
             }
@@ -309,46 +306,46 @@ public class modEleveController implements Initializable {
             eleve.setEmail(email.getText());
             eleve.setRef_niv(0);
             eleve.setRef_c(0);
-            // maj parent
             if (ancien != null) {
-                System.out.println("MAWJOUD");
-                //new Parent(ancien.getRef_p(), nomP.getText(), profP.getText(), nomM.getText(), profM.getText(), telP.getText(), emailP.getText());
                 ParentDAO daop = new ParentDAO();
-                Parent p = daop.find(ancien.getRef_p());
-                p.setID_PARENT(ancien.getRef_p());
-                p.setNOMP(nomP.getText());
-                p.setNOMM(nomM.getText());
-                p.setPROFM(profM.getText());
-                p.setPROFP(profP.getText());
-                p.setEMAILP(emailP.getText());
-                p.setTELP(telP.getText());
-                eleve.setRef_p(ancien.getRef_p());
-                daop.update(p);
-                dao.update(eleve);
-            } else {
-                // ajout parent
-                System.out.println("MOCH MAWJOUD");
-                ParentDAO daop = new ParentDAO();
-                Parent p = new Parent();
-                p.setNOMP(nomP.getText());
-                p.setNOMM(nomM.getText());
-                p.setPROFM(profM.getText());
-                p.setPROFP(profP.getText());
-                p.setEMAILP(emailP.getText());
-                p.setTELP(telP.getText());
-                daop.create(p);
+                Parent parent = daop.find(ancien.getRef_p());
+                // suppression ancien parent
+                if (parent != null) {
+                    daop.delete(ancien.getRef_p());
+                }
+                parent = new Parent();
+                parent.setNOMP(nomP.getText());
+                parent.setNOMM(nomM.getText());
+                parent.setPROFM(profM.getText());
+                parent.setPROFP(profP.getText());
+                parent.setEMAILP(emailP.getText());
+                parent.setTELP(telP.getText());
+                daop.create(parent);
                 eleve.setRef_p(daop.dernier());
-                dao.update(eleve);
-            }
-            //
-           // dao.update(eleve);
-        } else {
-            System.out.println(erreur);
-            Alert conf = new Alert(Alert.AlertType.INFORMATION);
-            conf.setTitle("Erreur!");
-            conf.setHeaderText("des erreur sont produite lors de l'ajout");
-            conf.setContentText(erreur + "\n\n\n\n\n\n\nVerifiez les donnes et reessayer ");
-            conf.showAndWait();
+                //
+                if (dao.update(eleve)) {
+                    Alert conf = new Alert(Alert.AlertType.INFORMATION);
+                    conf.setTitle("Success!");
+                    conf.setHeaderText("l'operation de mise a jour eleve est effectuer sans erreur");
+                    conf.setContentText("1 tuple eleve modifier =)");
+                    conf.showAndWait();
+                    reinit();
+                } else {
+                    Alert conf = new Alert(Alert.AlertType.INFORMATION);
+                    conf.setTitle("Erreur!");
+                    conf.setHeaderText("une erreur s'est produite lors de l'edition");
+                    conf.setContentText("aucun eleve modifier =(");
+                    conf.showAndWait();
+                }
+
+            }} else {
+                System.out.println(erreur);
+                Alert conf = new Alert(Alert.AlertType.INFORMATION);
+                conf.setTitle("Erreur!");
+                conf.setHeaderText("des erreur sont produite lors de l'ajout");
+                conf.setContentText(erreur + "\n\n\n\n\n\n\nVerifiez les donnes et reessayer ");
+                conf.showAndWait();
+
         }
     }
 
