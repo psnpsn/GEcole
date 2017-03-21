@@ -138,7 +138,7 @@ public class ajoutEleveController implements Initializable {
     @FXML private void click_ajouter(ActionEvent event) {
         String erreur = "";
         if (!Tests.email(email.getText())) {
-            erreur += "Erreur Email\n";
+            erreur += "Erreur Email Eleve\n";
         }
         if (!Tests.telephone(telP.getText())) {
             erreur += "Erreur Numero Telephone\n";
@@ -163,7 +163,7 @@ public class ajoutEleveController implements Initializable {
             erreur += "Erreur Date Naissance invalide\n";
         }
         if (!Tests.chaine(lnaissance.getText(), 20, false)) {
-            erreur += "Erreur Addresse\n";
+            erreur += "Erreur Lieu Naissance\n";
         }
         if (ville.getSelectionModel().getSelectedIndex() == -1) {
             erreur += "Erreur Ville : selectionner une svp\n";
@@ -181,7 +181,7 @@ public class ajoutEleveController implements Initializable {
         if (!Tests.chaine(profP.getText(), 20, false)) {
             erreur += "Erreur Profession Pere\n";
         }
-        if (!Tests.email(email.getText())) {
+        if (!Tests.email(emailP.getText())) {
             erreur += "Erreur Email parent\n";
         }
         if (!Tests.telephone(telP.getText())) {
@@ -217,7 +217,8 @@ public class ajoutEleveController implements Initializable {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Success!");
                 conf.setHeaderText("l'operation d'ajout d'eleve est effectuer sans erreur");
-                conf.setContentText("1 eleve ajouter a la base de donnee");
+                conf.setContentText("1 tuple eleve ajouter a la base de donnee\n"
+                                  + "1 tuple parent ajouter a la base de donnee");
                 conf.showAndWait();
                 reinit();
             } else {
