@@ -6,8 +6,10 @@
 package GUI.centre;
 
 import DAO.EleveDAO;
+import DAO.ParentDAO;
 import GUI.LoginController;
 import Models.Eleve;
+import Models.Parent;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.BufferedReader;
@@ -25,6 +27,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -165,6 +168,13 @@ public class voirEleveController implements Initializable {
         ville.setText("Ville : ");
         garcon.setSelected(true);
         dnaissance.setText("Date Naissance :");
+        // parent
+        nomp.setText("Nom et Prenom Pere :");
+        profp.setText("Profession Pere :");
+        nomm.setText("Nom et Prenom Mere :");
+        profm.setText("Profession Mere :");
+        telp.setText("Telephone Parent :");
+        emailp.setText("Email Parent:");
 
     }
 
@@ -191,7 +201,25 @@ public class voirEleveController implements Initializable {
             }
             Calendar cal = Calendar.getInstance();
             cal.setTime(eleve.getDateNaiss());
-            dnaissance.setText("Née le  "+ new SimpleDateFormat("DD").format(cal.getTime()) + " " + new SimpleDateFormat("MMMM").format(cal.getTime()) + " " +  new SimpleDateFormat("YYYY").format(cal.getTime()));
+            dnaissance.setText("Née le  " + new SimpleDateFormat("DD").format(cal.getTime()) + " " + new SimpleDateFormat("MMMM").format(cal.getTime()) + " " + new SimpleDateFormat("YYYY").format(cal.getTime()));
+            // parent
+            ParentDAO daop = new ParentDAO();
+            Parent p = daop.find(eleve.getRef_p());
+            if (p != null) {
+                nomp.setText("Nom et Prenom Pere :" + p.getNOMP());
+                profp.setText("Profession du Pere :" + p.getPROFP());
+                nomm.setText("Nom et Prenom Mere :" + p.getNOMM());
+                profm.setText("Profession de la Mere :" + p.getPROFM());
+                telp.setText("Telephone parent :" + p.getTELP());
+                emailp.setText("Email Parent :" + p.getEMAILP());
+            }
+        } else {
+            Alert conf = new Alert(Alert.AlertType.INFORMATION);
+            conf.setTitle("Erreur!");
+            conf.setHeaderText("L'identifiant n'a pa ete touve");
+            conf.setContentText("aucun eleve n'existe avec ce identifiant :(\n"
+                    + "Verifier l'identifiant et reessayer");
+            conf.showAndWait();
         }
 
     }

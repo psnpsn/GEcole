@@ -36,7 +36,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Instituteurs" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_ginst" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Instituteurs" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter, modifier, supprimer et chercher les instituteur de l'école." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
