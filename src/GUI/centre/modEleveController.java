@@ -6,8 +6,11 @@
 package GUI.centre;
 
 import DAO.EleveDAO;
+import DAO.ParentDAO;
 import GUI.LoginController;
+import GUI.Tests;
 import Models.Eleve;
+import Models.Parent;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
@@ -17,8 +20,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +33,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -157,11 +163,25 @@ public class modEleveController implements Initializable {
             lnaissance.setText(eleve.getLieuNaiss());
             Instant instant = Instant.ofEpochMilli(eleve.getDateNaiss().getTime());
             dnaissance.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            // parent
+            ParentDAO daop = new ParentDAO();
+            Parent p = daop.find(eleve.getRef_p());
+            if (p != null) {
+                nomP.setText(p.getNOMP());
+                profP.setText(p.getPROFP());
+                nomM.setText(p.getNOMM());
+                profM.setText(p.getPROFM());
+                telP.setText(p.getTELP());
+                emailP.setText(p.getEMAILP());
+            }
+        } else {
+            Alert conf = new Alert(Alert.AlertType.INFORMATION);
+            conf.setTitle("Erreur!");
+            conf.setHeaderText("L'identifiant n'a pa ete touve");
+            conf.setContentText("aucun eleve n'existe avec ce identifiant :(\n"
+                    + "Verifier l'identifiant et reessayer");
+            conf.showAndWait();
         }
-    }
-
-    void click_save_as(ActionEvent event) {
-
     }
 
     private void reinit() {
@@ -211,26 +231,125 @@ public class modEleveController implements Initializable {
 
     @FXML
     private void click_modifier(ActionEvent event) {
-        EleveDAO dao = new EleveDAO();
-        if (identifiant.getText().isEmpty()) {
-            return;
+        // controle de saisie
+        String erreur = "";
+        if (!Tests.email(email.getText())) {
+            erreur += "Erreur Email\n";
         }
-                Eleve  eleve = new Eleve();
-        eleve.setId_e(Integer.parseInt(identifiant.getText()));
-        eleve.setNom(nom.getText());
-        eleve.setPrenom(prenom.getText());
-        eleve.setAdresse(addresse.getText());
-        eleve.setVille(ville.getSelectionModel().getSelectedItem().toString());
-        eleve.setCodeP(Integer.parseInt(codepostal.getText()));
-        eleve.setDateNaiss(new java.util.Date());
-        eleve.setLieuNaiss(lnaissance.getText());
-        if (garcon.isSelected())eleve.setSex("M");else
-        eleve.setSex("F");
-        eleve.setEmail(email.getText());
-        eleve.setRef_niv(0);
-        eleve.setRef_c(0);
-        eleve.setRef_p(0);
-        dao.update(eleve);
+        if (!Tests.telephone(telP.getText())) {
+            erreur += "Erreur Numero Telephone\n";
+        }
+        if (!Tests.chaine(nom.getText(), 20, false)) {
+            erreur += "Erreur Nom Eleve\n";
+        }
+        if (!Tests.chaine(prenom.getText(), 20, false)) {
+            erreur += "Erreur Prenom Eleve\n";
+        }
+        if (!Tests.chaine(addresse.getText(), 20, true)) {
+            erreur += "Erreur addresse\n";
+        }
+        if (!Tests.code_postal(codepostal.getText())) {
+            erreur += "Erreur Code Postal\n";
+        }
+        LocalDate d = dnaissance.getValue();
+        if (d == null) {
+            erreur += "Erreur Date , Selectionner une\n";
+        }
+        if (d != null && !Tests.date_naissance(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))) {
+            erreur += "Erreur Date Naissance invalide\n";
+        }
+        if (!Tests.chaine(lnaissance.getText(), 20, false)) {
+            erreur += "Erreur Addresse\n";
+        }
+        if (ville.getSelectionModel().getSelectedIndex() == -1) {
+            erreur += "Erreur Ville : selectionner une svp\n";
+        }
+        // donnee des parents
+        if (!Tests.chaine(nomP.getText(), 20, false)) {
+            erreur += "Erreur Nom Pere\n";
+        }
+        if (!Tests.chaine(nomM.getText(), 20, false)) {
+            erreur += "Erreur Nom Mere\n";
+        }
+        if (!Tests.chaine(profM.getText(), 20, false)) {
+            erreur += "Erreur Profession Mere\n";
+        }
+        if (!Tests.chaine(profP.getText(), 20, false)) {
+            erreur += "Erreur Profession Pere\n";
+        }
+        if (!Tests.email(email.getText())) {
+            erreur += "Erreur Email parent\n";
+        }
+        if (!Tests.telephone(telP.getText())) {
+            erreur += "Erreur telephone Parent\n";
+        }
+
+        //
+        if (erreur.isEmpty()) {
+            EleveDAO dao = new EleveDAO();
+
+            if (identifiant.getText().isEmpty()) {
+                return;
+            }
+            Eleve ancien = dao.find(Integer.parseInt(identifiant.getText()));
+            Eleve eleve = new Eleve();
+            eleve.setId_e(Integer.parseInt(identifiant.getText()));
+            eleve.setNom(nom.getText());
+            eleve.setPrenom(prenom.getText());
+            eleve.setAdresse(addresse.getText());
+            eleve.setVille(ville.getSelectionModel().getSelectedItem().toString());
+            eleve.setCodeP(Integer.parseInt(codepostal.getText()));
+            eleve.setDateNaiss(new java.util.Date());
+            eleve.setLieuNaiss(lnaissance.getText());
+            if (garcon.isSelected()) {
+                eleve.setSex("M");
+            } else {
+                eleve.setSex("F");
+            }
+            eleve.setEmail(email.getText());
+            eleve.setRef_niv(0);
+            eleve.setRef_c(0);
+            // maj parent
+            if (ancien != null) {
+                System.out.println("MAWJOUD");
+                //new Parent(ancien.getRef_p(), nomP.getText(), profP.getText(), nomM.getText(), profM.getText(), telP.getText(), emailP.getText());
+                ParentDAO daop = new ParentDAO();
+                Parent p = daop.find(ancien.getRef_p());
+                p.setID_PARENT(ancien.getRef_p());
+                p.setNOMP(nomP.getText());
+                p.setNOMM(nomM.getText());
+                p.setPROFM(profM.getText());
+                p.setPROFP(profP.getText());
+                p.setEMAILP(emailP.getText());
+                p.setTELP(telP.getText());
+                eleve.setRef_p(ancien.getRef_p());
+                daop.update(p);
+                dao.update(eleve);
+            } else {
+                // ajout parent
+                System.out.println("MOCH MAWJOUD");
+                ParentDAO daop = new ParentDAO();
+                Parent p = new Parent();
+                p.setNOMP(nomP.getText());
+                p.setNOMM(nomM.getText());
+                p.setPROFM(profM.getText());
+                p.setPROFP(profP.getText());
+                p.setEMAILP(emailP.getText());
+                p.setTELP(telP.getText());
+                daop.create(p);
+                eleve.setRef_p(daop.dernier());
+                dao.update(eleve);
+            }
+            //
+           // dao.update(eleve);
+        } else {
+            System.out.println(erreur);
+            Alert conf = new Alert(Alert.AlertType.INFORMATION);
+            conf.setTitle("Erreur!");
+            conf.setHeaderText("des erreur sont produite lors de l'ajout");
+            conf.setContentText(erreur + "\n\n\n\n\n\n\nVerifiez les donnes et reessayer ");
+            conf.showAndWait();
+        }
     }
 
     @FXML

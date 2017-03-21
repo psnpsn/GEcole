@@ -45,8 +45,8 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setRef_niv(resultat.getInt("REF_NIV"));
                 eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
-                eleve.setDateIns(resultat.getDate("DATEINS"));
-               // eleve.set(resultat.getDate("DATEINSCRIPTION"));
+                //eleve.setDateIns(resultat.getDate("DATEINS"));
+
                 liste.add(eleve);
 
             }
@@ -78,8 +78,8 @@ public class EleveDAO implements DAO<Eleve> {
     public boolean create(Eleve instance) {
     valide = false;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_P ,DATEINS)  "
-                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , 12016 , 1 , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
+            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_C , REF_P ,DATEINS)  "
+                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -90,9 +90,9 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8,instance.getSex());
             statement.setString(9, instance.getEmail());
-            //statement.setInt(10, instance.getRef_niv());
-            //statement.setInt(11, instance.getRef_c());
-            //statement.setInt(12, instance.getRef_p());
+            statement.setInt(10, instance.getRef_niv());
+            statement.setInt(11, instance.getRef_c());
+            statement.setInt(12, instance.getRef_p());
             if (statement.executeUpdate() != 0) {
                 valide = true;
             }
