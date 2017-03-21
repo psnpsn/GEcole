@@ -77,7 +77,7 @@ public class Main_class extends Application {
      */
     public static void main(String[] args) {
         System.out.println("test");
-        ODB.OracleDBSingleton.seConnecter("jdbc:oracle:thin@localhost:1521:XE","oracle.jdbc.driver.OracleDriver","tester","tester");
+        ODB.OracleDBSingleton.seConnecter("jdbc:oracle:thin:@localhost:1521:XE","oracle.jdbc.driver.OracleDriver","tester","tester");
         launch(args);
     }
     

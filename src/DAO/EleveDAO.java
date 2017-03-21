@@ -78,8 +78,8 @@ public class EleveDAO implements DAO<Eleve> {
     public boolean create(Eleve instance) {
     valide = false;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , TEL , TEL2 , EMAIL , REF_NIV , REF_C , REF_P )  "
-                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_P ,DATEINS)  "
+                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , 12016 , 1 , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -88,13 +88,11 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setInt(5, instance.getCodeP());
             statement.setDate(6, new java.sql.Date(instance.getDateNaiss().getTime()));
             statement.setString(7, instance.getLieuNaiss());
-            statement.setString(8, String.valueOf(instance.getSex()));
-            statement.setString(11, instance.getEmail());
-            statement.setInt(12, instance.getRef_niv());
-            statement.setInt(13, instance.getRef_c());
-            statement.setInt(14, instance.getRef_p());
-
-
+            statement.setString(8,instance.getSex());
+            statement.setString(9, instance.getEmail());
+            //statement.setInt(10, instance.getRef_niv());
+            //statement.setInt(11, instance.getRef_c());
+            //statement.setInt(12, instance.getRef_p());
             if (statement.executeUpdate() != 0) {
                 valide = true;
             }
@@ -130,7 +128,6 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setRef_niv(resultat.getInt("REF_NIV"));
                 eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
-             //   eleve.setDateInscription(resultat.getDate("DATEINSCRIPTION"));
             }
 
         } catch (Exception exception) {
@@ -145,7 +142,7 @@ public class EleveDAO implements DAO<Eleve> {
     public boolean update(Eleve instance) {
     valide = false;
         try {
-            requete = "UPDATE " + nomTable + " SET  ( "
+            requete = "UPDATE " + nomTable + " SET   "
                     + "NOM           =  ?  ,"
                     + "PRENOM        =  ?  ,"
                     + "ADRESSE      =  ?  ,"
@@ -154,12 +151,10 @@ public class EleveDAO implements DAO<Eleve> {
                     + "DATENAISS =  ?  ,"
                     + "LIEUNAISS =  ?  ,"
                     + "SEX          =  ?  ,"
-                    + "TEL  =  ?  ,"
-                    + "TEL2  =  ?  ,"
-                    + "EMAIL         =  ?  ,"
+                    + "EMAIL  =  ?  ,"
                     + "REF_NIV    =  ?  ,"
                     + "REF_C    =  ?  ,"
-                    + "REF_P   =  ? )"
+                    + "REF_P   =  ? "
                     + "WHERE  ID_ELEVE = ? ";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
@@ -170,11 +165,11 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setDate(6,  new java.sql.Date(instance.getDateNaiss().getTime()));
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8, instance.getSex());
-            statement.setString(11, instance.getEmail());
-            statement.setInt(12, instance.getRef_niv());
-            statement.setInt(13, instance.getRef_c());
-            statement.setInt(14, instance.getRef_p());
-            statement.setInt(15, instance.getId_e());
+            statement.setString(9, instance.getEmail());
+            statement.setInt(10, instance.getRef_niv());
+            statement.setInt(11, instance.getRef_c());
+            statement.setInt(12, instance.getRef_p());
+            statement.setInt(13, instance.getId_e());
 
             if(statement.executeUpdate()!=0){
                 valide = true;
