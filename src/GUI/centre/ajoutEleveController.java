@@ -7,8 +7,11 @@ package GUI.centre;
 
 import DAO.DAO;
 import DAO.EleveDAO;
+import DAO.ParentDAO;
 import GUI.LoginController;
+import GUI.Tests;
 import Models.Eleve;
+import Models.Parent;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
@@ -17,6 +20,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +32,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +48,7 @@ import main_pack.Main_class;
  * @author Chazzone
  */
 public class ajoutEleveController implements Initializable {
+
     @FXML
     private ImageView image;
 
@@ -108,45 +116,132 @@ public class ajoutEleveController implements Initializable {
 
     @FXML
     void click_image(ActionEvent event) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choisir une image pour l'eleve");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Images", "*.jpeg","*.png","*.jpg"),
-                    new FileChooser.ExtensionFilter("JPEG", "*.jpeg"),
-                    new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                    new FileChooser.ExtensionFilter("PNG", "*.png")
-            );
-            File file = fileChooser.showOpenDialog(new javafx.stage.Stage());
-            if (file != null) {
-                try {
-                    BufferedImage bufferedImage = ImageIO.read(file);
-                    Image i = SwingFXUtils.toFXImage(bufferedImage, null);
-                    image.setImage(i);
-                } catch (IOException x) {
-                }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une image pour l'eleve");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Images", "*.jpeg", "*.png", "*.jpg"),
+                new FileChooser.ExtensionFilter("JPEG", "*.jpeg"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(new javafx.stage.Stage());
+        if (file != null) {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(file);
+                Image i = SwingFXUtils.toFXImage(bufferedImage, null);
+                image.setImage(i);
+            } catch (IOException x) {
+            }
         }
     }
 
     @FXML private void click_ajouter(ActionEvent event) {
-        DAO elevedao = new EleveDAO();
-        Eleve  eleve = new Eleve();
-        eleve.setNom(nom.getText());
-        eleve.setPrenom(prenom.getText());
-        eleve.setAdresse(addresse.getText());
-        eleve.setVille(ville.getSelectionModel().getSelectedItem().toString());
-        eleve.setCodeP(Integer.parseInt(codepostal.getText()));
-        eleve.setDateNaiss(new java.util.Date());
-        eleve.setLieuNaiss(lnaissance.getText());
-        if (garcon.isSelected())eleve.setSex("M");else
-        eleve.setSex("F");
-        eleve.setEmail(email.getText());
-        eleve.setRef_niv(0);
-        eleve.setRef_c(0);
-        eleve.setRef_p(0);
-        elevedao.create(eleve);
+        String erreur = "";
+        if (!Tests.email(email.getText())) {
+            erreur += "Erreur Email\n";
+        }
+        if (!Tests.telephone(telP.getText())) {
+            erreur += "Erreur Numero Telephone\n";
+        }
+        if (!Tests.chaine(nom.getText(), 20, false)) {
+            erreur += "Erreur Nom Eleve\n";
+        }
+        if (!Tests.chaine(prenom.getText(), 20, false)) {
+            erreur += "Erreur Prenom Eleve\n";
+        }
+        if (!Tests.chaine(addresse.getText(), 20, true)) {
+            erreur += "Erreur addresse\n";
+        }
+        if (!Tests.code_postal(codepostal.getText())) {
+            erreur += "Erreur Code Postal\n";
+        }
+        LocalDate d = dnaissance.getValue();
+        if (d == null) {
+            erreur += "Erreur Date , Selectionner une\n";
+        }
+        if (d != null && !Tests.date_naissance(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))) {
+            erreur += "Erreur Date Naissance invalide\n";
+        }
+        if (!Tests.chaine(lnaissance.getText(), 20, false)) {
+            erreur += "Erreur Addresse\n";
+        }
+        if (ville.getSelectionModel().getSelectedIndex() == -1) {
+            erreur += "Erreur Ville : selectionner une svp\n";
+        }
+        // donnee des parents
+        if (!Tests.chaine(nomP.getText(), 20, false)) {
+            erreur += "Erreur Nom Pere\n";
+        }
+        if (!Tests.chaine(nomM.getText(), 20, false)) {
+            erreur += "Erreur Nom Mere\n";
+        }
+        if (!Tests.chaine(profM.getText(), 20, false)) {
+            erreur += "Erreur Profession Mere\n";
+        }
+        if (!Tests.chaine(profP.getText(), 20, false)) {
+            erreur += "Erreur Profession Pere\n";
+        }
+        if (!Tests.email(email.getText())) {
+            erreur += "Erreur Email parent\n";
+        }
+        if (!Tests.telephone(telP.getText())) {
+            erreur += "Erreur telephone Parent\n";
+        }
+        if (erreur.isEmpty()) {
+            DAO elevedao = new EleveDAO();
+            Eleve eleve = new Eleve();
+            // ajout parent
+            Parent p = new Parent(-1,nomP.getText(),profP.getText(),nomM.getText(),profM.getText(),telP.getText(),emailP.getText());
+            ParentDAO daop = new ParentDAO();
+            daop.create(p);
+            int id_parent = daop.dernier();
+            if (id_parent == -1)
+                return;
+            eleve.setNom(nom.getText());
+            eleve.setPrenom(prenom.getText());
+            eleve.setAdresse(addresse.getText());
+            eleve.setVille(ville.getSelectionModel().getSelectedItem());
+            eleve.setCodeP(Integer.parseInt(codepostal.getText()));
+            eleve.setDateNaiss(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            eleve.setLieuNaiss(lnaissance.getText());
+            if (garcon.isSelected()) {
+                eleve.setSex("M");
+            } else {
+                eleve.setSex("F");
+            }
+            eleve.setEmail(email.getText());
+            eleve.setRef_niv(0);
+            eleve.setRef_c(0);
+            eleve.setRef_p(id_parent);
+            if (elevedao.create(eleve)) {
+                Alert conf = new Alert(Alert.AlertType.INFORMATION);
+                conf.setTitle("Success!");
+                conf.setHeaderText("l'operation d'ajout d'eleve est effectuer sans erreur");
+                conf.setContentText("1 eleve ajouter a la base de donnee");
+                conf.showAndWait();
+                reinit();
+            } else {
+                Alert conf = new Alert(Alert.AlertType.INFORMATION);
+                conf.setTitle("Erreur!");
+                conf.setHeaderText("une erreur s'est produite lors de l'ajout");
+                conf.setContentText("aucun eleve ajouter a la base de donner :(");
+                conf.showAndWait();
+            }
+        } else {
+            System.out.println(erreur);
+            Alert conf = new Alert(Alert.AlertType.INFORMATION);
+            conf.setTitle("Erreur!");
+            conf.setHeaderText("des erreur sont produite lors de l'ajout");
+            conf.setContentText(erreur + "\n\n\n\n\n\n\nVerifiez les donnes et reessayer ");
+            conf.showAndWait();
+        }
     }
 
     @FXML private void click_reinitialiser(ActionEvent event) {
+        reinit();
+    }
+
+    private void reinit() {
         garcon.setSelected(true);
         nom.setText("");
         prenom.setText("");
@@ -168,9 +263,8 @@ public class ajoutEleveController implements Initializable {
             Image i = SwingFXUtils.toFXImage(bufferedImage, null);
             image.setImage(i);
         } catch (IOException x) {
-            System.out.println("ERERER : " + x);
+            System.out.println("Erreur : " + x);
         }
-
 
     }
 
