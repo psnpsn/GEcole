@@ -134,7 +134,20 @@ public class ParentDAO implements DAO<Parent>{
 
     @Override
     public boolean delete(int id) {
-        return false;
+        valide = false;
+        try {
+            requete = "DELETE FROM " + nomTable + " WHERE ( ID_PARENT = ? )";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, id);
+            if (statement.executeUpdate() != 0){
+                valide = true;
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : ParentDAO.java\n"
+                    + "Methode : delete(id)\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
     }
 
 
