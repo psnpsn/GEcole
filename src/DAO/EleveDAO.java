@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class EleveDAO implements DAO<Eleve> {
 
@@ -24,13 +26,13 @@ public class EleveDAO implements DAO<Eleve> {
     }
 
     @Override
-    public ArrayList<Eleve> getAll() {
+    public ObservableList<Eleve> getAll() {
         ArrayList<Eleve> liste = new ArrayList<Eleve>();
         try {
             requete = "SELECT * FROM " + nomTable ;
             statement = session.prepareStatement(requete);
             resultat = statement.executeQuery();
-            while (resultat.next()) {
+             while (resultat.next()) {
                 Eleve eleve = new Eleve();
                 eleve.setId_e(resultat.getInt("ID_ELEVE"));
                 eleve.setNom(resultat.getString("NOM"));
@@ -45,17 +47,22 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setRef_niv(resultat.getInt("REF_NIV"));
                 eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
-                //eleve.setDateIns(resultat.getDate("DATEINS"));
-
+                eleve.setDateIns(resultat.getDate("DATEINS"));
+               System.out.println("PRINT2");
                 liste.add(eleve);
+                
+                System.out.println(eleve.toString()+"SOP");
 
             }
+
+            
         } catch (Exception exception) {
             System.out.println("Classe : EleveDAO.java\n"
                     + "Methode : getAll()\n"
                     + "Exception : " + exception);
         }
-        return liste;
+        ObservableList<Eleve> list = FXCollections.observableArrayList(liste);
+        return list;
     }
 
     @Override
@@ -78,8 +85,8 @@ public class EleveDAO implements DAO<Eleve> {
     public boolean create(Eleve instance) {
     valide = false;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_C , REF_P ,DATEINS)  "
-                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
+            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_P ,DATEINS)  "
+                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -90,9 +97,9 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8,instance.getSex());
             statement.setString(9, instance.getEmail());
-            statement.setInt(10, instance.getRef_niv());
-            statement.setInt(11, instance.getRef_c());
-            statement.setInt(12, instance.getRef_p());
+            statement.setInt(10, 22016);
+            //statement.setInt(11, instance.getRef_c());
+            statement.setInt(11, instance.getRef_p());
             if (statement.executeUpdate() != 0) {
                 valide = true;
             }

@@ -16,6 +16,9 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Color;
+import static java.awt.Color.red;
+import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -99,6 +102,8 @@ public class ajoutEleveController implements Initializable {
 
     @FXML
     private JFXTextField email;
+    @FXML
+    private JFXComboBox<Integer> niveau;
 
     /**
      * Initializes the controller class.
@@ -112,6 +117,7 @@ public class ajoutEleveController implements Initializable {
         ville.setItems(FXCollections.observableArrayList(
                 "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tatatouine", "Tozeur", "Tunis", "Zaghouan"
         ));
+        niveau.setItems(FXCollections.observableArrayList(1,2,3,4,5,6));
     }
 
     @FXML
@@ -139,53 +145,108 @@ public class ajoutEleveController implements Initializable {
         String erreur = "";
         if (!Tests.email(email.getText())) {
             erreur += "Erreur Email Eleve\n";
+            email.clear();
+            email.setPromptText("Email (*@*.*)");
+            email.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.telephone(telP.getText())) {
             erreur += "Erreur Numero Telephone\n";
+            telP.clear();
+            telP.setPromptText("Téléphone (8 Chiffre)");
+            telP.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.chaine(nom.getText(), 20, false)) {
             erreur += "Erreur Nom Eleve\n";
+            nom.clear();
+            nom.setPromptText("Nom (Que des lettres)");
+            nom.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.chaine(prenom.getText(), 20, false)) {
             erreur += "Erreur Prenom Eleve\n";
+            prenom.clear();
+            prenom.setPromptText("Prenom (Que des lettres)");
+            prenom.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.chaine(addresse.getText(), 20, true)) {
             erreur += "Erreur addresse\n";
+            addresse.clear();
+            addresse.setPromptText("Adresse (Trop long)");
+            addresse.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.code_postal(codepostal.getText())) {
             erreur += "Erreur Code Postal\n";
+            codepostal.clear();
+            codepostal.setPromptText("Code Postal (4 Chiffre seulement)");
+            codepostal.setStyle("-fx-prompt-text-fill:red");
         }
         LocalDate d = dnaissance.getValue();
         if (d == null) {
             erreur += "Erreur Date , Selectionner une\n";
+            dnaissance.setValue(null);
+            dnaissance.setPromptText("Date de Naissance");
+            dnaissance.setStyle("-fx-prompt-text-fill:red");
         }
         if (d != null && !Tests.date_naissance(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))) {
             erreur += "Erreur Date Naissance invalide\n";
+            dnaissance.setValue(null);
+            dnaissance.setPromptText("Date de Naissance");
+            dnaissance.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.chaine(lnaissance.getText(), 20, false)) {
             erreur += "Erreur Lieu Naissance\n";
+            lnaissance.clear();
+            lnaissance.setPromptText("Lieu Naissance (Saisir que des lettres)");
+            lnaissance.setStyle("-fx-prompt-text-fill:red");
         }
         if (ville.getSelectionModel().getSelectedIndex() == -1) {
             erreur += "Erreur Ville : selectionner une svp\n";
+            ville.setValue("");
+            ville.setPromptText("Ville");
+            ville.setStyle("-fx-prompt-text-fill:red");
+        }
+        if (niveau.getSelectionModel().getSelectedIndex() == -1) {
+            erreur += "Erreur Ville : selectionner une svp\n";
+            niveau.setValue(-1);
+            niveau.setPromptText("Niveau");
+            niveau.setStyle("-fx-prompt-text-fill:red");
         }
         // donnee des parents
         if (!Tests.chaine(nomP.getText(), 20, false)) {
-            erreur += "Erreur Nom Pere\n";
+            erreur += "Saisir que des lettres";
+            nomP.clear();
+            nomP.setPromptText("Nom du Père (Saisir que des lettres)");
+            nomP.setStyle("-fx-prompt-text-fill:red");
         }
+     
         if (!Tests.chaine(nomM.getText(), 20, false)) {
             erreur += "Erreur Nom Mere\n";
+            nomM.clear();
+            nomM.setPromptText("Nom de la Mère(Saisir que des lettres)");
+            nomM.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.chaine(profM.getText(), 20, false)) {
             erreur += "Erreur Profession Mere\n";
+            profM.clear();
+            profM.setPromptText("Prefession de la Mère (Saisir que des lettres)");
+            profM.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.chaine(profP.getText(), 20, false)) {
             erreur += "Erreur Profession Pere\n";
+            profP.clear();
+            profP.setPromptText("Profession du Père (Saisir que des lettres)");
+            profP.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.email(emailP.getText())) {
             erreur += "Erreur Email parent\n";
+            emailP.clear();
+            emailP.setPromptText("Email Parents (Erreur Format (*@*.*)");
+            emailP.setStyle("-fx-prompt-text-fill:red");
         }
         if (!Tests.telephone(telP.getText())) {
             erreur += "Erreur telephone Parent\n";
+            telP.clear();
+            telP.setPromptText("Telephone Parent (Numéro de 8 chiffres)");
+            telP.setStyle("-fx-prompt-text-fill:red");
         }
         if (erreur.isEmpty()) {
             DAO elevedao = new EleveDAO();
@@ -213,21 +274,26 @@ public class ajoutEleveController implements Initializable {
             eleve.setRef_niv(0);
             eleve.setRef_c(0);
             eleve.setRef_p(id_parent);
+            String niv= niveau.getSelectionModel().getSelectedItem()+"2016";
+            eleve.setRef_niv(Integer.parseInt(niv));
+            
             if (elevedao.create(eleve)) {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Success!");
-                conf.setHeaderText("l'operation d'ajout d'eleve est effectuer sans erreur");
+                conf.setHeaderText("L'operation de l'ajout dde l'élève est effectuée avec succés");
                 conf.setContentText("1 tuple eleve ajouter a la base de donnee\n"
                                   + "1 tuple parent ajouter a la base de donnee");
                 conf.showAndWait();
                 reinit();
+                
             } else {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Erreur!");
-                conf.setHeaderText("une erreur s'est produite lors de l'ajout");
-                conf.setContentText("aucun eleve ajouter a la base de donner :(");
+                conf.setHeaderText("Une erreur s'est produite lors de l'ajout");
+                conf.setContentText("Aucun élève n'a été ajouté à la base de données :(");
                 conf.showAndWait();
             }
+    }
         } else {
             System.out.println(erreur);
             Alert conf = new Alert(Alert.AlertType.INFORMATION);
@@ -249,6 +315,9 @@ public class ajoutEleveController implements Initializable {
         ville.getSelectionModel().clearSelection();
         ville.setValue("");
         ville.setPromptText("Ville Naissance");
+        niveau.getSelectionModel().clearSelection();
+        niveau.setValue(-1);
+        niveau.setPromptText("Niveau");
         addresse.setText("");
         codepostal.setText("");
         nomP.setText("");

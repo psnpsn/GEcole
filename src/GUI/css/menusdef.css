@@ -69,3 +69,8 @@ and open the template in the editor.
 .legendtext{
     -fx-text-fill:red;
 }
+
+.error{
+    -fx-text-fill:red;
+    
+}

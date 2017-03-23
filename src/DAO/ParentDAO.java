@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 public class ParentDAO implements DAO<Parent>{
 
     private String            nomTable    = "Parent"    ;
@@ -21,7 +22,7 @@ public class ParentDAO implements DAO<Parent>{
     }
 
     @Override
-    public ArrayList<Parent> getAll() {
+    public ObservableList<Parent> getAll() {
         return null;
     }
 

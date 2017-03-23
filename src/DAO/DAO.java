@@ -1,5 +1,6 @@
 package DAO;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -11,7 +12,7 @@ public interface DAO<T> {
      * Permet d'avoir tous les tuples
      * @return un ArrayList de T elements , null si aucun tuple trouvé
      */
-    public ArrayList<T> getAll();
+    public ObservableList<T> getAll();
 
     /**
      * Permet de supprimer tous les tuples
