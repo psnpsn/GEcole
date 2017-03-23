@@ -11,16 +11,24 @@ public class Tests {
         if (!s.contains("@")) {
             return false;
         }
+        // pa d'espace
+        if (s.contains(" ")) {
+            return false;
+        }
         //ne commence pa par @
         if (s.indexOf('@') == 0) {
             return false;
         }
-        // ne se termine pa par @
-        if (s.length() == s.indexOf('.')) {
+        // ne se termine pa par .
+        if (s.charAt(s.length()-1)=='.') {
             return false;
         }
         // ne se termine pa par un point
         if (s.length() == s.indexOf('.')) {
+            return false;
+        }
+        //pa plus que 20 chars
+        if (s.length() >=20) {
             return false;
         }
         //doit contenir un . apres le @
@@ -37,7 +45,7 @@ public class Tests {
             return false;
         }
         // pa de lettre dans un tel
-        if (s.chars().allMatch(Character::isLetter)) {
+        if (!s.chars().allMatch(Character::isDigit)) {
             return false;
         }
         // n'es pa composer de 8 chiffres.
@@ -57,7 +65,7 @@ public class Tests {
             return false;
         }
         // pa de chiffre
-        if (!accepter_chiffre && s.chars().allMatch(Character::isDigit)) {
+        if ((!accepter_chiffre) && !s.chars().allMatch(Character::isLetter)) {
             return false;
         }
         return true;
@@ -73,7 +81,7 @@ public class Tests {
             return false;
         }
         // que des chiffres..
-        if (s.chars().allMatch(Character::isLetter)) {
+        if (!s.chars().allMatch(Character::isDigit)) {
             return false;
         }
         return true;
