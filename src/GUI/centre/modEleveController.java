@@ -100,12 +100,14 @@ public class modEleveController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ToggleGroup group = new ToggleGroup();
+        identifiant.setText(""+GestionEleveController.id_eleve_a_editer);
         garcon.setToggleGroup(group);
         fille.setToggleGroup(group);
         garcon.setSelected(true);
         ville.setItems(FXCollections.observableArrayList(
                 "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "tatatouine", "Tozeur", "Tunis", "Zaghouan"
         ));
+        charger_info();
     }
 
     @FXML
@@ -141,7 +143,13 @@ public class modEleveController implements Initializable {
 
     }
 
+
     @FXML private void click_voir(ActionEvent event) {
+    }
+    private void charger_info(){
+        if (identifiant.getText().isEmpty())
+            return;
+
         reinit();
         EleveDAO dao = new EleveDAO();
         if (identifiant.getText().isEmpty()) {
