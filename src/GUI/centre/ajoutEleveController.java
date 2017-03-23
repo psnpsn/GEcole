@@ -16,9 +16,6 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.Color;
-import static java.awt.Color.red;
-import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -217,7 +214,7 @@ public class ajoutEleveController implements Initializable {
             nomP.setPromptText("Nom du Père (Saisir que des lettres)");
             nomP.setStyle("-fx-prompt-text-fill:red");
         }
-     
+
         if (!Tests.chaine(nomM.getText(), 20, false)) {
             erreur += "Erreur Nom Mere\n";
             nomM.clear();
@@ -276,7 +273,7 @@ public class ajoutEleveController implements Initializable {
             eleve.setRef_p(id_parent);
             String niv= niveau.getSelectionModel().getSelectedItem()+"2016";
             eleve.setRef_niv(Integer.parseInt(niv));
-            
+
             if (elevedao.create(eleve)) {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Success!");
@@ -285,7 +282,7 @@ public class ajoutEleveController implements Initializable {
                                   + "1 tuple parent ajouter a la base de donnee");
                 conf.showAndWait();
                 reinit();
-                
+
             } else {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Erreur!");
@@ -293,7 +290,7 @@ public class ajoutEleveController implements Initializable {
                 conf.setContentText("Aucun élève n'a été ajouté à la base de données :(");
                 conf.showAndWait();
             }
-    }
+    
         } else {
             System.out.println(erreur);
             Alert conf = new Alert(Alert.AlertType.INFORMATION);
@@ -302,7 +299,8 @@ public class ajoutEleveController implements Initializable {
             conf.setContentText(erreur + "\n\n\n\n\n\n\nVerifiez les donnes et reessayer ");
             conf.showAndWait();
         }
-    }
+}
+
 
     @FXML private void click_reinitialiser(ActionEvent event) {
         reinit();
