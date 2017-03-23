@@ -9,6 +9,9 @@ import DAO.DAO;
 import DAO.EleveDAO;
 import GUI.LoginController;
 import Models.Eleve;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
@@ -19,6 +22,8 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -59,6 +64,20 @@ public class GestionEleveController implements Initializable {
     private TableColumn<Eleve, ?> modifCol;
     @FXML
     private TableColumn<Eleve, Boolean> cochCol;
+    
+    private ObservableList<Eleve> masterData = FXCollections.observableArrayList();
+    @FXML
+    private JFXTextField idEleveF;
+    @FXML
+    private JFXTextField nomEleveF;
+    @FXML
+    private JFXDatePicker dateNaissF;
+    @FXML
+    private JFXDatePicker dateInsF;
+    @FXML
+    private JFXComboBox<?> nivF;
+    @FXML
+    private JFXComboBox<?> classeF;
 
     
     /**
@@ -115,8 +134,67 @@ public class GestionEleveController implements Initializable {
     @FXML
     private void click_chercher(ActionEvent event) {
         DAO elevedao = new EleveDAO();
-        ObservableList<Eleve> masterData = elevedao.getAll();
+        masterData = elevedao.getAll();
         tableView.getItems().setAll(masterData);
+        FilteredList<Eleve> filteredData = new FilteredList<>(masterData, p -> true);
+        
+         nomEleveF.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(eleve -> {
+                
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String fullnameFilter = newValue.toLowerCase();
+
+                if (eleve.getNom().toLowerCase().contains(fullnameFilter)) {
+                    return true; 
+                } else if (eleve.getPrenom().toLowerCase().contains(fullnameFilter)) {
+                    return true; 
+                }
+                return false;
+            });
+        });
+         idEleveF.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(eleve -> {
+                
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String idFilter = newValue;
+
+                if (eleve.id_eProperty().toString().contains(idFilter)){
+                    return true;
+                } 
+                return false;
+            });
+        });
+         
+         dateNaissF.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(eleve -> {
+                
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String dateFilter = newValue;
+
+                if (eleve.dateNaissProperty().toString().equals(dateFilter)){
+                    return true;
+                } 
+                return false;
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList<Eleve> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableView.setItems(sortedData);
         
     }
 /*
@@ -148,59 +226,10 @@ public class GestionEleveController implements Initializable {
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
         sexCol.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
         dateinsCol.setCellValueFactory(cellData -> cellData.getValue().dateInsProperty());
-        classeCol.setCellValueFactory(cellData -> cellData.getValue().ref_nProperty().asString());
-        cochCol.setCellFactory(CheckBoxTableCell.forTableColumn(cochCol));
-        cochCol.setCellValueFactory(cellData -> cellData.getValue().cocherProperty());
+        classeCol.setCellValueFactory(cellData -> cellData.getValue().ref_nProperty().asString());  
+    }
         
-        /* 
-        modifCol.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Eleve, Boolean>, ObservableValue<Boolean>>() {
- 
-                    @Override
-                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Eleve, Boolean> p) {
-                        return new SimpleBooleanProperty(p.getValue() != null);
-                    }
-                });
-        modifCol.setCellFactory(
-                new Callback<TableColumn<Eleve, Boolean>, TableCell<ELeve, Boolean>>() {
- 
-                    @Override
-                    public TableCell<Eleve, Boolean> call(TableColumn<Eleve, Boolean> p) {
-                        return new ButtonCell();
-                    }
- 
-                });
- 
-    }
- 
-    //Define the button cell
-    private class ButtonCell extends TableCell<Eleve, Boolean> {
- 
-        final Button cellButton = new Button("Action");
- 
-        ButtonCell() {
- 
-            cellButton.setOnAction(new EventHandler<ActionEvent>() {
- 
-                @Override
-                public void handle(ActionEvent t) {
-                    // do something when button clicked
-                    //...
-                }
-            });
-        }
- 
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if(!empty){
-                setGraphic(cellButton);
-            }
-
-        }
-        */
-    }
-
-
 }
+
+
+

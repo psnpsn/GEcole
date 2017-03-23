@@ -75,6 +75,8 @@ public class Eleve {
     public int getId_e() {
         return id_e.get();
     }
+    
+    
 
     public String getNom() {
         return nom.get();
