@@ -72,7 +72,7 @@
                 <RowConstraints maxHeight="456.0" minHeight="10.0" prefHeight="413.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <TableView onMouseClicked="#selection_eleve" fx:id="tableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <columns>
                         <TableColumn fx:id="nomCol" prefWidth="262.0" text="Eleve" />
                         <TableColumn fx:id="dateCol" prefWidth="170.0" text="Date de Naissance" />

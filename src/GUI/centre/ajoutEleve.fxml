@@ -67,10 +67,10 @@
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="317.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="0.0" prefWidth="13.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="301.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.0" minWidth="10.0" prefWidth="269.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.0" minWidth="10.0" prefWidth="245.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="0.0" prefWidth="215.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="279.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.0" minWidth="10.0" prefWidth="246.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -88,10 +88,10 @@
               </rowConstraints>
                <children>
                   <JFXTextField fx:id="nom" promptText="Nom*" />
-                  <JFXTextField fx:id="prenom" promptText="Prenom*" GridPane.columnIndex="2" />
-                  <JFXDatePicker fx:id="dnaissance" prefHeight="22.0" prefWidth="370.0" promptText="Date de Naissance*" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="addresse" promptText="Addresse*" GridPane.rowIndex="2" />
-                  <GridPane GridPane.rowIndex="3">
+                  <JFXTextField fx:id="prenom" promptText="Prenom*" GridPane.rowIndex="1" />
+                  <JFXDatePicker fx:id="dnaissance" prefHeight="22.0" prefWidth="370.0" promptText="Date de Naissance*" GridPane.rowIndex="2" />
+                  <JFXTextField fx:id="addresse" promptText="Addresse*" GridPane.rowIndex="5" />
+                  <GridPane GridPane.rowIndex="4">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -102,23 +102,23 @@
                     </rowConstraints>
                      <children>
                         <JFXRadioButton fx:id="fille" text="Fille" GridPane.columnIndex="1" />
-                        <JFXRadioButton fx:id="garcon" text="Garcon" GridPane.columnIndex="2" />
+                        <JFXRadioButton fx:id="garcon" text="Garçon" GridPane.columnIndex="2" />
                         <Label text="Sexe" />
                      </children>
                   </GridPane>
-                  <JFXTextField fx:id="email" promptText="Email*" GridPane.rowIndex="4" />
-                  <JFXTextField fx:id="nomP" promptText="Nom et Prenom du Pere*" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="profP" promptText="Pofession du Pere*" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="nomM" promptText="Nom et Prenom de la Mere*" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="profM" promptText="Pofession de la Mere*" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <JFXTextField fx:id="telP" promptText="Telephone Parents*" GridPane.rowIndex="7" />
-                  <JFXTextField fx:id="emailP" promptText="Email Parents*" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="email" promptText="Email*" GridPane.rowIndex="8" />
+                  <JFXTextField fx:id="nomP" promptText="Nom du Pere*" GridPane.columnIndex="2" />
+                  <JFXTextField fx:id="profP" promptText="Profession du Père*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="nomM" promptText="Nom de la Mere*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <JFXTextField fx:id="profM" promptText="Profession de la Mère*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <JFXTextField fx:id="telP" promptText="Telephone des Parents*" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <JFXTextField fx:id="emailP" promptText="Email Parents*" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label styleClass="legendtext" stylesheets="@../css/menusdef.css" text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.rowIndex="11">
                      <font>
                         <Font size="9.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="image" fitHeight="159.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <ImageView fx:id="image" fitHeight="159.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="8">
                      <image>
                         <Image url="@../../GUI/image/default-eleve.jpg" />
                      </image>
@@ -126,12 +126,12 @@
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="123.0" promptText="Choisir le fichier" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                  <TextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="123.0" promptText="Choisir le fichier" GridPane.columnIndex="2" GridPane.rowIndex="10" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets left="14.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Button alignment="TOP_CENTER" minHeight="13.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#click_image" prefHeight="22.0" prefWidth="46.0" text="..." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                  <Button alignment="TOP_CENTER" minHeight="13.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#click_image" prefHeight="22.0" prefWidth="46.0" text="..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
@@ -139,7 +139,7 @@
                         <Font name="Arial Bold Italic" size="12.0" />
                      </font>
                   </Button>
-                  <GridPane GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <GridPane GridPane.rowIndex="6">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -152,8 +152,78 @@
                         <JFXComboBox fx:id="ville" prefHeight="22.0" prefWidth="163.0" promptText="Ville*" />
                      </children>
                   </GridPane>
-                  <JFXTextField fx:id="lnaissance" promptText="Lieu Naissance*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <JFXComboBox fx:id="niveau" prefHeight="25.0" prefWidth="164.0" promptText="Niveau" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <JFXTextField fx:id="lnaissance" promptText="Lieu Naissance*" GridPane.rowIndex="3" />
+                  <JFXComboBox fx:id="niveau" prefHeight="25.0" prefWidth="164.0" promptText="Niveau" GridPane.rowIndex="7" />
+                  <Label fx:id="lnom" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lprenom" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="ldate" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="llieu" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="laddresse" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lville" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lniv" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lemail" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lpere" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lppere" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lmere" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lpmere" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="ltel" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lemailp" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets left="8.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets left="15.0" />

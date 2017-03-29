@@ -16,9 +16,6 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.Color;
-import static java.awt.Color.red;
-import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +33,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -104,6 +102,34 @@ public class ajoutEleveController implements Initializable {
     private JFXTextField email;
     @FXML
     private JFXComboBox<Integer> niveau;
+    @FXML
+    private Label lnom;
+    @FXML
+    private Label lprenom;
+    @FXML
+    private Label ldate;
+    @FXML
+    private Label llieu;
+    @FXML
+    private Label laddresse;
+    @FXML
+    private Label lville;
+    @FXML
+    private Label lniv;
+    @FXML
+    private Label lemail;
+    @FXML
+    private Label lpere;
+    @FXML
+    private Label lppere;
+    @FXML
+    private Label lmere;
+    @FXML
+    private Label lpmere;
+    @FXML
+    private Label ltel;
+    @FXML
+    private Label lemailp;
 
     /**
      * Initializes the controller class.
@@ -142,113 +168,15 @@ public class ajoutEleveController implements Initializable {
     }
 
     @FXML private void click_ajouter(ActionEvent event) {
-        String erreur = "";
-        if (!Tests.email(email.getText())) {
-            erreur += "Erreur Email\n";
-            email.clear();
-            email.setPromptText("Email (*@*.*)");
-            email.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.telephone(telP.getText())) {
-            erreur += "Erreur Numero Telephone\n";
-            telP.clear();
-            telP.setPromptText("Téléphone (8 Chiffre)");
-            telP.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.chaine(nom.getText(), 20, false)) {
-            erreur += "Erreur Nom Eleve\n";
-            nom.clear();
-            nom.setPromptText("Nom (Que des lettres)");
-            nom.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.chaine(prenom.getText(), 20, false)) {
-            erreur += "Erreur Prenom Eleve\n";
-            prenom.clear();
-            prenom.setPromptText("Prenom (Que des lettres)");
-            prenom.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.chaine(addresse.getText(), 20, true)) {
-            erreur += "Erreur addresse\n";
-            addresse.clear();
-            addresse.setPromptText("Adresse (Trop long)");
-            addresse.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.code_postal(codepostal.getText())) {
-            erreur += "Erreur Code Postal\n";
-            codepostal.clear();
-            codepostal.setPromptText("Code Postal (4 Chiffre seulement)");
-            codepostal.setStyle("-fx-prompt-text-fill:red");
-        }
-        LocalDate d = dnaissance.getValue();
-        if (d == null) {
-            erreur += "Erreur Date , Selectionner une\n";
-            dnaissance.setValue(null);
-            dnaissance.setPromptText("Date de Naissance");
-            dnaissance.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (d != null && !Tests.date_naissance(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))) {
-            erreur += "Erreur Date Naissance invalide\n";
-            dnaissance.setValue(null);
-            dnaissance.setPromptText("Date de Naissance");
-            dnaissance.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.chaine(lnaissance.getText(), 20, false)) {
-            erreur += "Erreur Addresse\n";
-            lnaissance.clear();
-            lnaissance.setPromptText("Lieu Naissance (Saisir que des lettres)");
-            lnaissance.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (ville.getSelectionModel().getSelectedIndex() == -1) {
-            erreur += "Erreur Ville : selectionner une svp\n";
-            ville.setValue("");
-            ville.setPromptText("Ville");
-            ville.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (niveau.getSelectionModel().getSelectedIndex() == -1) {
-            erreur += "Erreur Ville : selectionner une svp\n";
-            niveau.setValue(-1);
-            niveau.setPromptText("Niveau");
-            niveau.setStyle("-fx-prompt-text-fill:red");
-        }
-        // donnee des parents
-        if (!Tests.chaine(nomP.getText(), 20, false)) {
-            erreur += "Saisir que des lettres";
-            nomP.clear();
-            nomP.setPromptText("Nom du Père (Saisir que des lettres)");
-            nomP.setStyle("-fx-prompt-text-fill:red");
-        }
-     
-        if (!Tests.chaine(nomM.getText(), 20, false)) {
-            erreur += "Erreur Nom Mere\n";
-            nomM.clear();
-            nomM.setPromptText("Nom de la Mère(Saisir que des lettres)");
-            nomM.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.chaine(profM.getText(), 20, false)) {
-            erreur += "Erreur Profession Mere\n";
-            profM.clear();
-            profM.setPromptText("Prefession de la Mère (Saisir que des lettres)");
-            profM.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.chaine(profP.getText(), 20, false)) {
-            erreur += "Erreur Profession Pere\n";
-            profP.clear();
-            profP.setPromptText("Profession du Père (Saisir que des lettres)");
-            profP.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.email(emailP.getText())) {
-            erreur += "Erreur Email parent\n";
-            emailP.clear();
-            emailP.setPromptText("Email Parents (Erreur Format (*@*.*)");
-            emailP.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (!Tests.telephone(telP.getText())) {
-            erreur += "Erreur telephone Parent\n";
-            telP.clear();
-            telP.setPromptText("Telephone Parent (Numéro de 8 chiffres)");
-            telP.setStyle("-fx-prompt-text-fill:red");
-        }
-        if (erreur.isEmpty()) {
+        boolean erreur;
+        erreur=((Tests.vtel(telP, ltel))||(Tests.vchaine(nom,lnom,20,false))||(Tests.vchaine(prenom,lprenom,20,false))
+                ||(Tests.vchaine(lnaissance,llieu,20,false))||(Tests.vchaine(addresse,laddresse,40,false))
+                ||(Tests.vemail(email,lemail))||(Tests.vchaine(nomP,lpere,20,false))||(Tests.vchaine(profP,lppere,20,false))
+                ||(Tests.vchaine(nomM,lmere,20,false))||(Tests.vchaine(profM,lpmere,20,false))||(Tests.vemail(emailP,lemailp))
+                ||(Tests.vcodep(codepostal,lville))||(Tests.vdate(dnaissance,ldate))
+                );
+        
+        if (!erreur) {
             DAO elevedao = new EleveDAO();
             Eleve eleve = new Eleve();
             // ajout parent
@@ -263,7 +191,7 @@ public class ajoutEleveController implements Initializable {
             eleve.setAdresse(addresse.getText());
             eleve.setVille(ville.getSelectionModel().getSelectedItem());
             eleve.setCodeP(Integer.parseInt(codepostal.getText()));
-            eleve.setDateNaiss(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            eleve.setDateNaiss(Date.from(dnaissance.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
             eleve.setLieuNaiss(lnaissance.getText());
             if (garcon.isSelected()) {
                 eleve.setSex("M");
@@ -276,24 +204,30 @@ public class ajoutEleveController implements Initializable {
             eleve.setRef_p(id_parent);
             String niv= niveau.getSelectionModel().getSelectedItem()+"2016";
             eleve.setRef_niv(Integer.parseInt(niv));
-            
+
             if (elevedao.create(eleve)) {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Success!");
                 conf.setHeaderText("L'operation de l'ajout dde l'élève est effectuée avec succés");
-                conf.setContentText("L'élève a été ajouté à la base de données :)");
+                conf.setContentText("L'élève est ajouté.\n");
                 conf.showAndWait();
                 reinit();
-                
+
             } else {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Erreur!");
                 conf.setHeaderText("Une erreur s'est produite lors de l'ajout");
-                conf.setContentText("Aucun élève n'a été ajouté à la base de données :(");
+                conf.setContentText("Aucun élève n'a été ajouté.");
                 conf.showAndWait();
             }
-    }
-    }
+    
+        } else {
+            System.out.println("Erreur");
+            
+        }
+}
+
+
     @FXML private void click_reinitialiser(ActionEvent event) {
         reinit();
     }

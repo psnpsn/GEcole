@@ -70,7 +70,18 @@ and open the template in the editor.
     -fx-text-fill:red;
 }
 
-.error{
+.fielderror{
     -fx-text-fill:red;
+    -fx-unfocus-color:red;
     
+}
+
+.txtfield{
+    
+}
+
+.labels{
+    -fx-text-fill:red;
+    -fx-text-style:italique;
+    -fx-font-size:9px;
 }

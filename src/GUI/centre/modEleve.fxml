@@ -45,7 +45,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField fx:id="nom" promptText="Nom*" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="nom" promptText="Nom*" styleClass="txtfield" stylesheets="@../css/menusdef.css" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="prenom" promptText="Prenom*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <JFXDatePicker fx:id="dnaissance" prefHeight="22.0" prefWidth="370.0" promptText="date naissance" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="addresse" promptText="Addresse*" GridPane.rowIndex="3" />
