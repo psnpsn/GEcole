@@ -12,12 +12,13 @@ import javafx.collections.ObservableList;
 
 public class InstituteurDAO implements DAO<Instituteur>  {
      private String            nomTable    = "INST"    ;
-    private String            nomSequence = "SEQ_ID_E.NEXTVAL" ;
+    private String            nomSequence = "SEQ_ID_E" ;
     private String            requete     = ""         ;
     private Connection        session     = null       ;
     private PreparedStatement statement   = null       ;
     private ResultSet         resultat    = null       ;
     private boolean           valide      = false      ;
+    private int               seq         =-1          ;
     
     public InstituteurDAO(){
               session = OracleDBSingleton.getSession();
@@ -76,11 +77,11 @@ public class InstituteurDAO implements DAO<Instituteur>  {
     }
 
  
-    public boolean create(Instituteur instance) {
+    public int create(Instituteur instance) {
     valide = false;
         try {
             requete = "INSERT INTO " + nomTable + " (ID , NOM , PRENOM , DATENAISS ,NCIN, DATEEMB , SEX , IMM , GRADE , ADRESSE ,VILLE , CODEP , TEL, TEL2, EMAIL  )  "
-                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -99,14 +100,14 @@ public class InstituteurDAO implements DAO<Instituteur>  {
 
 
             if (statement.executeUpdate() != 0) {
-                valide = true;
+                seq=seq_id_curr();
             }
         } catch (Exception exception) {
             System.out.println("Classe : InstituteurDAO.java\n"
                     + "Methode : create(Instituteur instance)\n"
                     + "Exception : " + exception);
         }
-        return valide;
+        return seq;
     }
   @Override
     public Instituteur find(int id) {
@@ -213,6 +214,42 @@ public class InstituteurDAO implements DAO<Instituteur>  {
         }
         return valide;
     }
+    
+    private int seq_id_next(){
+        try {
+            requete = "SELECT " +nomSequence+ ".nextval FROM DUAL";
+            statement = session.prepareStatement(requete);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                seq=resultat.getInt("NEXTVAL");
+            }
 
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : seq_id_next\n"
+                    + "Exception : " + exception);
+        }
+        System.out.println("sequence nextval "+seq);
+        return seq;
+    }
+    
+    public int seq_id_curr(){
+    try {
+            requete = "SELECT " +nomSequence+ ".currval FROM DUAL";
+            statement = session.prepareStatement(requete);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                seq=resultat.getInt("CURRVAL");
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : seq_id_curr\n"
+                    + "Exception : " + exception);
+        }
+       
+        System.out.println("sequence curr  "+seq);
+        return seq;
+    }
 
 }

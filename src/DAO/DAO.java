@@ -25,7 +25,7 @@ public interface DAO<T> {
      * @param instance l'instance a insérée dans la base de donnée.
      * @return true si l'insertion est effectuée sans erreur , false sinon
      */
-    public boolean      create(T instance);
+    public int      create(T instance);
 
     /**
      * Permet de rechercher un tuple de type T a partir de son ID
@@ -47,6 +47,8 @@ public interface DAO<T> {
      * @return true si la suppression est effectuée sans erreur , false sinon
      */
     public boolean      delete(int id);
+    
+    
 
 
 }

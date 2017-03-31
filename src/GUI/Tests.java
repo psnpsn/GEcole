@@ -15,18 +15,21 @@ public class Tests {
     
     public static boolean vemail(TextField field,Label label){
         if (field.getText().isEmpty()){ 
+            System.out.println("Erreur empty "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         } 
         if (!email(field.getText())){
+            System.out.println("Erreur "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("L'email est incorrecte.");
             label.setVisible(true);
             return false;    
         }else
         {
+            System.out.println("Champ Valide "+field.getId());
             field.getStyleClass().add("txtfield");
             label.setVisible(false);
             return true;
@@ -36,18 +39,21 @@ public class Tests {
     
     public static boolean vtel(TextField field,Label label){
         if (field.getText().isEmpty()){ 
+            System.out.println("Erreur empty "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         } 
         if (!telephone(field.getText())){
+            System.out.println("Erreur "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Numéro à 8 Chiffres.");
             label.setVisible(true);
             return false;    
         }else
         {
+            System.out.println("Champ Valide "+field.getId());
             field.getStyleClass().add("txtfield");
             label.setVisible(false);
             return true;
@@ -57,12 +63,14 @@ public class Tests {
     
     public static boolean vchaine(TextField field,Label label,int max,boolean chiffre){
         if (field.getText().isEmpty()){
+            System.out.println("Erreur empty "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         } 
         if (!chaine(field.getText(), max, chiffre)){
+            System.out.println("Erreur "+field.getId());
             field.getStyleClass().add("fielderror");
             if (!chiffre){
             label.setText("Que des lettres, de longueur maximale "+max+".");
@@ -71,6 +79,7 @@ public class Tests {
             return false;    
         }else
         {
+            System.out.println("Champ Valide "+field.getId());
             field.getStyleClass().add("txtfield");
             label.setVisible(false);
             return true;
@@ -80,18 +89,21 @@ public class Tests {
     
     public static boolean vcodep(TextField field,Label label){
         if (field.getText().isEmpty()){
+            System.out.println("Erreur empty "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         } 
         if (!code_postal(field.getText())){
+            System.out.println("Erreur "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("4 Chiffres.");
             label.setVisible(true);
             return false;    
         }else
         {
+            System.out.println("Champ Valide "+field.getId());
             field.getStyleClass().add("txtfield");
             label.setVisible(false);
             return true;
@@ -102,18 +114,21 @@ public class Tests {
     public static boolean vdate(JFXDatePicker field,Label label){
         LocalDate d = field.getValue();
         if (d==null){
+            System.out.println("Erreur empty "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         } 
         if (!date_naissance(Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))){
+            System.out.println("Erreur "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Choisir une date antérieur.");
             label.setVisible(true);
             return false;    
         }else
         {
+            System.out.println("Champ Valide "+field.getId());
             field.getStyleClass().add("txtfield");
             label.setVisible(false);
             return true;
@@ -123,12 +138,14 @@ public class Tests {
     
     public static boolean vcombo(JFXComboBox field, Label label){
         if (field.getSelectionModel().getSelectedIndex() == -1 ){
+            System.out.println("Erreur empty "+field.getId());
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         }else
         {
+            System.out.println("Champ Valide "+field.getId());
             field.getStyleClass().add("txtfield");
             label.setVisible(false);
             return true;

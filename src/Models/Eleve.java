@@ -130,6 +130,8 @@ public class Eleve {
     public Date getDateIns() {
         return dateIns.get();
     }
+    
+    
 
     // Setters
 
@@ -204,7 +206,9 @@ public class Eleve {
         return prenom;
     }
     public SimpleStringProperty adresseProperty(){
-        return adresse;
+        SimpleStringProperty fulladresse= new SimpleStringProperty();
+        fulladresse.set(adresse.get()+", "+ville.get());
+        return fulladresse;
     }
     public SimpleStringProperty villeProperty(){
         return ville;

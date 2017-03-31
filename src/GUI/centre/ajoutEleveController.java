@@ -169,21 +169,20 @@ public class ajoutEleveController implements Initializable {
 
     @FXML private void click_ajouter(ActionEvent event) {
         boolean erreur;
-        erreur=((Tests.vtel(telP, ltel))||(Tests.vchaine(nom,lnom,20,false))||(Tests.vchaine(prenom,lprenom,20,false))
-                ||(Tests.vchaine(lnaissance,llieu,20,false))||(Tests.vchaine(addresse,laddresse,40,false))
-                ||(Tests.vemail(email,lemail))||(Tests.vchaine(nomP,lpere,20,false))||(Tests.vchaine(profP,lppere,20,false))
-                ||(Tests.vchaine(nomM,lmere,20,false))||(Tests.vchaine(profM,lpmere,20,false))||(Tests.vemail(emailP,lemailp))
-                ||(Tests.vcodep(codepostal,lville))||(Tests.vdate(dnaissance,ldate))
+        erreur=((Tests.vtel(telP, ltel))&(Tests.vchaine(nom,lnom,20,false))&(Tests.vchaine(prenom,lprenom,20,false))
+                &(Tests.vchaine(lnaissance,llieu,20,false))&(Tests.vchaine(addresse,laddresse,40,false))
+                &(Tests.vemail(email,lemail))&(Tests.vchaine(nomP,lpere,20,false))&(Tests.vchaine(profP,lppere,20,false))
+                &(Tests.vchaine(nomM,lmere,20,false))&(Tests.vchaine(profM,lpmere,20,false))&(Tests.vemail(emailP,lemailp))
+                &(Tests.vcodep(codepostal,lville))&(Tests.vdate(dnaissance,ldate))
                 );
         
-        if (!erreur) {
+        if (erreur) {
             DAO elevedao = new EleveDAO();
             Eleve eleve = new Eleve();
             // ajout parent
             Parent p = new Parent(-1,nomP.getText(),profP.getText(),nomM.getText(),profM.getText(),telP.getText(),emailP.getText());
             ParentDAO daop = new ParentDAO();
-            daop.create(p);
-            int id_parent = daop.dernier();
+            int id_parent=daop.create(p);
             if (id_parent == -1)
                 return;
             eleve.setNom(nom.getText());
@@ -204,12 +203,12 @@ public class ajoutEleveController implements Initializable {
             eleve.setRef_p(id_parent);
             String niv= niveau.getSelectionModel().getSelectedItem()+"2016";
             eleve.setRef_niv(Integer.parseInt(niv));
-
-            if (elevedao.create(eleve)) {
+            int id=elevedao.create(eleve);
+            if (id!=-1) {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Success!");
                 conf.setHeaderText("L'operation de l'ajout dde l'élève est effectuée avec succés");
-                conf.setContentText("L'élève est ajouté.\n");
+                conf.setContentText("L'élève est ajouté"+id+".\n");
                 conf.showAndWait();
                 reinit();
 

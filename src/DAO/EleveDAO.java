@@ -13,12 +13,13 @@ import javafx.collections.ObservableList;
 public class EleveDAO implements DAO<Eleve> {
 
     private String            nomTable    = "ELEVE"    ;
-    private String            nomSequence = "SEQ_ID_E.NEXTVAL" ;
+    private String            nomSequence = "SEQ_ID_E" ;
     private String            requete     = ""         ;
     private Connection        session     = null       ;
     private PreparedStatement statement   = null       ;
     private ResultSet         resultat    = null       ;
     private boolean           valide      = false      ;
+    private int               seq         =-1          ;
 
 
     public EleveDAO(){
@@ -82,11 +83,11 @@ public class EleveDAO implements DAO<Eleve> {
     }
 
     @Override
-    public boolean create(Eleve instance) {
-    valide = false;
+    public int create(Eleve instance) {
+    seq = -1;
         try {
             requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_P ,DATEINS)  "
-                      + "  VALUES ( " + nomSequence + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
+                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -101,14 +102,15 @@ public class EleveDAO implements DAO<Eleve> {
             //statement.setInt(11, instance.getRef_c());
             statement.setInt(11, instance.getRef_p());
             if (statement.executeUpdate() != 0) {
-                valide = true;
+                seq = seq_id_curr();
             }
         } catch (Exception exception) {
             System.out.println("Classe : EleveDAO.java\n"
                     + "Methode : create(Eleve instance)\n"
                     + "Exception : " + exception);
         }
-        return valide;
+        
+        return seq;
     }
 
     @Override
@@ -205,6 +207,64 @@ public class EleveDAO implements DAO<Eleve> {
                     + "Exception : " + exception);
         }
         return valide;
+    }
+    
+    public boolean updateRef_c(Eleve instance) {
+    valide = false;
+        try {
+            requete = "UPDATE " + nomTable + " SET   "
+                    + "REF_C    =  ?  "
+                    + "WHERE  ID_ELEVE = ? ";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, instance.getRef_c());
+            statement.setInt(2, instance.getId_e());
+
+            if(statement.executeUpdate()!=0){
+                valide = true;
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : updateRef_c(Eleve instance)\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
+    }
+    
+    private int seq_id_next(){
+        try {
+            requete = "SELECT " +nomSequence+ ".nextval FROM DUAL";
+            statement = session.prepareStatement(requete);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                seq=resultat.getInt("NEXTVAL");
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : seq_id_next\n"
+                    + "Exception : " + exception);
+        }
+        System.out.println("sequence nextval "+seq);
+        return seq;
+    }
+    
+    public int seq_id_curr(){
+    try {
+            requete = "SELECT " +nomSequence+ ".currval FROM DUAL";
+            statement = session.prepareStatement(requete);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                seq=resultat.getInt("CURRVAL");
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : seq_id_curr\n"
+                    + "Exception : " + exception);
+        }
+       
+        System.out.println("sequence curr  "+seq);
+        return seq;
     }
 
 }
