@@ -2,10 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -42,7 +44,7 @@
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
-                  <JFXButton onAction="#click_reinitialiserE" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Réinitialiser les élèves" />
+                  <JFXButton fx:id="reinitbtn" onAction="#click_reinitialiserE" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Réinitialiser les élèves" />
                </children></VBox>
          </left>
          <top>
@@ -71,18 +73,6 @@
                 <RowConstraints maxHeight="452.0" minHeight="10.0" prefHeight="445.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView fx:id="tableView" onMouseClicked="#selection_eleve" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                    <columns>
-                      <TableColumn fx:id="nomCol" prefWidth="182.0" text="Nom" />
-                      <TableColumn fx:id="idCol" prefWidth="104.0" text="ID" />
-                        <TableColumn fx:id="dateCol" prefWidth="146.0" text="Date de Naissance" />
-                        <TableColumn fx:id="adresseCol" prefWidth="295.0" text="Adresse" />
-                        <TableColumn fx:id="cochCol" prefWidth="72.0" text="Cocher" />
-                    </columns>
-                     <GridPane.margin>
-                        <Insets left="100.0" right="100.0" />
-                     </GridPane.margin>
-                  </TableView>
                   <GridPane>
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="258.0" />
@@ -112,6 +102,44 @@
                         <Label fx:id="lniveau" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="5" />
                      </children>
                   </GridPane>
+                  <JFXTabPane fx:id="tabs" GridPane.rowIndex="1">
+                     <tabs>
+                        <Tab fx:id="tabE" onSelectionChanged="#tab_eleve" text="Elèves">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="tableView" onMouseClicked="#selection_eleve" prefHeight="410.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                       <columns>
+                                          <TableColumn fx:id="nomCol" prefWidth="182.0" text="Nom" />
+                                          <TableColumn fx:id="idCol" prefWidth="104.0" text="ID" />
+                                          <TableColumn fx:id="dateCol" prefWidth="146.0" text="Date de Naissance" />
+                                          <TableColumn fx:id="adresseCol" prefWidth="295.0" text="Adresse" />
+                                          <TableColumn fx:id="cochCol" prefWidth="72.0" text="Cocher" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab fx:id="tabI" onSelectionChanged="#tab_inst" text="Instituteurs">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="tableViewI" onMouseClicked="#selection_instituteur" prefHeight="410.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                       <columns>
+                                          <TableColumn fx:id="nomICol" prefWidth="204.0" text="Nom" />
+                                          <TableColumn fx:id="immCol" prefWidth="157.0" text="Immatricule" />
+                                          <TableColumn fx:id="gradeCol" prefWidth="174.0" text="Grade" />
+                                          <TableColumn fx:id="matiereCol" prefWidth="203.0" text="Matière" />
+                                          <TableColumn fx:id="cochColI" prefWidth="61.0" text="Cocher" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                     </tabs>
+                  </JFXTabPane>
                </children>
                <BorderPane.margin>
                   <Insets />

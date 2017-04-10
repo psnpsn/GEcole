@@ -139,7 +139,7 @@ public class ajoutEleveController implements Initializable {
         ToggleGroup group = new ToggleGroup();
         garcon.setToggleGroup(group);
         fille.setToggleGroup(group);
-        garcon.setSelected(true);
+        fille.setSelected(true);
         ville.setItems(FXCollections.observableArrayList(
                 "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tatatouine", "Tozeur", "Tunis", "Zaghouan"
         ));

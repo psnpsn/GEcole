@@ -5,14 +5,20 @@
  */
 package GUI.classe;
 
+import DAO.AssisteDAO;
 import DAO.ClasseDAO;
 import DAO.DAO;
 import DAO.EleveDAO;
+import DAO.InstituteurDAO;
 import GUI.LoginController;
 import GUI.Tests;
+import Models.Assiste;
 import Models.Classe;
 import Models.Eleve;
+import Models.Instituteur;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -24,11 +30,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -63,15 +71,36 @@ public class ajoutClasseController implements Initializable {
     @FXML
     private TableColumn<Eleve, Boolean> cochCol;
     
-    public static int id_eleve_a_editer = -1 ;
-    
     private ObservableList<Eleve> masterData = FXCollections.observableArrayList();
+    
     @FXML
     private Label lnomClasse;
     @FXML
     private Label lniveau;
     @FXML
     private Label lcapacite;
+    @FXML
+    private TableView<Instituteur> tableViewI;
+    @FXML
+    private TableColumn<Instituteur, String> nomICol;
+    @FXML
+    private TableColumn<Instituteur, String> immCol;
+    @FXML
+    private TableColumn<Instituteur, String> gradeCol;
+    @FXML
+    private TableColumn<Instituteur, String> matiereCol;
+    @FXML
+    private TableColumn<Instituteur, Boolean> cochColI;
+    
+     private ObservableList<Instituteur> masterDataI = FXCollections.observableArrayList();
+    @FXML
+    private JFXButton reinitbtn;
+    @FXML
+    private JFXTabPane tabs;
+    @FXML
+    private Tab tabE;
+    @FXML
+    private Tab tabI;
 
     /**
      * Initializes the controller class.
@@ -83,11 +112,15 @@ public class ajoutClasseController implements Initializable {
                 16,17,18,20,21,22,23,24,25,26,27,28,29,30)
         );
         initCol();
+        //init eleves
         DAO elevedao = new EleveDAO();
         masterData = elevedao.getAll();
         tableView.getItems().setAll(masterData);
+        //init inst
+        DAO instdao = new InstituteurDAO();
+        masterDataI = instdao.getAll();
+        tableViewI.getItems().setAll(masterDataI);
         
-
     }    
     
     @FXML private void selection_eleve(MouseEvent event) {
@@ -112,6 +145,15 @@ public class ajoutClasseController implements Initializable {
 
     @FXML
     private void click_trouver(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("gestionClasse.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -124,7 +166,7 @@ public class ajoutClasseController implements Initializable {
         DAO classedao =new ClasseDAO();
         Classe classe=new Classe();
         classe.setNom(nomClasse.getText());
-        classe.setRef_niv(niveau.getSelectionModel().getSelectedItem()+"2016");
+        classe.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem()+"2016"));
         classe.setCapacite(capacite.getSelectionModel().getSelectedItem());
         int id=classedao.create(classe);
         if (id!=-1) {
@@ -144,7 +186,7 @@ public class ajoutClasseController implements Initializable {
                 conf.showAndWait();
             }
         
-        if (ajoutClasse(id)) {
+        if (ajoutEleves(id)) {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Success!");
                 conf.setHeaderText("L'operation de l'ajout des élèves est effectuée avec succés");
@@ -176,18 +218,53 @@ public class ajoutClasseController implements Initializable {
 
     @FXML
     private void click_reinitialiserE(ActionEvent event) {
-        tableView.getItems().clear();
+        if(reinitbtn.getText()=="Réinitialiser les élèves"){
+            System.out.println("If élèves");
+            tableView.getItems().forEach(item -> item.cocherProperty().set(false));
+            
+        }
+         if(reinitbtn.getText()=="Réinitialiser les instituteurs"){
+            System.out.println("If Instituteurs");
+            tableViewI.getItems().forEach(item -> item.cocherProperty().set(false));
+            
+        }
+        
+    }
+    
+    @FXML
+    private void selection_instituteur(MouseEvent event) {
+        ObservableList<Instituteur> selected = tableViewI.getSelectionModel().getSelectedItems();
+                for (int i = 0; i < selected.size(); i++) {
+                    selected.get(i).setCocher(!selected.get(i).isCocher());
+                }
+    }
+
+    @FXML
+    private void tab_eleve(Event event) {
+        System.out.println("Tab Eleve Selected");
+            reinitbtn.setText("Réinitialiser les élèves");
+    }
+
+    @FXML
+    private void tab_inst(Event event) {
+        System.out.println("Tab Instituteurs Selected");
+            reinitbtn.setText("Réinitialiser les instituteurs");
     }
     
     private void initCol() {
+        //eleve
         nomCol.setCellValueFactory(cellData -> cellData.getValue().fullnomProperty());
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
         idCol.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
         adresseCol.setCellValueFactory(cellData -> cellData.getValue().adresseProperty());
         cochCol.setCellFactory(CheckBoxTableCell.forTableColumn(cochCol));
         cochCol.setCellValueFactory(cellData -> cellData.getValue().cocherProperty());
-        
-
+        //instituteur
+        nomICol.setCellValueFactory(cellData -> cellData.getValue().fullnomProperty());
+        immCol.setCellValueFactory(cellData -> cellData.getValue().immProperty().asString());
+        gradeCol.setCellValueFactory(cellData -> cellData.getValue().gradeProperty());
+        cochColI.setCellFactory(CheckBoxTableCell.forTableColumn(cochColI));
+        cochColI.setCellValueFactory(cellData -> cellData.getValue().cocherProperty());
         
     }
     
@@ -202,7 +279,7 @@ public class ajoutClasseController implements Initializable {
         
     }
     
-    private boolean ajoutClasse(int id){
+    private boolean ajoutEleves(int id){
         int i=0;
         boolean valide=false;
         Eleve eleve=new Eleve();
@@ -222,5 +299,29 @@ public class ajoutClasseController implements Initializable {
         
         return valide;
     }
+    
+    private boolean ajoutInst(int id){
+        int i=0;
+        boolean valide=false;
+        Assiste assiste=new Assiste();
+        AssisteDAO assistedao=new AssisteDAO();
+        Instituteur inst=new Instituteur();
+        
+        while(i<masterDataI.size()){
+            inst = masterDataI.get(i);
+            if (inst.isCocher()){
+            assiste.setRef_c(id);
+            if(assistedao.create(assiste)!=-1)
+                valide=true;
+            else valide=false;
+            }
+            i++;
+        }
+        
+        
+        return valide;
+    }
+
+    
     
 }

@@ -110,7 +110,7 @@ public class ajoutInstController implements Initializable {
     @FXML
     private void click_trouver(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("listerInst.fxml");
+            URL loader = getClass().getResource("gestionInst.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
 
             BorderPane border = Main_class.getRoot();

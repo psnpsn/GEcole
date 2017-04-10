@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.classe.gestionClasseController">
+   <children>
+      <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" stylesheets="@../css/menusdef.css" text="Trouver une classe">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton onAction="#click_ajouter" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" stylesheets="@../css/menusdef.css" text="Créer une classe">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <Separator prefHeight="29.0" prefWidth="200.0" />
+                  <JFXButton onAction="#click_chercher" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Chercher">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></JFXButton>
+                  <JFXButton onAction="#click_supprimer" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Supprimer">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></JFXButton>
+                  <JFXButton onAction="#click_supptout" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Supprimer tout" />
+               </children></VBox>
+         </left>
+         <top>
+            <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#click_retour" prefHeight="71.0" prefWidth="62.0" styleClass="backbtn" stylesheets="@../css/menusdef.css" text="&lt;-">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="217.0" text="Gestion des Classes">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="253.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="452.0" minHeight="10.0" prefHeight="445.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <children>
+                  <TableView fx:id="tableView" onMouseClicked="#selection_classe" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <columns>
+                        <TableColumn fx:id="nomCol" prefWidth="262.0" text="Classe" />
+                        <TableColumn fx:id="nivCol" prefWidth="170.0" text="Niveau" />
+                        <TableColumn fx:id="nbCol" minWidth="0.0" prefWidth="111.0" text="Nombre d'élèves" />
+                        <TableColumn fx:id="capaciteCol" prefWidth="111.0" text="Capacité" />
+                        <TableColumn fx:id="anneeCol" prefWidth="151.0" text="Année Scolaire" />
+                        <TableColumn fx:id="modifCol" editable="false" prefWidth="132.0" sortable="false" text="Modifier" />
+                        <TableColumn fx:id="cochCol" editable="false" prefWidth="62.0" text="Cocher" />
+                        <TableColumn prefWidth="75.0" text="Id élève" />
+                     </columns>
+                  </TableView>
+                  <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXTextField fx:id="nom" maxWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Nom de la classe" GridPane.halignment="CENTER" />
+                        <JFXComboBox fx:id="niveau" prefHeight="25.0" prefWidth="160.0" promptText="Niveau" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <JFXComboBox fx:id="capacite" prefHeight="25.0" prefWidth="160.0" promptText="Capacité" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <JFXRadioButton fx:id="vide" text="Vide" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </JFXRadioButton>
+                        <JFXRadioButton fx:id="complet" text="Complet" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="40.0" />
+                           </GridPane.margin>
+                        </JFXRadioButton>
+                        <JFXRadioButton fx:id="incomplet" text="Incomplet" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

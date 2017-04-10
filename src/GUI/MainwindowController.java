@@ -52,7 +52,7 @@ public class MainwindowController implements Initializable  {
     @FXML
     private void click_gclasses(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("classe/ajoutClasse.fxml");
+            URL loader = getClass().getResource("classe/gestionClasse.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
             
             BorderPane border = Main_class.getRoot();   
@@ -65,7 +65,7 @@ public class MainwindowController implements Initializable  {
     @FXML
     private void click_ginst(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("inst/listerInst.fxml");
+            URL loader = getClass().getResource("inst/gestionInst.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
             
             BorderPane border = Main_class.getRoot();   

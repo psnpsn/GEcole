@@ -2,6 +2,8 @@
 package Models;
 import java.util.Date;
 import java.util.Objects;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,6 +26,9 @@ public class Instituteur {
     private SimpleIntegerProperty codeP;
     private SimpleIntegerProperty tel1;
     private SimpleIntegerProperty tel2;
+    
+     private BooleanProperty cocher = new SimpleBooleanProperty(false);
+     
     //constructeurs 
  public Instituteur(){
      this.id_i =new SimpleIntegerProperty();
@@ -230,6 +235,20 @@ public class Instituteur {
     public SimpleObjectProperty<Date> dateEmbProperty(){
         return dateEmb;
     }
+    
+    //cocher property
+     public BooleanProperty cocherProperty() {
+            return cocher;
+        }
+
+        public void setCocher(boolean cocher) {
+            this.cocher.set(cocher);
+        }
+
+        public boolean isCocher() {
+            return cocher.get();
+        }
+        
     //methodes utils ...
     @Override
     public int hashCode() {
