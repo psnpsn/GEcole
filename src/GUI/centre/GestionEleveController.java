@@ -10,11 +10,18 @@ import DAO.EleveDAO;
 import GUI.LoginController;
 import Models.Eleve;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -32,10 +39,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -64,7 +71,7 @@ public class GestionEleveController implements Initializable {
     @FXML
     private TableColumn<Eleve, String> modifCol;
     @FXML
-    private TableColumn<Eleve, Boolean> cochCol;
+    private TableColumn<Eleve, String> cochCol;
 
     private ObservableList<Eleve> masterData = FXCollections.observableArrayList();
     @FXML
@@ -80,12 +87,7 @@ public class GestionEleveController implements Initializable {
     @FXML
     private JFXComboBox<?> classeF;
 
-    public static int id_eleve_a_editer = -1 ;
-
-
-    /**
-     * Initializes the controller class.
-     */
+private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
 
 Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_editer_eleve = new Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>>() {
         @Override
@@ -133,10 +135,57 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_edite
             return cell;
         }
     };
+Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_select_eleve = new Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>>() {
+        @Override
+        public TableCell call(final TableColumn param) {
+            final TableCell cell = new TableCell() {
 
+                @Override
+                public void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        final JFXCheckBox check_box = new JFXCheckBox();
+                        check_box.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                if (check_box.isSelected()) {
+                                    selected_ids.add(getIndex());
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    update_selection();
+                                } else {
+                                    selected_ids.remove(selected_ids.indexOf(getIndex()));
+                                }
+                                param.getTableView().getSelectionModel().clearSelection(getIndex());
+                                update_selection();
+                            }
+                        });
+                        setGraphic(check_box);
+                        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
+        refresh();
+    }
+
+        @FXML
+    private void user_selection(MouseEvent event) {
+        update_selection();
+    }
+
+    private void update_selection() {
+        tableView.getSelectionModel().clearSelection();
+        for (int i = 0; i < selected_ids.size(); i++) {
+            tableView.getSelectionModel().select(selected_ids.get(i));
+        }
     }
 
     @FXML
@@ -153,13 +202,12 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_edite
     }
 
 
-    @FXML private void selection_eleve(MouseEvent event) {
-        ObservableList<Eleve> selected = tableView.getSelectionModel().getSelectedItems();
-                for (int i = 0; i < selected.size(); i++) {
-                    selected.get(i).setCocher(!selected.get(i).isCocher());
-                }
+    private void refresh(){
+        EleveDAO dao = new EleveDAO();
+        tableView.getItems().clear();
+        masterData = dao.getAll();
+        tableView.setItems(masterData);
     }
-
     @FXML
     private void click_retour(ActionEvent event) {
         try {
@@ -267,22 +315,48 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_edite
 
     @FXML
     private void click_supp(ActionEvent event) {
+        if (tableView.getSelectionModel().getSelectedItems().size() > 0) {
+            EleveDAO dao = new EleveDAO();
+            ObservableList<Eleve> liste = tableView.getSelectionModel().getSelectedItems();
+            for (Eleve l : liste) {
+                dao.delete(l.getId_e());
+                try {
+                    Path path = FileSystems.getDefault().getPath("data/eleve/" + l.getId_e() + ".png");
+                    Files.deleteIfExists(path);
+                } catch (Exception exception) {
+                    System.out.println(exception);
+                }
+            }
+            refresh();
+        }
 
     }
 
     @FXML
     private void click_supptout(ActionEvent event) {
+        EleveDAO dao = new EleveDAO();
+        dao.delAll();
+        refresh();
+        try {
+            Files.walk(Paths.get("data/eleve/"))
+                    .filter(Files::isRegularFile)
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException exception) {
+            System.out.println(exception);
+        }
     }
 
     private void initCol() {
+        tableView.getSelectionModel().setCellSelectionEnabled(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         nomCol.setCellValueFactory(cellData -> cellData.getValue().fullnomProperty());
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
         sexCol.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
         dateinsCol.setCellValueFactory(cellData -> cellData.getValue().dateInsProperty());
         classeCol.setCellValueFactory(cellData -> cellData.getValue().ref_nProperty().asString());
-        cochCol.setCellFactory(CheckBoxTableCell.forTableColumn(cochCol));
-        cochCol.setCellValueFactory(cellData -> cellData.getValue().cocherProperty());
         modifCol.setCellFactory(callback_fn_editer_eleve);
+        cochCol.setCellFactory(callback_fn_select_eleve);
 
 
     }
