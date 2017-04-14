@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.salle.list">
+    <stylesheets>
+        <URL value="@../common/style.css" />
+    </stylesheets>
+    <children>
+        <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn"  text="Trouver une Salle">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#goto_ajouter_salle" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn"  text="Ajouter une Salle">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </JFXButton>
+                        <Separator prefHeight="29.0" prefWidth="200.0" />
+                        <JFXButton onAction="#chercher_salle" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn"  text="Chercher" />
+                        <JFXButton onAction="#supprimer_salle" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Supprimer" />
+                        <JFXButton onAction="#supprimer_salles" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn"  text="Supprimer tout" />
+                    </children>
+                </VBox>
+            </left>
+            <top>
+                <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton onAction="#goto_admin_main" prefHeight="71.0" prefWidth="62.0" styleClass="backbtn" text="&lt;-">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                        </JFXButton>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="217.0" text="Gestion des Salles">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+            </top>
+            <center>
+                <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="456.0" minHeight="10.0" prefHeight="413.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <TableView onMouseClicked="#user_selection"  fx:id="table_salle" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                            <columns>
+                                <TableColumn fx:id="colonne_identifiant" prefWidth="50.0" text="Identifiant" />
+                                <TableColumn fx:id="colonne_nom" minWidth="0.0" prefWidth="100.0" text="Nom Salle" />
+                                <TableColumn fx:id="colonne_capacite" prefWidth="100.0" text="Capacite" />
+                                <TableColumn fx:id="colonne_modifier" editable="false" prefWidth="100.0" sortable="false" text="Modifier" />
+                                <TableColumn fx:id="colonne_cocher" editable="false" prefWidth="50.0" text="Cocher" />
+                            </columns>
+                        </TableView>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <JFXTextField fx:id="identifiant" prefHeight="25.0" prefWidth="296.0" promptText="Id Instituteur" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                    <GridPane.margin>
+                                        <Insets left="50.0" right="50.0" />
+                                    </GridPane.margin>
+                                </JFXTextField>
+                                <JFXTextField fx:id="nom" prefHeight="6.0" prefWidth="344.0" promptText="Nom / Prénom" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                    <GridPane.margin>
+                                        <Insets left="50.0" right="50.0" />
+                                    </GridPane.margin>
+                                </JFXTextField>
+                                <JFXDatePicker fx:id="date_embauchement" prefHeight="28.0" prefWidth="380.0" promptText="Date d'Emboche" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <JFXComboBox fx:id="grade" prefHeight="25.0" prefWidth="160.0" promptText="Classe" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                <JFXTextField fx:id="numero_matricule" prefHeight="6.0" prefWidth="344.0" promptText="Immatricule" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets left="50.0" right="50.0" />
+                                    </GridPane.margin>
+                                </JFXTextField>
+                            </children>
+                        </GridPane>
+                    </children>
+                </GridPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
