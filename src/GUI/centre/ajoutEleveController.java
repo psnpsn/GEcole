@@ -264,8 +264,7 @@ public class ajoutEleveController implements Initializable {
             if (id_parents != -1) {
                 EleveDAO daoe = new EleveDAO();
                 LocalDate d = date_naissance.getValue();
-                Eleve eleve = new Eleve(id_el, nom.getText(), prenom.getText(), addresse.getText(),ville.getSelectionModel().getSelectedItem(),Integer.parseInt(code_postal.getText()) , Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),lieu_naissance.getText(), (garcon.isSelected() ? "H" : "F"),  email.getText(), Integer.parseInt(niveau.getSelectionModel().getSelectedItem()),-1,id_pa , null);
-                eleve.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem()));
+                Eleve eleve = new Eleve(id_el, nom.getText(), prenom.getText(), addresse.getText(),ville.getSelectionModel().getSelectedItem(),Integer.parseInt(code_postal.getText()) , Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),lieu_naissance.getText(), (garcon.isSelected() ? "H" : "F"),  email.getText(), Integer.parseInt(niveau.getSelectionModel().getSelectedItem()),-1,id_parents , null);
                 int id_eleve = daoe.create(eleve);
                 if (id_eleve != -1) {
                     eleve.setRef_p(id_parents);
