@@ -129,10 +129,13 @@ public class ajoutEleveController implements Initializable {
     }
 
     private void set_class(){
+        classe.getItems().clear();
+
         ClasseDAO daoc = new ClasseDAO();
         ob_class_list = daoc.getAll();
         EleveDAO daoe = new EleveDAO();
         ob_eleve_list = daoe.getAll();
+
         for (int i = 0; i < ob_class_list.size(); i++) {
             int count = 0;
             for (int ei = 0; ei < ob_eleve_list.size(); ei++) {
@@ -140,8 +143,10 @@ public class ajoutEleveController implements Initializable {
                     count++;
                 }
             }
-            if (count < ob_class_list.get(i).getCapacite()) {
-                classe.getItems().add(ob_class_list.get(i).getNom());
+            if (count < ob_class_list.get(i).getCapacite()
+                    && ob_class_list.get(i).getRef_niv()
+                    == Integer.parseInt(niveau.getSelectionModel().getSelectedItem())){
+                classe.getItems().add(ob_class_list.get(i).getNom()+" - "+count + "/"+ob_class_list.get(i).getCapacite());
             }
 
         }
@@ -301,7 +306,8 @@ public class ajoutEleveController implements Initializable {
                 if (classe.getSelectionModel().getSelectedIndex()!=-1){
                     for (int i = 0;i < ob_class_list.size();i++)
                     {
-                        if (ob_class_list.get(i).getNom().equals(classe.getSelectionModel().getSelectedItem())){
+                        if (ob_class_list.get(i).getNom().equals(classe.getSelectionModel().getSelectedItem()))
+                               {
                             eleve.setRef_c(ob_class_list.get(i).getId_c());
                         }
                     }
