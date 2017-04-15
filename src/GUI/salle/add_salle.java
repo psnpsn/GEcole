@@ -68,7 +68,7 @@ public class add_salle implements Initializable {
         Scene scene = (Scene) source.getScene();
         BorderPane border = (BorderPane) scene.getRoot();
         try {
-            border.setCenter(FXMLLoader.load(getClass().getResource("list.fxml")));
+            border.setCenter(FXMLLoader.load(getClass().getResource("list_salle.fxml")));
         } catch (IOException exception) {
             System.out.println("erreur i/o: " + exception);
         }
@@ -81,6 +81,8 @@ public class add_salle implements Initializable {
             LocalDate ds = date_salle.getValue();
             dao.create(new Salle(-1,type_salle.getText(),Integer.parseInt(capacite.getText()),
             Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())));
+            //
+            goto_lister_salle(new ActionEvent(action, action));
         }
     }
 

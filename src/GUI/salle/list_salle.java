@@ -87,7 +87,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
                                     BorderPane border = (BorderPane) scene.getRoot();
                                     try {//
                                         FXMLLoader loader = new FXMLLoader();
-                                        loader.setLocation(getClass().getResource("add.fxml"));
+                                        loader.setLocation(getClass().getResource("add_salle.fxml"));
                                         Parent root = loader.load();
                                         GUI.salle.add_salle controller = loader.getController();
                                         border.setCenter((AnchorPane) root);
@@ -161,7 +161,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
         Scene scene = (Scene) source.getScene();
         BorderPane border = (BorderPane) scene.getRoot();
         try {
-            border.setCenter(FXMLLoader.load(getClass().getResource("add.fxml")));
+            border.setCenter(FXMLLoader.load(getClass().getResource("add_salle.fxml")));
         } catch (IOException exception) {
             System.out.println("erreur i/o: " + exception);
         }
