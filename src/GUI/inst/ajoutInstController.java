@@ -216,6 +216,8 @@ public class ajoutInstController implements Initializable {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+            if (id_instituteur!=-1)
+                 goto_list(new ActionEvent(action, action));
         }
     }
 
@@ -294,11 +296,12 @@ public class ajoutInstController implements Initializable {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+             goto_list(new ActionEvent(action, action));
         }
     }
     public void edit_instituteur(int x) {
 
-        action.setText("Mod");
+        action.setText("Modifier Instituteur");
         id_instituteur = x;
         action.setOnAction((e) -> {
             update_instituteur(x);

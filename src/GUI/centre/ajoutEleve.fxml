@@ -168,7 +168,19 @@
                      </children>
                   </GridPane>
                   <JFXTextField fx:id="lieu_naissance" promptText="Lieu Naissance*" GridPane.rowIndex="3" />
-                  <JFXComboBox fx:id="niveau" prefHeight="25.0" prefWidth="164.0" promptText="Niveau" GridPane.rowIndex="7" />
+                  <GridPane GridPane.rowIndex="7">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <JFXComboBox fx:id="niveau" onAction="#niv_selected" prefHeight="25.0" prefWidth="112.0" promptText="Niveau" />
+                        <JFXComboBox fx:id="classe"  disable="true" layoutX="10.0" layoutY="19.0" prefHeight="27.0" prefWidth="106.0" promptText="Classe" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
                   <Label fx:id="lnom" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" text="Label" visible="false" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets left="8.0" />
@@ -248,7 +260,7 @@
                                  <Insets left="8.0" />
                              </GridPane.margin>
                          </Label>
-                         <Label fx:id="lcode_postal" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" text="Label" visible="false" GridPane.rowIndex="1" >
+                         <Label fx:id="lcode_postal" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" text="Label" visible="false" GridPane.rowIndex="1">
                              <GridPane.margin>
                                  <Insets left="8.0" />
                              </GridPane.margin>
