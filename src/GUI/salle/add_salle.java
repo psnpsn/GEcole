@@ -21,7 +21,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
-public class add implements Initializable {
+public class add_salle implements Initializable {
 
     @FXML
     private JFXButton action;

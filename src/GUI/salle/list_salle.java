@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
-public class list implements Initializable {
+public class list_salle implements Initializable {
 
     @FXML
     private TableView<Salle> table_salle;
@@ -89,7 +89,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
                                         FXMLLoader loader = new FXMLLoader();
                                         loader.setLocation(getClass().getResource("add.fxml"));
                                         Parent root = loader.load();
-                                        GUI.salle.add controller = loader.getController();
+                                        GUI.salle.add_salle controller = loader.getController();
                                         border.setCenter((AnchorPane) root);
                                         if (controller != null) {
                                             controller.edit_salle(item.getIdentifiant());
