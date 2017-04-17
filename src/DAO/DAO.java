@@ -1,4 +1,5 @@
 package DAO;
+import Models.Eleve;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
 
@@ -47,6 +48,8 @@ public interface DAO<T> {
      * @return true si la suppression est effectuée sans erreur , false sinon
      */
     public boolean      delete(int id);
+
+    
     
     
 

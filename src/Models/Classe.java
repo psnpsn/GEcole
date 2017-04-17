@@ -22,6 +22,8 @@ public class Classe {
     private SimpleIntegerProperty capacite;
     private SimpleIntegerProperty ref_niv;
     
+    private SimpleIntegerProperty nbE;
+    
     private BooleanProperty cocher = new SimpleBooleanProperty(false);
 
     //Constructeurs
@@ -30,12 +32,14 @@ public class Classe {
         this.nom = new SimpleStringProperty("");
         this.capacite = new SimpleIntegerProperty();
         this.ref_niv = new SimpleIntegerProperty();
+        this.nbE= new SimpleIntegerProperty();
     }
     public Classe(int id_c, String nom, int capacite, int ref_niv) {
         this.id_c = new SimpleIntegerProperty(id_c);
         this.nom = new SimpleStringProperty(nom);
         this.capacite = new SimpleIntegerProperty(capacite);
         this.ref_niv = new SimpleIntegerProperty(ref_niv);
+       
     }
 
     //Setters & Getters
@@ -93,6 +97,18 @@ public class Classe {
     
     public SimpleIntegerProperty anneeProperty(){
         return new SimpleIntegerProperty(ref_niv.get()%10000);
+    }
+    
+     public SimpleIntegerProperty nbEProperty(){
+        return new SimpleIntegerProperty(nbE.get());
+    }
+
+    public int getNbE() {
+        return nbE.get();
+    }
+
+    public void setNbE(int nbE) {
+        this.nbE.set(nbE);
     }
     
     //cocher property

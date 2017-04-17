@@ -36,7 +36,7 @@
                      </VBox.margin>
                   </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton onAction="#click_ajouter" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Ajouter la classe">
+                  <JFXButton fx:id="action" onAction="#click_ajouter" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Ajouter la classe">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
@@ -108,7 +108,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="tableView" onMouseClicked="#selection_eleve" prefHeight="410.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tableView" onMouseClicked="#user_selection" prefHeight="410.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
                                        <columns>
                                           <TableColumn fx:id="nomCol" prefWidth="182.0" text="Nom" />
                                           <TableColumn fx:id="idCol" prefWidth="104.0" text="ID" />
@@ -125,7 +125,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="tableViewI" onMouseClicked="#selection_instituteur" prefHeight="410.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tableViewI" onMouseClicked="#user_selectionI" prefHeight="410.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
                                        <columns>
                                           <TableColumn fx:id="nomICol" prefWidth="204.0" text="Nom" />
                                           <TableColumn fx:id="immCol" prefWidth="157.0" text="Immatricule" />

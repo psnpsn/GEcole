@@ -9,11 +9,14 @@ import DAO.ClasseDAO;
 import DAO.DAO;
 import GUI.LoginController;
 import Models.Classe;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +29,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,7 +69,7 @@ public class gestionClasseController implements Initializable {
     @FXML
     private TableColumn<Classe, String> modifCol;
     @FXML
-    private TableColumn<Classe, Boolean> cochCol;
+    private TableColumn<Classe, String> cochCol;
     @FXML
     private JFXTextField nom;
     @FXML
@@ -80,14 +88,12 @@ public class gestionClasseController implements Initializable {
      ToggleGroup group = new ToggleGroup();
      
      private ObservableList<Classe> masterData = FXCollections.observableArrayList();
-
-    /**
-     * Initializes the controller class.
-     */
      
-     Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_editer_classe
-            = //
-            new Callback<TableColumn<Classe, String>, TableCell<Classe, String>>() {
+     private ArrayList<Integer> selected_idsC = new ArrayList<Integer>();
+
+    
+     
+     Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_editer_classe = new Callback<TableColumn<Classe, String>, TableCell<Classe, String>>() {
         @Override
         public TableCell call(final TableColumn param) {
             final TableCell cell = new TableCell() {
@@ -99,16 +105,85 @@ public class gestionClasseController implements Initializable {
                         setText(null);
                         setGraphic(null);
                     } else {
-                        final Button editer = new Button("Modifier");
-                        editer.setOnAction(new EventHandler<ActionEvent>() {
+                        final MenuButton editer = new MenuButton("Modifier..");
+                        MenuItem ajouterItem = new MenuItem("Ajouter des élèves");
+                        MenuItem retirerItem = new MenuItem("Retirer des élèves");
+                        MenuItem instItem = new MenuItem("Modifier les instituteurs");
+                        editer.getItems().add(ajouterItem);
+                        editer.getItems().add(retirerItem);
+                        editer.getItems().add(instItem);
+                        ajouterItem.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
                                 param.getTableView().getSelectionModel().select(getIndex());
                                 Classe item = tableView.getSelectionModel().getSelectedItem();
                                 if (item != null) {
-                                    id_classe_a_editer = item.getId_c();
-                                    click_modifier();
-
+                                    MenuItem source = (MenuItem) event.getSource();
+                                    Scene scene = source.getParentPopup().getOwnerWindow().getScene();
+                                    BorderPane border = (BorderPane) scene.getRoot();
+                                    try {//
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(getClass().getResource("ajoutClasse.fxml"));
+                                        Parent root = loader.load();
+                                        ajoutClasseController controller = loader.getController();
+                                        border.setCenter((AnchorPane) root);
+                                        if (controller != null) {
+                                            controller.ajouter_eleves(item.getId_c());
+                                        }
+                                        else System.out.println("nul: ");
+                                    } catch (Exception exception) {
+                                        System.out.println("erreur i/o: " + exception);
+                                    }
+                                }
+                            }
+                        });
+                        retirerItem.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                param.getTableView().getSelectionModel().select(getIndex());
+                                Classe item = tableView.getSelectionModel().getSelectedItem();
+                                if (item != null) {
+                                    MenuItem source = (MenuItem) event.getSource();
+                                    Scene scene = source.getParentPopup().getOwnerWindow().getScene();
+                                    BorderPane border = (BorderPane) scene.getRoot();
+                                    try {//
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(getClass().getResource("ajoutClasse.fxml"));
+                                        Parent root = loader.load();
+                                        ajoutClasseController controller = loader.getController();
+                                        border.setCenter((AnchorPane) root);
+                                        if (controller != null) {
+                                            controller.retirer_eleves(item.getId_c());
+                                        }
+                                        else System.out.println("nul: ");
+                                    } catch (Exception exception) {
+                                        System.out.println("erreur i/o: " + exception);
+                                    }
+                                }
+                            }
+                        });
+                        instItem.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                param.getTableView().getSelectionModel().select(getIndex());
+                                Classe item = tableView.getSelectionModel().getSelectedItem();
+                                if (item != null) {
+                                    MenuItem source = (MenuItem) event.getSource();
+                                    Scene scene = source.getParentPopup().getOwnerWindow().getScene();
+                                    BorderPane border = (BorderPane) scene.getRoot();
+                                    try {//
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(getClass().getResource("ajoutClasse.fxml"));
+                                        Parent root = loader.load();
+                                        ajoutClasseController controller = loader.getController();
+                                        border.setCenter((AnchorPane) root);
+                                        if (controller != null) {
+                                            controller.edit_classe(item.getId_c());
+                                        }
+                                        else System.out.println("nul: ");
+                                    } catch (Exception exception) {
+                                        System.out.println("erreur i/o: " + exception);
+                                    }
                                 }
                             }
                         });
@@ -120,9 +195,53 @@ public class gestionClasseController implements Initializable {
             return cell;
         }
     };
-     
+Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_select_classe = new Callback<TableColumn<Classe, String>, TableCell<Classe, String>>() {
+        @Override
+        public TableCell call(final TableColumn param) {
+            final TableCell cell = new TableCell() {
+
+                @Override
+                public void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        final JFXCheckBox check_box = new JFXCheckBox();
+                        check_box.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                if (check_box.isSelected()) {
+                                    selected_idsC.add(getIndex());
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    update_selection();
+                                } else {
+                                    selected_idsC.remove(selected_idsC.indexOf(getIndex()));
+                                }
+                                param.getTableView().getSelectionModel().clearSelection(getIndex());
+                                update_selection();
+                            }
+                        });
+                        setGraphic(check_box);
+                        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
     
+    private void user_selection(MouseEvent event) {
+        update_selection();
+    }
     
+    private void update_selection() {
+        tableView.getSelectionModel().clearSelection();
+        for (int i = 0; i < selected_idsC.size(); i++) {
+            tableView.getSelectionModel().select(selected_idsC.get(i));
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //niveau.setItems(FXCollections.observableArrayList(1,2,3,4,5,6));
@@ -248,13 +367,12 @@ public class gestionClasseController implements Initializable {
     
     private void initCol() {
         nomCol.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
-        //nbCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
+        nbCol.setCellValueFactory(cellData -> cellData.getValue().nbEProperty().asString());
         nivCol.setCellValueFactory(cellData -> cellData.getValue().nivProperty().asString());
         capaciteCol.setCellValueFactory(cellData -> cellData.getValue().capaciteProperty().asString());
         anneeCol.setCellValueFactory(cellData -> cellData.getValue().anneeProperty().asString());
-        cochCol.setCellFactory(CheckBoxTableCell.forTableColumn(cochCol));
-        cochCol.setCellValueFactory(cellData -> cellData.getValue().cocherProperty());
         modifCol.setCellFactory(callback_fn_editer_classe);
+        cochCol.setCellFactory(callback_fn_select_classe);
 
         
     }
@@ -271,6 +389,11 @@ public class gestionClasseController implements Initializable {
         }
     }
  
-    
+    private void refresh(){
+        ClasseDAO dao = new ClasseDAO();
+        tableView.getItems().clear();
+        masterData = dao.getAll();
+        tableView.setItems(masterData);
+    }
     
 }

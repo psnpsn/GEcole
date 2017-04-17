@@ -23,11 +23,15 @@ public class ClasseDAO implements DAO<Classe> {
      private String            nomTable    = "CLASSE"    ;
     private String            nomSequence = "SEQ_ID_C" ;
     private String            requete     = ""         ;
+    private String            requete2     = ""         ;
     private Connection        session     = null       ;
     private PreparedStatement statement   = null       ;
+    private PreparedStatement statement2   = null       ;
     private ResultSet         resultat    = null       ;
+    private ResultSet         resultat2    = null       ;
     private boolean           valide      = false      ;
     private int               seq         =-1          ;
+    
     
     
     public ClasseDAO(){
@@ -47,6 +51,7 @@ public class ClasseDAO implements DAO<Classe> {
                 classe.setNom(resultat.getString("NOMC"));
                 classe.setCapacite(resultat.getInt("CAPACITE"));
                 classe.setRef_niv(resultat.getInt("REF_NIV")); 
+                classe.setNbE(countEleves(classe.getId_c()));
                 liste.add(classe);
 
             }
@@ -88,12 +93,53 @@ public class ClasseDAO implements DAO<Classe> {
 
     @Override
     public Classe find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Classe classe= null;
+        try {
+            requete = "SELECT * FROM " + nomTable +" WHERE ( ID_CLASSE = ? )";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, id);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                valide = true;
+                classe = new Classe();
+                classe.setId_c(resultat.getInt("ID_CLASSE"));
+                classe.setNom(resultat.getString("NOMC"));
+                classe.setCapacite(resultat.getInt("CAPACITE"));
+                classe.setRef_niv(resultat.getInt("REF_NIV"));
+                classe.setNbE(countEleves(classe.getId_c()));
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : ClasseDAO.java\n"
+                    + "Methode : findByID()\n"
+                    + "Exception : " + exception);
+        }
+        return classe;
     }
 
     @Override
     public boolean update(Classe instance) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        valide = false;
+        try {
+            requete = "UPDATE " + nomTable + " SET   "
+                    + "NOMC           =  ?  ,"
+                    + "CAPACITE       =  ?  ,"
+                    + "REF_NIV =  ?  "
+                    + "WHERE  ID_CLASSE = ? ";
+            statement = session.prepareStatement(requete);
+            statement.setString(1, instance.getNom());
+            statement.setInt(2, instance.getCapacite());
+            statement.setInt(3, instance.getRef_niv());
+            statement.setInt(4, instance.getId_c());
+            if(statement.executeUpdate()!=0){
+                valide = true;
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : ClasseDAO.java\n"
+                    + "Methode : update(Classe instance)\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
     }
 
     @Override
@@ -137,5 +183,27 @@ public class ClasseDAO implements DAO<Classe> {
         System.out.println("sequence curr  "+seq);
         return seq;
     }
+    
+    public int countEleves(int id){
+        int nbE=0;
+    try {
+            requete2 = "SELECT COUNT(DISTINCT ID_ELEVE) AS "+"NBELEVES"+" FROM ELEVE WHERE REF_C="+id;
+            statement2 = session.prepareStatement(requete2);
+            resultat2 = statement2.executeQuery();
+            while (resultat2.next()) {
+                nbE=resultat2.getInt("NBELEVES");
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : ClasseDAO.java\n"
+                    + "Methode : countEleves\n"
+                    + "Exception : " + exception);
+        }
+       
+        System.out.println("Nombre d'eleves  "+nbE);
+        return nbE;
+    }
+    
+    
     
 }

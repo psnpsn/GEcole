@@ -229,6 +229,27 @@ public class EleveDAO implements DAO<Eleve> {
         }
         return valide;
     }
+    
+    public boolean nullRef_c(Eleve instance) {
+    valide = false;
+        try {
+            requete = "UPDATE " + nomTable + " SET   "
+                    + "REF_C    =  NULL  "
+                    + "WHERE  ID_ELEVE = ? ";
+            statement = session.prepareStatement(requete);
+            //statement.setString(1, "NULL");
+            statement.setInt(1, instance.getId_e());
+
+            if(statement.executeUpdate()!=0){
+                valide = true;
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : nullRef_c(Eleve instance)\n"
+                    + "Exception : " + exception);
+        }
+        return valide;
+    }
 
     private int seq_id_next(){
         try {
@@ -265,6 +286,45 @@ public class EleveDAO implements DAO<Eleve> {
 
         System.out.println("sequence curr  "+seq);
         return seq;
+    }
+    
+    public ObservableList<Eleve> getbyRef_c(int id){
+        ArrayList<Eleve> liste = new ArrayList<Eleve>();
+        try {
+            requete = "SELECT * FROM " + nomTable+" WHERE REF_C="+id ;
+            statement = session.prepareStatement(requete);
+            resultat = statement.executeQuery();
+             while (resultat.next()) {
+                Eleve eleve = new Eleve();
+                eleve.setId_e(resultat.getInt("ID_ELEVE"));
+                eleve.setNom(resultat.getString("NOM"));
+                eleve.setPrenom(resultat.getString("PRENOM"));
+                eleve.setAdresse(resultat.getString("ADRESSE"));
+                eleve.setVille(resultat.getString("VILLE"));
+                eleve.setCodeP(resultat.getInt("CODEP"));
+                eleve.setDateNaiss(resultat.getDate("DATENAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
+                eleve.setSex(resultat.getString("SEX"));
+                eleve.setEmail(resultat.getString("EMAIL"));
+                eleve.setRef_niv(resultat.getInt("REF_NIV"));
+                eleve.setRef_c(resultat.getInt("REF_C"));
+                eleve.setRef_p(resultat.getInt("REF_P"));
+                eleve.setDateIns(resultat.getDate("DATEINS"));
+               System.out.println("PRINT2");
+                liste.add(eleve);
+
+                System.out.println(eleve.toString()+"SOP");
+
+            }
+
+
+        } catch (Exception exception) {
+            System.out.println("Classe : EleveDAO.java\n"
+                    + "Methode : getAll()\n"
+                    + "Exception : " + exception);
+        }
+        ObservableList<Eleve> list = FXCollections.observableArrayList(liste);
+        return list;
     }
 
 }
