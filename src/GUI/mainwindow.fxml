@@ -54,7 +54,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Emplois" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton  onAction="#click_gemplois" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Emplois" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer les emplois du temps de l'année  courante. Emplois de classes, instituteurs et examens." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -72,9 +72,9 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Notes" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton onAction="#click_gsalles" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Salles" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <graphic>
-                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot de notes et des appréciations et génération des livrets scolaires." textAlignment="CENTER" wrappingWidth="135.13671875">
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerer les salles de l'ecole." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
                         <Font size="10.0" />
                      </font>
