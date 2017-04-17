@@ -1,6 +1,5 @@
 
 package DAO;
-import Models.Eleve;
 import Models.Instituteur;
 import ODB.OracleDBSingleton;
 import java.sql.Connection;
@@ -19,7 +18,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
     private ResultSet         resultat    = null       ;
     private boolean           valide      = false      ;
     private int               seq         =-1          ;
-    
+
     public InstituteurDAO(){
               session = OracleDBSingleton.getSession();
     }
@@ -33,8 +32,8 @@ public class InstituteurDAO implements DAO<Instituteur>  {
             resultat = statement.executeQuery();
             while (resultat.next()) {
                 Instituteur instituteur = new Instituteur();
-           
-                
+
+
                 instituteur.setId_i(resultat.getInt("ID"));
                 instituteur.setNom(resultat.getString("NOM"));
                 instituteur.setPrenom(resultat.getString("PRENOM"));
@@ -76,7 +75,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
         return valide;
     }
 
- 
+
     public int create(Instituteur instance) {
     valide = false;
         try {
@@ -135,7 +134,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
                 instituteur.setEmail(resultat.getString("EMAIL"));
                 instituteur.setTel1(resultat.getInt("TEL"));
                 instituteur.setTel2(resultat.getInt("TEL2"));
-          
+
             }
 
         } catch (Exception exception) {
@@ -145,28 +144,28 @@ public class InstituteurDAO implements DAO<Instituteur>  {
         }
         return instituteur;
     }
-   
+
     public boolean update(Instituteur instance) {
     valide = false;
         try {
-            requete = "UPDATE " + nomTable + " SET  ( "
+            requete = "UPDATE " + nomTable + " SET   "
                     + "NOM           =  ?  ,"
                     + "PRENOM        =  ?  ,"
-                    + "DATENAISS      =  ?  ,"
-                    + "NCIN        =  ?  ,"
-                    + "DATEEMB    =  ?  ,"
-                    + "SEX =  ?  ,"
-                    + "IMM =  ?  ,"
+                    + "DATENAISS     =  ?  ,"
+                    + "NCIN          =  ?  ,"
+                    + "DATEEMB       =  ?  ,"
+                    + "SEX           =  ?  ,"
+                    + "IMM           =  ?  ,"
                     + "GRADE         =  ?  ,"
-                    + "ADRESSE  =  ?  ,"
-                    + "VILLE  =  ?  ,"
+                    + "ADRESSE       =  ?  ,"
+                    + "VILLE         =  ?  ,"
                     + "CODEP         =  ?  ,"
-                    + "TEL    =  ?  ,"
-                    + "TEL2    =  ?  ,"
-                    + "EMAIL   =  ? )"
-                    + "WHERE  ID   = ? ";
+                    + "TEL           =  ?  ,"
+                    + "TEL2          =  ?  ,"
+                    + "EMAIL         =  ? "
+                    + "WHERE  ID     =  ? ";
             statement = session.prepareStatement(requete);
-      
+
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
             statement.setDate(3,new java.sql.Date(instance.getDateNaiss().getTime()));
@@ -181,6 +180,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
             statement.setInt(12,instance.getTel1());
             statement.setInt(13,instance.getTel2());
             statement.setString(14, instance.getEmail());
+            statement.setInt(15, instance.getId_i());
 
             if(statement.executeUpdate()!=0){
                 valide = true;
@@ -192,11 +192,11 @@ public class InstituteurDAO implements DAO<Instituteur>  {
         }
         return valide;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     @Override
     public boolean delete(int id) {
         valide = false;
@@ -214,7 +214,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
         }
         return valide;
     }
-    
+
     private int seq_id_next(){
         try {
             requete = "SELECT " +nomSequence+ ".nextval FROM DUAL";
@@ -232,7 +232,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
         System.out.println("sequence nextval "+seq);
         return seq;
     }
-    
+
     public int seq_id_curr(){
     try {
             requete = "SELECT " +nomSequence+ ".currval FROM DUAL";
@@ -247,7 +247,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
                     + "Methode : seq_id_curr\n"
                     + "Exception : " + exception);
         }
-       
+
         System.out.println("sequence curr  "+seq);
         return seq;
     }

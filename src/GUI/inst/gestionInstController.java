@@ -1,81 +1,140 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.inst;
 
-import DAO.DAO;
 import DAO.InstituteurDAO;
-import GUI.LoginController;
 import Models.Instituteur;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
-import main_pack.Main_class;
 
-/**
- * FXML Controller class
- *
- * @author DELL
- */
 public class gestionInstController implements Initializable {
 
     @FXML
-    private TableView<Instituteur> tableView;
+    private TableView<Instituteur> table_instituteur;
     @FXML
-    private TableColumn<Instituteur, String> nomCol;
+    private TableColumn<Instituteur, String> colonne_nom;
     @FXML
-    private TableColumn<Instituteur, Date> dateCol;
+    private TableColumn<Instituteur, String> colonne_date_embauchement;
     @FXML
-    private TableColumn<Instituteur, String> sexCol;
+    private TableColumn<Instituteur, String> colonne_sex;
     @FXML
-    private TableColumn<Instituteur, String> immCol;
+    private TableColumn<Instituteur, String> colonne_matricule;
     @FXML
-    private TableColumn<Instituteur, String> gradeCol;
+    private TableColumn<Instituteur, String> colonne_grade;
     @FXML
-    private TableColumn<?, ?> modifCol;
+    private TableColumn<Instituteur, String> colonne_modifier;
     @FXML
-    private TableColumn<?, ?> cochCol;
+    private TableColumn<Instituteur, String> colonne_cocher;
     @FXML
-    private JFXTextField idInstituteurF;
+    private TableColumn<Instituteur, String> colonne_identifiant;
     @FXML
-    private JFXTextField nomInstituteurF;
+    private JFXTextField identifiant;
     @FXML
-    private JFXDatePicker dateNaissF;
+    private JFXTextField nom;
     @FXML
-    private JFXComboBox<?> classeF;
+    private JFXDatePicker date_embauchement;
     @FXML
-    private JFXTextField imm;
+    private JFXComboBox<String> grade;
     @FXML
-    private JFXTextField idInstituteurF1;
-    
-    public static int id_inst_a_editer = -1 ;
+    private JFXTextField numero_matricule;
+
+    private ObservableList<Instituteur> data = FXCollections.observableArrayList();
+    private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
 
 
-    Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>> callback_fn_editer_eleve
-            = //
-            new Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>>() {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        table_instituteur.getSelectionModel().setCellSelectionEnabled(false);
+        table_instituteur.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        colonne_nom.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getNom());
+        });
+        colonne_date_embauchement.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getDateEmb().toString());
+        });
+        colonne_identifiant.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(""+cellData.getValue().getId_i());
+        });
+        colonne_sex.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getSex());
+        });
+        colonne_grade.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getGrade());
+        });
+        colonne_matricule.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(""+cellData.getValue().getImmatricul());
+        });
+        colonne_modifier.setCellFactory(callback_fn_editer_instituteur);
+        colonne_cocher.setCellFactory(callback_fn_select_instituteur);
+        refresh();
+    }
+
+    Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>> callback_fn_select_instituteur = new Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>>() {
+        @Override
+        public TableCell call(final TableColumn param) {
+            final TableCell cell = new TableCell() {
+                @Override
+                public void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        final JFXCheckBox check_box = new JFXCheckBox();
+                        check_box.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                if (check_box.isSelected()) {
+                                    selected_ids.add(getIndex());
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    update_selection();
+                                } else {
+                                    selected_ids.remove(selected_ids.indexOf(getIndex()));
+                                }
+                                param.getTableView().getSelectionModel().clearSelection(getIndex());
+                                update_selection();
+                            }
+                        });
+                        setGraphic(check_box);
+                        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
+
+     Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>> callback_fn_editer_instituteur = new Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>>() {
         @Override
         public TableCell call(final TableColumn param) {
             final TableCell cell = new TableCell() {
@@ -87,16 +146,29 @@ public class gestionInstController implements Initializable {
                         setText(null);
                         setGraphic(null);
                     } else {
-                        final Button editer = new Button("Modifier");
+                        final JFXButton editer = new JFXButton("<Modifier>");
                         editer.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
                                 param.getTableView().getSelectionModel().select(getIndex());
-                                Instituteur item = tableView.getSelectionModel().getSelectedItem();
+                                Instituteur item = table_instituteur.getSelectionModel().getSelectedItem();
                                 if (item != null) {
-                                    id_inst_a_editer = item.getId_i();
-                                    click_modifier();
-
+                                    Node source = (Node) event.getSource();
+                                    Scene scene = (Scene) source.getScene();
+                                    BorderPane border = (BorderPane) scene.getRoot();
+                                    try {//
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(getClass().getResource("ajoutInst.fxml"));
+                                        Parent root = loader.load();
+                                        GUI.inst.ajoutInstController controller = loader.getController();
+                                        border.setCenter((AnchorPane) root);
+                                        if (controller != null) {
+                                            controller.edit_instituteur(item.getId_i());
+                                        }
+                                        else System.out.println("nul: ");
+                                    } catch (Exception exception) {
+                                        System.out.println("erreur i/o: " + exception);
+                                    }
                                 }
                             }
                         });
@@ -108,81 +180,79 @@ public class gestionInstController implements Initializable {
             return cell;
         }
     };
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        initCol();
-    }    
-
-    @FXML
-    private void click_retour(ActionEvent event) {
+    @FXML private void goto_admin_main(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Scene scene = (Scene) source.getScene();
+        BorderPane border = (BorderPane) scene.getRoot();
         try {
-            URL loader = getClass().getResource("../mainwindow.fxml");
-            AnchorPane middle = FXMLLoader.load(loader);
-
-            BorderPane border = Main_class.getRoot();
-            border.setCenter(middle);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            border.setCenter(FXMLLoader.load(getClass().getResource("../mainwindow.fxml")));
+        } catch (IOException exception) {
+            System.out.println("erreur i/o: " + exception);
+        }
+    }
+    @FXML
+    private void goto_ajouter_instituteur(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Scene scene = (Scene) source.getScene();
+        BorderPane border = (BorderPane) scene.getRoot();
+        try {
+            border.setCenter(FXMLLoader.load(getClass().getResource("ajoutInst.fxml")));
+        } catch (IOException exception) {
+            System.out.println("erreur i/o: " + exception);
         }
     }
 
-
     @FXML
-    private void click_chercher(ActionEvent event) {
-        DAO instdao = new InstituteurDAO();
-        ObservableList<Instituteur> masterData = instdao.getAll();
-        tableView.getItems().setAll(masterData);
+    private void chercher_instituteur(ActionEvent event) {
     }
 
     @FXML
-    private void click_supp(ActionEvent event) {
-    }
-
-    @FXML
-    private void click_supptout(ActionEvent event) {
-    }
-
-    @FXML
-    private void click_ajouter(ActionEvent event) {
-        try {
-            URL loader = getClass().getResource("ajoutInst.fxml");
-            AnchorPane middle = FXMLLoader.load(loader);
-
-            BorderPane border = Main_class.getRoot();
-            border.setCenter(middle);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void initCol() {
-        nomCol.setCellValueFactory(cellData -> cellData.getValue().fullnomProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
-        sexCol.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
-        immCol.setCellValueFactory(cellData -> cellData.getValue().immProperty().asString());
-        gradeCol.setCellValueFactory(cellData -> cellData.getValue().gradeProperty());
-    }
-    
-    private void click_modifier() {
-
-
-
-
+    private void supprimer_instituteur(ActionEvent event) {
+        if (table_instituteur.getSelectionModel().getSelectedItems().size() > 0) {
+            InstituteurDAO dao = new InstituteurDAO();
+            ObservableList<Instituteur> liste = table_instituteur.getSelectionModel().getSelectedItems();
+            for (Instituteur l : liste) {
+                dao.delete(l.getId_i());
                 try {
-            URL loader = getClass().getResource("modEleve.fxml");
-            AnchorPane middle = FXMLLoader.load(loader);
-
-            BorderPane border = Main_class.getRoot();
-            border.setCenter(middle);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    Path path = FileSystems.getDefault().getPath("data/instituteur/" + l.getId_i() + ".png");
+                    Files.deleteIfExists(path);
+                } catch (Exception exception) {
+                    System.out.println(exception);
+                }
+            }
+            refresh();
         }
-
-
     }
-    
+
+    @FXML
+    private void supprimer_instituteurs(ActionEvent event) {
+        InstituteurDAO dao = new InstituteurDAO();
+        dao.delAll();
+        refresh();
+        try {
+            Files.walk(Paths.get("data/instituteur/"))
+                    .filter(Files::isRegularFile)
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException exception) {
+            System.out.println(exception);
+        }
+    }
+    @FXML
+    private void user_selection(MouseEvent event) {
+        update_selection();
+    }
+
+    private void update_selection() {
+        table_instituteur.getSelectionModel().clearSelection();
+        for (int i = 0; i < selected_ids.size(); i++) {
+            table_instituteur.getSelectionModel().select(selected_ids.get(i));
+        }
+    }
+    private void refresh() {
+        InstituteurDAO dao = new InstituteurDAO();
+        table_instituteur.getItems().clear();
+        data = (ObservableList<Instituteur>) dao.getAll();
+        table_instituteur.setItems(data);
+    }
 }

@@ -51,12 +51,12 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setDateIns(resultat.getDate("DATEINS"));
                System.out.println("PRINT2");
                 liste.add(eleve);
-                
+
                 System.out.println(eleve.toString()+"SOP");
 
             }
 
-            
+
         } catch (Exception exception) {
             System.out.println("Classe : EleveDAO.java\n"
                     + "Methode : getAll()\n"
@@ -86,8 +86,8 @@ public class EleveDAO implements DAO<Eleve> {
     public int create(Eleve instance) {
     seq = -1;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_P ,DATEINS)  "
-                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
+            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_C , REF_P ,DATEINS)  "
+                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -98,9 +98,9 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8,instance.getSex());
             statement.setString(9, instance.getEmail());
-            statement.setInt(10, 22016);
-            //statement.setInt(11, instance.getRef_c());
-            statement.setInt(11, instance.getRef_p());
+            statement.setInt(10, instance.getRef_niv());
+            statement.setInt(11, instance.getRef_c());
+            statement.setInt(12, instance.getRef_p());
             if (statement.executeUpdate() != 0) {
                 seq = seq_id_curr();
             }
@@ -109,7 +109,7 @@ public class EleveDAO implements DAO<Eleve> {
                     + "Methode : create(Eleve instance)\n"
                     + "Exception : " + exception);
         }
-        
+
         return seq;
     }
 
@@ -208,7 +208,7 @@ public class EleveDAO implements DAO<Eleve> {
         }
         return valide;
     }
-    
+
     public boolean updateRef_c(Eleve instance) {
     valide = false;
         try {
@@ -229,7 +229,7 @@ public class EleveDAO implements DAO<Eleve> {
         }
         return valide;
     }
-    
+
     private int seq_id_next(){
         try {
             requete = "SELECT " +nomSequence+ ".nextval FROM DUAL";
@@ -247,7 +247,7 @@ public class EleveDAO implements DAO<Eleve> {
         System.out.println("sequence nextval "+seq);
         return seq;
     }
-    
+
     public int seq_id_curr(){
     try {
             requete = "SELECT " +nomSequence+ ".currval FROM DUAL";
@@ -262,7 +262,7 @@ public class EleveDAO implements DAO<Eleve> {
                     + "Methode : seq_id_curr\n"
                     + "Exception : " + exception);
         }
-       
+
         System.out.println("sequence curr  "+seq);
         return seq;
     }

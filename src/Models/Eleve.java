@@ -27,7 +27,7 @@ public class Eleve {
     private SimpleIntegerProperty ref_c;
     private SimpleIntegerProperty ref_p;
     private SimpleObjectProperty<Date> dateIns;
-    
+
     private BooleanProperty cocher = new SimpleBooleanProperty(false);
 
 
@@ -48,11 +48,11 @@ public class Eleve {
         this.ref_p = new SimpleIntegerProperty();
         this.dateIns = new SimpleObjectProperty<Date>();
 
-        
+
     }
 
 
-    public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, int tel, int tel2, String email, int ref_niv, int ref_c, int ref_p, Date dateIns) {
+    public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, String email, int ref_niv, int ref_c, int ref_p, Date dateIns) {
         this.id_e = new SimpleIntegerProperty(id_e);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
@@ -67,7 +67,7 @@ public class Eleve {
         this.ref_c = new SimpleIntegerProperty(ref_c);
         this.ref_p = new SimpleIntegerProperty(ref_p);
         this.dateIns = new SimpleObjectProperty<Date>(dateIns);
-        
+
     }
 
     // getters
@@ -75,8 +75,8 @@ public class Eleve {
     public int getId_e() {
         return id_e.get();
     }
-    
-    
+
+
 
     public String getNom() {
         return nom.get();
@@ -126,12 +126,12 @@ public class Eleve {
     public int getRef_p() {
         return ref_p.get();
     }
-    
+
     public Date getDateIns() {
         return dateIns.get();
     }
-    
-    
+
+
 
     // Setters
 
@@ -187,11 +187,11 @@ public class Eleve {
     public void setRef_p(int ref_p) {
         this.ref_p.set(ref_p);
     }
-    
+
     public void setDateIns(Date dateIns) {
         this.dateIns.set(dateIns);
     }
-    
+
     //Property
     public SimpleIntegerProperty id_eProperty(){
         return id_e;
@@ -243,7 +243,7 @@ public class Eleve {
     public SimpleObjectProperty<Date> dateInsProperty(){
         return dateIns;
     }
-    
+
     //cocher property
      public BooleanProperty cocherProperty() {
             return cocher;
@@ -256,8 +256,8 @@ public class Eleve {
         public boolean isCocher() {
             return cocher.get();
         }
-      
-   
+
+
 
 
     // methodes utiles...
@@ -312,5 +312,5 @@ public class Eleve {
     public String toString() {
         return "Eleve{" + "id_e=" + id_e.toString() + ", nom=" + nom.toString() + ", prenom=" + prenom + ", adresse=" + adresse + ", ville=" + ville + ", codeP=" + codeP + ", dateNaiss=" + dateNaiss + ", lieuNaiss=" + lieuNaiss + ", sex=" + sex + ", email=" + email + ", ref_niv=" + ref_niv + ", ref_c=" + ref_c + ", ref_p=" + ref_p + ", dateIns=" + dateIns + '}';
     }
-   
+
 }

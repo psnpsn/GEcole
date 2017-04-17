@@ -9,11 +9,19 @@ import DAO.DAO;
 import DAO.EleveDAO;
 import GUI.LoginController;
 import Models.Eleve;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,12 +35,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -61,8 +71,8 @@ public class GestionEleveController implements Initializable {
     @FXML
     private TableColumn<Eleve, String> modifCol;
     @FXML
-    private TableColumn<Eleve, Boolean> cochCol;
-    
+    private TableColumn<Eleve, String> cochCol;
+
     private ObservableList<Eleve> masterData = FXCollections.observableArrayList();
     @FXML
     private JFXTextField idEleveF;
@@ -77,16 +87,9 @@ public class GestionEleveController implements Initializable {
     @FXML
     private JFXComboBox<?> classeF;
 
-    public static int id_eleve_a_editer = -1 ;
+private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
 
-
-    /**
-     * Initializes the controller class.
-     */
-
-    Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_editer_eleve
-            = //
-            new Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>>() {
+Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_editer_eleve = new Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>>() {
         @Override
         public TableCell call(final TableColumn param) {
             final TableCell cell = new TableCell() {
@@ -98,16 +101,29 @@ public class GestionEleveController implements Initializable {
                         setText(null);
                         setGraphic(null);
                     } else {
-                        final Button editer = new Button("Modifier");
+                        final JFXButton editer = new JFXButton("<Modifier>");
                         editer.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
                                 param.getTableView().getSelectionModel().select(getIndex());
                                 Eleve item = tableView.getSelectionModel().getSelectedItem();
                                 if (item != null) {
-                                    id_eleve_a_editer = item.getId_e();
-                                    click_modifier();
-
+                                    Node source = (Node) event.getSource();
+                                    Scene scene = (Scene) source.getScene();
+                                    BorderPane border = (BorderPane) scene.getRoot();
+                                    try {//
+                                        FXMLLoader loader = new FXMLLoader();
+                                        loader.setLocation(getClass().getResource("ajoutEleve.fxml"));
+                                        Parent root = loader.load();
+                                        ajoutEleveController controller = loader.getController();
+                                        border.setCenter((AnchorPane) root);
+                                        if (controller != null) {
+                                            controller.edit_eleve(item.getId_e());
+                                        }
+                                        else System.out.println("nul: ");
+                                    } catch (Exception exception) {
+                                        System.out.println("erreur i/o: " + exception);
+                                    }
                                 }
                             }
                         });
@@ -119,11 +135,57 @@ public class GestionEleveController implements Initializable {
             return cell;
         }
     };
+Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_select_eleve = new Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>>() {
+        @Override
+        public TableCell call(final TableColumn param) {
+            final TableCell cell = new TableCell() {
 
-
+                @Override
+                public void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        final JFXCheckBox check_box = new JFXCheckBox();
+                        check_box.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                if (check_box.isSelected()) {
+                                    selected_ids.add(getIndex());
+                                    param.getTableView().getSelectionModel().select(getIndex());
+                                    update_selection();
+                                } else {
+                                    selected_ids.remove(selected_ids.indexOf(getIndex()));
+                                }
+                                param.getTableView().getSelectionModel().clearSelection(getIndex());
+                                update_selection();
+                            }
+                        });
+                        setGraphic(check_box);
+                        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
+        refresh();
+    }
+
+        @FXML
+    private void user_selection(MouseEvent event) {
+        update_selection();
+    }
+
+    private void update_selection() {
+        tableView.getSelectionModel().clearSelection();
+        for (int i = 0; i < selected_ids.size(); i++) {
+            tableView.getSelectionModel().select(selected_ids.get(i));
+        }
     }
 
     @FXML
@@ -140,13 +202,12 @@ public class GestionEleveController implements Initializable {
     }
 
 
-    @FXML private void selection_eleve(MouseEvent event) {
-        ObservableList<Eleve> selected = tableView.getSelectionModel().getSelectedItems();
-                for (int i = 0; i < selected.size(); i++) {
-                    selected.get(i).setCocher(!selected.get(i).isCocher());
-                }
+    private void refresh(){
+        EleveDAO dao = new EleveDAO();
+        tableView.getItems().clear();
+        masterData = dao.getAll();
+        tableView.setItems(masterData);
     }
-
     @FXML
     private void click_retour(ActionEvent event) {
         try {
@@ -169,10 +230,10 @@ public class GestionEleveController implements Initializable {
         tableView.getItems().setAll(masterData);
 
         FilteredList<Eleve> filteredData = new FilteredList<>(masterData, p -> true);
-        
+
          nomEleveF.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(eleve -> {
-                
+
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
@@ -180,16 +241,16 @@ public class GestionEleveController implements Initializable {
                 String fullnameFilter = newValue.toLowerCase();
 
                 if (eleve.getNom().toLowerCase().contains(fullnameFilter)) {
-                    return true; 
+                    return true;
                 } else if (eleve.getPrenom().toLowerCase().contains(fullnameFilter)) {
-                    return true; 
+                    return true;
                 }
                 return false;
             });
         });
          idEleveF.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(eleve -> {
-                
+
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
@@ -198,30 +259,30 @@ public class GestionEleveController implements Initializable {
 
                 if (eleve.id_eProperty().toString().contains(idFilter)){
                     return true;
-                } 
+                }
                 return false;
             });
         });
-         
+
          dateNaissF.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(eleve -> {
-                
+
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
                 String dateFilter = newValue.replace("/","-");
                 System.out.println("dateFilte " + dateFilter);
-                
+
 
                 if (eleve.dateNaissProperty().toString().equals(dateFilter)){
                     return true;
-                } 
+                }
                 return false;
             });
         });
 
-        // 3. Wrap the FilteredList in a SortedList. 
+        // 3. Wrap the FilteredList in a SortedList.
         SortedList<Eleve> sortedData = new SortedList<>(filteredData);
 
         // 4. Bind the SortedList comparator to the TableView comparator.
@@ -229,7 +290,7 @@ public class GestionEleveController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         tableView.setItems(sortedData);
-        
+
 
     }
 
@@ -254,30 +315,56 @@ public class GestionEleveController implements Initializable {
 
     @FXML
     private void click_supp(ActionEvent event) {
+        if (tableView.getSelectionModel().getSelectedItems().size() > 0) {
+            EleveDAO dao = new EleveDAO();
+            ObservableList<Eleve> liste = tableView.getSelectionModel().getSelectedItems();
+            for (Eleve l : liste) {
+                dao.delete(l.getId_e());
+                try {
+                    Path path = FileSystems.getDefault().getPath("data/eleve/" + l.getId_e() + ".png");
+                    Files.deleteIfExists(path);
+                } catch (Exception exception) {
+                    System.out.println(exception);
+                }
+            }
+            refresh();
+        }
 
     }
 
     @FXML
     private void click_supptout(ActionEvent event) {
+        EleveDAO dao = new EleveDAO();
+        dao.delAll();
+        refresh();
+        try {
+            Files.walk(Paths.get("data/eleve/"))
+                    .filter(Files::isRegularFile)
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException exception) {
+            System.out.println(exception);
+        }
     }
 
     private void initCol() {
+        tableView.getSelectionModel().setCellSelectionEnabled(false);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         nomCol.setCellValueFactory(cellData -> cellData.getValue().fullnomProperty());
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
         sexCol.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
         dateinsCol.setCellValueFactory(cellData -> cellData.getValue().dateInsProperty());
         classeCol.setCellValueFactory(cellData -> cellData.getValue().ref_nProperty().asString());
-        cochCol.setCellFactory(CheckBoxTableCell.forTableColumn(cochCol));
-        cochCol.setCellValueFactory(cellData -> cellData.getValue().cocherProperty());
         modifCol.setCellFactory(callback_fn_editer_eleve);
+        cochCol.setCellFactory(callback_fn_select_eleve);
 
-        
+
     }
 
 
-         
+
     }
-        
+
 
 
 
