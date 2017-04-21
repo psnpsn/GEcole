@@ -26,8 +26,9 @@ public class SalleDAO implements DAO<Salle> {
                 while (resultat.next()) {
                     Salle salle = new Salle();
                     salle.setIdentifiant(resultat.getInt("ID_SALLE"));
-                    salle.setType_salle(resultat.getString("NOM"));
+                    salle.setType_salle(resultat.getString("TYPE"));
                     salle.setCapacite(resultat.getInt("CAPACITE"));
+                    salle.setDate_creation(resultat.getDate("DATEC"));
                     liste.add(salle);
                 }
                 ObservableList<Salle> list = FXCollections.observableArrayList(liste);
@@ -59,8 +60,8 @@ public class SalleDAO implements DAO<Salle> {
                              " VALUES ( SEQ_ID_S.NEXTVAL , ? , ? , ?)";
             Connection session = ODB.OracleDBSingleton.getSession();
             PreparedStatement statement = session.prepareStatement(requete);
-            statement.setString(1, ((Salle) instance).getType_salle());
-            statement.setInt(2, ((Salle) instance).getCapacite());
+            statement.setString(1, instance.getType_salle());
+            statement.setInt(2,  instance.getCapacite());
             statement.setDate(3, new java.sql.Date(instance.getDate_creation().getTime()));
             if (statement.executeUpdate() != 0) {
                     requete = "Select ID_SALLE from SALLE where rowid=(select max(rowid) from SALLE )";
@@ -101,18 +102,18 @@ public class SalleDAO implements DAO<Salle> {
     @Override
     public boolean update(Salle instance) {
         String  requete = "UPDATE SALLE SET   "
-                    + "NOM       =  ?  ,"
-                    + "TYPE    =  ?  ,"
-                    + "DATEC       =  ?"
-                    + "WHERE  ID_SALLE = ? ";
+                    + "TYPE        =  ?  ," // 1
+                    + "CAPACITE    =  ?  ," // 2
+                    + "DATEC       =  ?   "    // 2
+                    + "WHERE  ID_SALLE = ? "; // 3
         try {
             Connection session = ODB.OracleDBSingleton.getSession();
             PreparedStatement statement = session.prepareStatement(requete);
                 statement = session.prepareStatement(requete);
-                statement.setString(1, ((Salle) instance).getType_salle());
-                statement.setInt(2, ((Salle) instance).getCapacite());
+                statement.setString(1, instance.getType_salle());
+                statement.setInt(2, instance.getCapacite());
                 statement.setDate(3,new java.sql.Date(instance.getDate_creation().getTime()));
-                statement.setInt(4, ((Salle) instance).getIdentifiant());
+                statement.setInt(4, instance.getIdentifiant());
                 return (statement.executeUpdate() != 0);
             } catch (Exception exception) {
                 System.out.println("exception update salle:" + exception);

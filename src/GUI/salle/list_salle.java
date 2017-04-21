@@ -4,6 +4,9 @@ import DAO.SalleDAO;
 import Models.Salle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -45,6 +49,18 @@ public class list_salle implements Initializable {
     private TableColumn<Salle,String> colonne_cocher;
     private ObservableList<Salle> data = FXCollections.observableArrayList();
     private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
+    @FXML
+    private TableColumn<Salle,String> colonne_date_creation;
+    @FXML
+    private JFXTextField identifiant;
+    @FXML
+    private JFXTextField nom;
+    @FXML
+    private JFXDatePicker date_embauchement;
+    @FXML
+    private JFXComboBox<?> grade;
+    @FXML
+    private JFXTextField numero_matricule;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,6 +77,13 @@ public class list_salle implements Initializable {
         colonne_capacite.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(""+cellData.getValue().getCapacite());
         });
+        colonne_date_creation.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getDate_creation().toString());
+        });
+        Label firstNameColHeader = new Label("Cocher");
+      //  firstNameColHeader.setOnMouseClicked(e -> select_all());
+        colonne_cocher.setGraphic(firstNameColHeader);
+
         refresh();
     }
 Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_editer_salle = new Callback<TableColumn<Salle, String>, TableCell<Salle, String>>() {
@@ -115,7 +138,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
         Scene scene = (Scene) source.getScene();
         BorderPane border = (BorderPane) scene.getRoot();
         try {
-            border.setCenter(FXMLLoader.load(getClass().getResource("../main_screen/admin_main.fxml")));
+            border.setCenter(FXMLLoader.load(getClass().getResource("../mainwindow.fxml")));
         }catch (IOException exception) {
             System.out.println("erreur i/o: " + exception);
         }
@@ -166,7 +189,19 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
             System.out.println("erreur i/o: " + exception);
         }
     }
+/*
+    private void select_all(){
+      //  table_salle.getSelectionModel().clearSelection();
+        for (int i = 0; i < table_salle.getItems().size(); i++) {
+            selected_ids.add(i);
+            Salle item = table_salle.getItems().get(i);
 
+            //System.out.println(table_salle.getItems().get(i).getIdentifiant());
+
+        }
+       update_selection();
+    }
+*/
     @FXML
     private void chercher_salle(ActionEvent event) {
     }

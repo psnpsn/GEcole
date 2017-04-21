@@ -76,11 +76,12 @@
                     <children>
                         <TableView onMouseClicked="#user_selection"  fx:id="table_salle" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                             <columns>
-                                <TableColumn fx:id="colonne_identifiant" prefWidth="50.0" text="Identifiant" />
+                                <TableColumn fx:id="colonne_identifiant" prefWidth="100.0" text="Identifiant" />
                                 <TableColumn fx:id="colonne_nom" minWidth="0.0" prefWidth="100.0" text="Nom Salle" />
+                                <TableColumn fx:id="colonne_date_creation" minWidth="0.0" prefWidth="140.0" text="Date Construction" />
                                 <TableColumn fx:id="colonne_capacite" prefWidth="100.0" text="Capacite" />
                                 <TableColumn fx:id="colonne_modifier" editable="false" prefWidth="100.0" sortable="false" text="Modifier" />
-                                <TableColumn fx:id="colonne_cocher" editable="false" prefWidth="50.0" text="Cocher" />
+                                <TableColumn fx:id="colonne_cocher" editable="false" prefWidth="50.0" text="" />
                             </columns>
                         </TableView>
                         <GridPane>

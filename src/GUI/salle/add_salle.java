@@ -7,7 +7,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -56,7 +58,7 @@ public class add_salle implements Initializable {
         Scene scene = (Scene) source.getScene();
         BorderPane border = (BorderPane) scene.getRoot();
         try {
-            border.setCenter(FXMLLoader.load(getClass().getResource("../main_screen/admin_main.fxml")));
+            border.setCenter(FXMLLoader.load(getClass().getResource("../mainwindow.fxml")));
         } catch (IOException exception) {
             System.out.println("erreur i/o: " + exception);
         }
@@ -127,6 +129,9 @@ private int id_salle = -1;
         if (salle != null) {
             type_salle.setText(salle.getType_salle());
             capacite.setText(""+salle.getCapacite());
+            Instant instant = Instant.ofEpochMilli(salle.getDate_creation().getTime());
+            date_salle.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+
     }
     }
 
@@ -137,6 +142,8 @@ private int id_salle = -1;
             salle.setCapacite(Integer.parseInt(capacite.getText()));
             salle.setIdentifiant(x);
             salle.setType_salle(type_salle.getText());
+            LocalDate ds = date_salle.getValue();
+            salle.setDate_creation(Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
             dao.update(salle);
             goto_lister_salle(new ActionEvent(action, action));
         }
