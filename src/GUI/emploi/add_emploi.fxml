@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
@@ -58,7 +59,7 @@
                      <VBox.margin>
                         <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
                      </VBox.margin></JFXButton>
-                  <JFXButton onAction="#re_init" prefHeight="30.0" prefWidth="212.0" styleClass="optionbtn" text="Réinitialiser les champs">
+                  <JFXButton onAction="#check_conflicts" prefHeight="30.0" prefWidth="212.0" styleClass="optionbtn" text="Verifier Chevauchement">
                      <VBox.margin>
                         <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
                      </VBox.margin></JFXButton>
@@ -72,8 +73,8 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <ComboBox fx:id="classe" disable="true" layoutX="11.0" layoutY="261.0" prefHeight="25.0" prefWidth="116.0" promptText="Classe" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="niveau" layoutX="113.0" layoutY="10.0" onAction="#niveau_selection" prefHeight="25.0" prefWidth="79.0" promptText="Niveau" />
+                        <ComboBox fx:id="combobox_classe" disable="true" layoutX="11.0" layoutY="261.0" prefHeight="25.0" prefWidth="116.0" promptText="Classe" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="combobox_niveau" layoutX="113.0" layoutY="10.0" prefHeight="25.0" prefWidth="79.0" promptText="Niveau" />
                      </children>
                      <VBox.margin>
                         <Insets left="4.0" right="4.0" />
@@ -86,11 +87,11 @@
                   </Separator>
                   <Accordion>
                     <panes>
-                      <TitledPane animated="false" layoutY="6.0" prefHeight="180.0" prefWidth="202.0" text="Matieres">
+                      <TitledPane animated="false" layoutY="6.0" prefHeight="180.0" prefWidth="202.0" text="Profs / Matieres">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="200.0">
                                  <children>
-                                    <JFXListView fx:id="list_matieres" layoutX="4.0" layoutY="4.0" prefHeight="146.0" prefWidth="192.0" />
+                                    <JFXListView fx:id="listview_matieres" layoutX="4.0" layoutY="4.0" onDragDetected="#matiere_drag_detected" prefHeight="146.0" prefWidth="192.0" />
                                  </children></AnchorPane>
                         </content>
                            <padding>
@@ -101,7 +102,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <JFXListView fx:id="list_des_salles" layoutX="2.0" layoutY="6.0" onDragDetected="#detected" onDragDone="#done" prefHeight="169.0" prefWidth="197.0" />
+                                    <JFXListView fx:id="listview_salles" layoutX="2.0" layoutY="6.0" onDragDetected="#salle_drag_detected" onDragDone="#done" prefHeight="169.0" prefWidth="197.0" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -153,10 +154,15 @@
                <children>
                   <Pane GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle fx:id="lundi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="lundi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text fx:id="matiere" layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text fx:id="instituteur" layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text fx:id="salle" layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -281,175 +287,280 @@
                   </Pane>
                   <Pane layoutX="30.0" layoutY="40.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle fx:id="lundi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="lundi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="252.0" layoutY="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle fx:id="lundi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="lundi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="474.0" layoutY="40.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle fx:id="lundi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="lundi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="696.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Rectangle fx:id="mardi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mardi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="30.0" layoutY="122.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
-                        <Rectangle fx:id="mardi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mardi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="252.0" layoutY="122.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <children>
-                        <Rectangle fx:id="mardi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mardi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="474.0" layoutY="122.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <children>
-                        <Rectangle fx:id="mardi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mardi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="696.0" layoutY="122.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <Rectangle fx:id="mercredi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mercredi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="30.0" layoutY="204.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <children>
-                        <Rectangle fx:id="mercredi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mercredi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="252.0" layoutY="204.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <children>
-                        <Rectangle fx:id="mercredi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mercredi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="474.0" layoutY="204.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <children>
-                        <Rectangle fx:id="mercredi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="mercredi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="696.0" layoutY="204.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
-                        <Rectangle fx:id="jeudi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="jeudi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="30.0" layoutY="285.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <children>
-                        <Rectangle fx:id="jeudi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="jeudi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="252.0" layoutY="285.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <children>
-                        <Rectangle fx:id="jeudi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="jeudi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="474.0" layoutY="285.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <children>
-                        <Rectangle fx:id="jeudi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="jeudi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="696.0" layoutY="285.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
-                        <Rectangle fx:id="vendredi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="vendredi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="30.0" layoutY="366.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                      <children>
-                        <Rectangle fx:id="vendredi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="vendredi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="252.0" layoutY="366.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                      <children>
-                        <Rectangle fx:id="vendredi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="vendredi_3" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="474.0" layoutY="366.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
                      <children>
-                        <Rectangle fx:id="vendredi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="vendredi_4" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="696.0" layoutY="366.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <children>
-                        <Rectangle fx:id="samedi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="samedi_1" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <Pane layoutX="30.0" layoutY="447.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <children>
-                        <Rectangle fx:id="samedi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Rectangle fx:id="samedi_2" arcHeight="5.0" arcWidth="9.0" fill="#3bffcba0" height="67.0" layoutX="6.0" layoutY="7.0" onDragDropped="#salle_dropped" onDragEntered="#entered" onDragExited="#exited" onDragOver="#salle_dragged_over" stroke="BLACK" strokeType="INSIDE" width="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="19.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---------------------------------------" />
                         <Text layoutX="124.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-----------------" />
+                        <JFXButton layoutX="201.0" layoutY="6.0" maxHeight="13.0" maxWidth="13.0" minHeight="17.0" minWidth="17.0" onAction="#reset_cell" prefHeight="13.0" prefWidth="13.0" text="x">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </Pane>
-                  <Pane>
+                  <Pane onMouseClicked="#reset_all_cells">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cdbc7a" height="24.0" layoutX="4.0" layoutY="4.0" onMouseClicked="#re_init" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.8" width="24.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#da8888" height="24.0" layoutX="4.0" layoutY="4.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.8" width="24.0" />
                      </children>
                   </Pane>
                </children>
