@@ -112,7 +112,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
     public Instituteur find(int id) {
       Instituteur instituteur = null;
         try {
-            requete = "SELECT * FROM " + nomTable +" WHERE ( ID = ? )";
+            requete = "SELECT * FROM INST WHERE  ID = ? ";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             resultat = statement.executeQuery();
@@ -134,7 +134,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
                 instituteur.setEmail(resultat.getString("EMAIL"));
                 instituteur.setTel1(resultat.getInt("TEL"));
                 instituteur.setTel2(resultat.getInt("TEL2"));
-
+                return instituteur;
             }
 
         } catch (Exception exception) {

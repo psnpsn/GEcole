@@ -13,6 +13,13 @@ public class Emploi {
         id_heure = -1;
         id_day = -1;
     }
+     public Emploi(int day,int heure) {
+        id = -1;
+        id_salle = -1;
+        id_assiste = 1;
+        id_heure = heure;
+        id_day = day;
+    }
 
     public int getId() {
         return id;

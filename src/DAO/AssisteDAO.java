@@ -10,6 +10,7 @@ import ODB.OracleDBSingleton;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -33,7 +34,26 @@ public class AssisteDAO implements DAO<Assiste> {
 
     @Override
     public ObservableList<Assiste> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         ObservableList<Assiste> liste = FXCollections.observableArrayList();
+            try {
+            requete = "SELECT * FROM ASSISTE" ;
+            statement = session.prepareStatement(requete);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                Assiste a = new Assiste();
+                a.setRef_c(resultat.getInt("REF_C"));
+                a.setRef_i(resultat.getInt("REF_I"));
+                a.setRef_m(resultat.getString("REF_M"));
+                a.setId_assiste(resultat.getInt("ID_ASSISTE"));
+                liste.add(a);
+
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : AssisteDAO.java\n"
+                    + "Methode : getAll()\n"
+                    + "Exception : " + exception);
+        }
+        return liste;
     }
 
     @Override
@@ -65,8 +85,47 @@ public class AssisteDAO implements DAO<Assiste> {
 
     @Override
     public Assiste find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Assiste assiste = null;
+        try {
+            requete = "SELECT * FROM ASSISTE WHERE  ID_ASSISTE = ? ";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, id);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                valide = true;
+                assiste = new Assiste();
+                assiste.setId_assiste(resultat.getInt("ID_ASSISTE"));
+                assiste.setRef_i(Integer.parseInt(resultat.getString("REF_I")));
+                assiste.setRef_m(resultat.getString("REF_M"));
+                assiste.setRef_c(resultat.getInt("REF_C"));
+            }
+
+        } catch (Exception exception) {
+            System.out.println("Classe : AssisteDAO.java\n"
+                    + "Methode : findByID()\n"
+                    + "Exception : " + exception);
+        }
+        return assiste;
     }
+    
+      public String getNomMatiere(int id) {
+        try {
+            requete = "SELECT NOM FROM MATIERE WHERE  ID_MATIERE = ? ";
+            statement = session.prepareStatement(requete);
+            statement.setInt(1, id);
+            resultat = statement.executeQuery();
+            while (resultat.next()) {
+                valide = true;
+                return resultat.getString("NOM");
+            }
+        } catch (Exception exception) {
+            System.out.println("Classe : AssisteDAO.java\n"
+                    + "Methode : findByID()\n"
+                    + "Exception : " + exception);
+        }
+        return "";
+    }
+      
 
     @Override
     public boolean update(Assiste instance) {
