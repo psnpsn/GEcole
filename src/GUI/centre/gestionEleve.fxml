@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -72,7 +70,7 @@
                 <RowConstraints maxHeight="456.0" minHeight="10.0" prefHeight="413.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView onMouseClicked="#user_selection" fx:id="tableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <TableView fx:id="tableView" onMouseClicked="#user_selection" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <columns>
                         <TableColumn fx:id="nomCol" prefWidth="262.0" text="Eleve" />
                         <TableColumn fx:id="dateCol" prefWidth="170.0" text="Date de Naissance" />
@@ -95,20 +93,20 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <JFXTextField fx:id="idEleveF" prefHeight="25.0" prefWidth="296.0" promptText="Id élève" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <JFXTextField fx:id="idEleveF" labelFloat="true" prefHeight="25.0" prefWidth="296.0" promptText="Id élève" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="nomEleveF" prefHeight="6.0" prefWidth="344.0" promptText="Nom / Prénom" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <JFXTextField fx:id="nomEleveF" labelFloat="true" prefHeight="6.0" prefWidth="344.0" promptText="Nom / Prénom" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXDatePicker fx:id="dateNaissF" prefHeight="28.0" prefWidth="380.0" promptText="Date de Naissance" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <JFXDatePicker fx:id="dateInsF" prefHeight="28.0" prefWidth="380.0" promptText="Date d'Inscription" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <JFXComboBox fx:id="nivF" prefHeight="25.0" prefWidth="160.0" promptText="Niveau" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <JFXComboBox fx:id="classeF" prefHeight="25.0" prefWidth="160.0" promptText="Classe" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <JFXTextField fx:id="nivF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="Niveau" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <JFXTextField fx:id="dateNaissF" labelFloat="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Date de Naissance" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <JFXTextField fx:id="classeF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" promptText="Classe" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <JFXTextField fx:id="dateInsF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Date de d'Inscription" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>

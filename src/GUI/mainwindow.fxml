@@ -22,39 +22,13 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="169.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="301.0" minHeight="10.0" prefHeight="149.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="213.0" minHeight="10.0" prefHeight="140.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="111.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="301.0" minHeight="10.0" prefHeight="158.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="301.0" minHeight="10.0" prefHeight="158.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="213.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" graphicTextGap="2.0" onAction="#click_geleves" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Eleves" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <graphic>
-                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Réaliser les modifications nécessaire sur les éleves inscrits à l'école." textAlignment="CENTER" wrappingWidth="135.13671875">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Text>
-               </graphic>
-            </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_ginst" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Instituteurs" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <graphic>
-                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter, modifier, supprimer et chercher les instituteur de l'école." textAlignment="CENTER" wrappingWidth="135.13671875">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Text>
-               </graphic>
-            </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gclasses" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Classes" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <graphic>
-                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Créer des classes et gérer leurs contenus." textAlignment="CENTER" wrappingWidth="135.13671875">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Text>
-               </graphic>
-            </JFXButton>
-            <JFXButton  onAction="#click_gemplois" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Emplois" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gemplois" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Emplois" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer les emplois du temps de l'année  courante. Emplois de classes, instituteurs et examens." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -63,7 +37,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot des absences et justifications." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -72,7 +46,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton onAction="#click_gsalles" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Salles" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gsalles" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Salles" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerer les salles de l'ecole." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -82,6 +56,51 @@
                </graphic>
             </JFXButton>
             <Pane prefHeight="157.0" prefWidth="460.0" style="-fx-background-color: lightblue;" GridPane.columnSpan="3" />
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" graphicTextGap="2.0" onAction="#click_geleves" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Eleves" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Réaliser les modifications nécessaire sur les éleves inscrits à l'école." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_ginst" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Instituteurs" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter, modifier, supprimer et chercher les instituteur de l'école." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gclasses" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Classes" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Créer des classes et gérer leurs contenus." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gmatiere" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Matiere" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter vos modules et matières." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gnotes" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Notes" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Stocker les notes des élèves et appréciations." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
          </children>
       </GridPane>
    </children>

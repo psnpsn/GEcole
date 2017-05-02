@@ -182,18 +182,21 @@ public class Tests {
      */
     public static boolean email_field(JFXTextField field,Label label){
      if (field.getText().isEmpty()){
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         }
         if (!email(field.getText())){
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("L'email est incorrecte.");
             label.setVisible(true);
             return false;
         }else
         {
+            field.setUnFocusColor(Color.GREEN);
             field.getStyleClass().add("txtfield");
             field.getStyleClass().remove("fielderror");
             label.setVisible(false);
@@ -207,12 +210,14 @@ public class Tests {
     }
     public static boolean txt_field(JFXTextField field,Label label,int max,boolean chiffre,boolean empty){
         if (!empty && field.getText().isEmpty()){
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         }
         if (!txt(field.getText(), max, chiffre,empty)){
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             if (!chiffre){
             label.setText("Que des lettres, de longueur maximale "+max+".");
@@ -221,6 +226,7 @@ public class Tests {
             return false;
         }else
         {
+            field.setUnFocusColor(Color.GREEN);
             field.getStyleClass().add("txtfield");
             field.getStyleClass().remove("fielderror");
             label.setVisible(false);
@@ -230,18 +236,21 @@ public class Tests {
     }
         public static boolean telephone_field(JFXTextField field,Label label){
         if (field.getText().isEmpty()){
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         }
         if (!telephone(field.getText())){
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Numéro de 8 Chiffres.");
             label.setVisible(true);
             return false;
         }else
         {
+            field.setUnFocusColor(Color.GREEN);
             field.getStyleClass().add("txtfield");
             field.getStyleClass().remove("fielderror");
             label.setVisible(false);
@@ -265,6 +274,7 @@ public class Tests {
         public static boolean date_naissance_field(JFXDatePicker field,Label label){
         java.time.LocalDate d = field.getValue();
         if (d==null){
+            field.setDefaultColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
@@ -272,11 +282,13 @@ public class Tests {
         }
         if (!date_naissance(java.util.Date.from(d.atStartOfDay().atZone(java.time.ZoneId.systemDefault()).toInstant()))){
             field.getStyleClass().add("fielderror");
+            field.setDefaultColor(Color.RED);
             label.setText("Choisir une date antérieur.");
             label.setVisible(true);
             return false;
         }else
         {
+            field.setDefaultColor(Color.GREEN);
             field.getStyleClass().add("txtfield");
             field.getStyleClass().remove("fielderror");
             label.setVisible(false);
@@ -290,17 +302,20 @@ public class Tests {
 
     public static boolean code_postal_field(JFXTextField field, Label label) {
         if (field.getText().isEmpty()) {
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Code Postal obligatoire.");
             label.setVisible(true);
             return false;
         }
         if (!code_postal(field.getText())) {
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("4 Chiffres.");
             label.setVisible(true);
             return false;
         } else {
+            field.setUnFocusColor(Color.GREEN);
             field.getStyleClass().add("txtfield");
             field.getStyleClass().remove("fielderror");
             label.setVisible(false);
@@ -310,11 +325,13 @@ public class Tests {
 
     public static boolean ville_field(JFXComboBox field, Label label) {
         if (field.getSelectionModel().getSelectedIndex() == -1) {
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Ville obligatoire.");
             label.setVisible(true);
             return false;
         } else {
+            field.setUnFocusColor(Color.GREEN);
             field.getStyleClass().add("txtfield");
             field.getStyleClass().remove("fielderror");
             label.setVisible(false);
@@ -323,13 +340,16 @@ public class Tests {
     }
     public static boolean niveau_field(JFXComboBox field, Label label) {
         if (field.getSelectionModel().getSelectedIndex() == -1) {
+            field.setUnFocusColor(Color.RED);
             field.getStyleClass().add("fielderror");
             label.setText("Champ obligatoire.");
             label.setVisible(true);
             return false;
         } else if (field.getSelectionModel().getSelectedIndex() > field.getItems().size()) {
+            field.setUnFocusColor(Color.RED);
             return false;
         } else {
+                field.setUnFocusColor(Color.GREEN);
                 field.getStyleClass().add("txtfield");
                 field.getStyleClass().remove("fielderror");
                 label.setVisible(false);
@@ -369,6 +389,28 @@ public class Tests {
             return false;
         }
         return true;
+    }
+  public static boolean capacite_field(JFXTextField field, Label label) {
+        if (field.getText().isEmpty()) {
+            field.setUnFocusColor(Color.RED);
+            field.getStyleClass().add("fielderror");
+            label.setText("Capacité obligatoire.");
+            label.setVisible(true);
+            return false;
+        }
+        if (!field.getText().matches("^[0-9]{2}$")) {
+            field.setUnFocusColor(Color.RED);
+            field.getStyleClass().add("fielderror");
+            label.setText("2 Chiffres.");
+            label.setVisible(true);
+            return false;
+        } else {
+            field.setUnFocusColor(Color.GREEN);
+            field.getStyleClass().add("txtfield");
+            field.getStyleClass().remove("fielderror");
+            label.setVisible(false);
+            return true;
+        }
     }
 
 }

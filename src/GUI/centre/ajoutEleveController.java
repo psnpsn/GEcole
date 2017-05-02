@@ -31,6 +31,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import static javafx.print.PrintColor.COLOR;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -38,6 +39,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -118,6 +120,10 @@ public class ajoutEleveController implements Initializable {
     private JFXComboBox<String> classe;
     private ObservableList<Classe> ob_class_list;
     private ObservableList<Eleve> ob_eleve_list;
+    @FXML
+    private JFXButton pressedbtn;
+    @FXML
+    private Label idLabel;
 
 
     @Override
@@ -200,7 +206,10 @@ public class ajoutEleveController implements Initializable {
     }
     public void edit_eleve(int x) {
 
-        action.setText("Mod");
+        action.setText("Modifier");
+        pressedbtn.setStyle("maintbn");
+        idLabel.setVisible(true);
+        idLabel.setText(idLabel.getText()+x);
         id_el = x;
         action.setOnAction((e) -> {
             update_eleve(x);
@@ -221,8 +230,7 @@ public class ajoutEleveController implements Initializable {
             }
             email.setText(eleve.getEmail());
             ville.setValue(eleve.getVille());
-            if (eleve.getRef_niv() != 0 && eleve.getRef_niv()!=-1)
-            niveau.setValue(""+eleve.getRef_niv());
+            niveau.setValue(Integer.toString(eleve.getRef_niv()));
             code_postal.setText("" + eleve.getCodeP());
             lieu_naissance.setText(eleve.getLieuNaiss());
             ParentDAO daop = new ParentDAO();

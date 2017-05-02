@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import java.net.URL?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.inst.ajoutInstController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.inst.ajoutInstController">
        <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -98,8 +89,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <JFXTextField fx:id="nom" promptText="Nom*" />
@@ -126,27 +115,27 @@
                   <JFXDatePicker fx:id="date_embauchement" prefHeight="22.0" prefWidth="370.0" promptText="Date d'embauchement*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="telephone_1" promptText="Telephone 1*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="telephone_2" promptText="Telephone 2*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Label styleClass="legendtext" text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.rowIndex="11">
+                  <Label styleClass="legendtext" text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.rowIndex="9">
                      <font>
                         <Font size="9.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="image" fitHeight="159.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                  <ImageView fx:id="image" fitHeight="159.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <image>
                         <Image url="@default.jpg" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="15.0" />
+                        <Insets />
                      </GridPane.margin>
                   </ImageView>
-                  <JFXTextField fx:id="nom_image" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="123.0" promptText="Choisir le fichier" GridPane.columnIndex="2" GridPane.rowIndex="10" GridPane.valignment="BOTTOM">
+                  <JFXTextField fx:id="nom_image" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="123.0" promptText="Choisir le fichier" GridPane.columnIndex="2" GridPane.rowIndex="8" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="14.0" />
+                        <Insets />
                      </GridPane.margin>
                   </JFXTextField>
-                  <Button alignment="TOP_CENTER" minHeight="13.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#ouvrir_image" prefHeight="22.0" prefWidth="46.0" text="..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="BOTTOM">
+                  <Button alignment="TOP_CENTER" minHeight="13.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#ouvrir_image" prefHeight="22.0" prefWidth="46.0" text="..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets />
                      </GridPane.margin>
                      <font>
                         <Font name="Arial Bold Italic" size="12.0" />
@@ -253,6 +242,11 @@
                          </Label>
                      </children>
                   </GridPane>
+                  <Label fx:id="idLabel" prefHeight="87.0" prefWidth="180.0" text="ID Instituteur: " visible="false" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets left="15.0" />

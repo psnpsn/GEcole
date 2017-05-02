@@ -79,13 +79,13 @@ public class GestionEleveController implements Initializable {
     @FXML
     private JFXTextField nomEleveF;
     @FXML
-    private JFXDatePicker dateNaissF;
+    private JFXTextField dateNaissF;
     @FXML
-    private JFXDatePicker dateInsF;
+    private JFXTextField dateInsF;
     @FXML
-    private JFXComboBox<?> nivF;
+    private JFXTextField nivF;
     @FXML
-    private JFXComboBox<?> classeF;
+    private JFXTextField classeF;
 
 private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
 
@@ -173,7 +173,7 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
-        refresh();
+        
     }
 
         @FXML
@@ -227,7 +227,17 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
     private void click_chercher(ActionEvent event) {
         DAO elevedao = new EleveDAO();
         masterData = elevedao.getAll();
-        tableView.getItems().setAll(masterData);
+        tableView.setItems(masterData);
+        
+        nomEleveF.setText("");
+        idEleveF.setText("");
+        dateNaissF.setText("");
+        dateInsF.setText("");
+        nivF.setText("");
+        classeF.setText("");
+        
+        
+        
 
         FilteredList<Eleve> filteredData = new FilteredList<>(masterData, p -> true);
 
@@ -264,18 +274,66 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
             });
         });
 
-         dateNaissF.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+         dateNaissF.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(eleve -> {
 
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
-                String dateFilter = newValue.replace("/","-");
-                System.out.println("dateFilte " + dateFilter);
+                String idFilter = newValue;
 
+                if (eleve.id_eProperty().toString().contains(idFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+         
+         dateInsF.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(eleve -> {
 
-                if (eleve.dateNaissProperty().toString().equals(dateFilter)){
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String idFilter = newValue;
+
+                if (eleve.id_eProperty().toString().contains(idFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+         
+         nivF.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(eleve -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String idFilter = newValue;
+
+                if (eleve.id_eProperty().toString().contains(idFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+         
+         classeF.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(eleve -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String fullnameFilter = newValue.toLowerCase();
+
+                if (eleve.getNom().toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } else if (eleve.getPrenom().toLowerCase().contains(fullnameFilter)) {
                     return true;
                 }
                 return false;

@@ -29,6 +29,7 @@ public class SalleDAO implements DAO<Salle> {
                     salle.setType_salle(resultat.getString("TYPE"));
                     salle.setCapacite(resultat.getInt("CAPACITE"));
                     salle.setDate_creation(resultat.getDate("DATEC"));
+                    salle.setNom(resultat.getString("NOM"));
                     liste.add(salle);
                 }
                 ObservableList<Salle> list = FXCollections.observableArrayList(liste);
@@ -56,13 +57,14 @@ public class SalleDAO implements DAO<Salle> {
     @Override
     public int create(Salle instance) {
         try {
-            String requete = "INSERT INTO Salle (ID_SALLE , TYPE , CAPACITE , DATEC) " +
-                             " VALUES ( SEQ_ID_S.NEXTVAL , ? , ? , ?)";
+            String requete = "INSERT INTO Salle (ID_SALLE , TYPE , CAPACITE , DATEC , NOM) " +
+                             " VALUES ( SEQ_ID_S.NEXTVAL , ? , ? , ? , ?)";
             Connection session = ODB.OracleDBSingleton.getSession();
             PreparedStatement statement = session.prepareStatement(requete);
             statement.setString(1, instance.getType_salle());
             statement.setInt(2,  instance.getCapacite());
             statement.setDate(3, new java.sql.Date(instance.getDate_creation().getTime()));
+            statement.setString(4, instance.getNom());
             if (statement.executeUpdate() != 0) {
                     requete = "Select ID_SALLE from SALLE where rowid=(select max(rowid) from SALLE )";
                     statement = session.prepareStatement(requete);
@@ -104,8 +106,9 @@ public class SalleDAO implements DAO<Salle> {
         String  requete = "UPDATE SALLE SET   "
                     + "TYPE        =  ?  ," // 1
                     + "CAPACITE    =  ?  ," // 2
-                    + "DATEC       =  ?   "    // 2
-                    + "WHERE  ID_SALLE = ? "; // 3
+                    + "DATEC       =  ?  ,"    // 3
+                    + "NOM       =  ?   "    // 4
+                    + "WHERE  ID_SALLE = ? "; // 5
         try {
             Connection session = ODB.OracleDBSingleton.getSession();
             PreparedStatement statement = session.prepareStatement(requete);
@@ -113,7 +116,8 @@ public class SalleDAO implements DAO<Salle> {
                 statement.setString(1, instance.getType_salle());
                 statement.setInt(2, instance.getCapacite());
                 statement.setDate(3,new java.sql.Date(instance.getDate_creation().getTime()));
-                statement.setInt(4, instance.getIdentifiant());
+                statement.setString(4, instance.getNom());
+                statement.setInt(5, instance.getIdentifiant());
                 return (statement.executeUpdate() != 0);
             } catch (Exception exception) {
                 System.out.println("exception update salle:" + exception);

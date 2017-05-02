@@ -118,6 +118,7 @@ public class Eleve {
     public int getRef_niv() {
         return ref_niv.get();
     }
+    
 
     public int getRef_c() {
         return ref_c.get();

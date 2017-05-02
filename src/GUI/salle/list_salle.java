@@ -52,15 +52,13 @@ public class list_salle implements Initializable {
     @FXML
     private TableColumn<Salle,String> colonne_date_creation;
     @FXML
-    private JFXTextField identifiant;
-    @FXML
     private JFXTextField nom;
     @FXML
-    private JFXDatePicker date_embauchement;
+    private JFXTextField type;
     @FXML
-    private JFXComboBox<?> grade;
+    private JFXTextField dateS;
     @FXML
-    private JFXTextField numero_matricule;
+    private JFXTextField capacite;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -204,6 +202,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
 */
     @FXML
     private void chercher_salle(ActionEvent event) {
+        refresh();
     }
 
     @FXML

@@ -100,6 +100,26 @@
                         </JFXComboBox>
                         <Label fx:id="lcapacite" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="3" />
                         <Label fx:id="lniveau" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="5" />
+                        <Label fx:id="nomLabel" alignment="CENTER" prefHeight="53.0" prefWidth="230.0" text="Label">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nbLabel" alignment="CENTER" prefHeight="53.0" prefWidth="230.0" text="Nombre d'élève:" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nivLabel" alignment="CENTER" prefHeight="53.0" prefWidth="230.0" text="Niveau " GridPane.columnIndex="4">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nbLabel1" prefHeight="53.0" prefWidth="230.0" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                   <JFXTabPane fx:id="tabs" GridPane.rowIndex="1">

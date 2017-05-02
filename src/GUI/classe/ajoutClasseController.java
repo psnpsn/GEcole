@@ -48,6 +48,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import main_pack.Main_class;
 
@@ -184,6 +185,15 @@ public class ajoutClasseController implements Initializable {
             return cell;
         }
     };
+    @FXML
+    private Label nomLabel;
+    private Label idLabel;
+    @FXML
+    private Label nivLabel;
+    @FXML
+    private Label nbLabel;
+    @FXML
+    private Label nbLabel1;
     
     @FXML
     private void user_selection(MouseEvent event) {
@@ -448,12 +458,26 @@ public class ajoutClasseController implements Initializable {
         Classe classe = (Classe) dao.find(x);
         
         if (classe != null) {
-            nomClasse.setText(classe.getNom());
+            nomClasse.setVisible(false);
             nomClasse.setDisable(true);
-            capacite.setValue(classe.getCapacite());
+            capacite.setVisible(false);
             capacite.setDisable(true);
-            niveau.setValue(classe.getRef_niv());
+            niveau.setVisible(false);
             niveau.setDisable(true);
+            nomLabel.setText(x+" / "+classe.getNom());
+            nomLabel.setVisible(true);
+            nbLabel.setVisible(true);
+            if (classe.getNbE()==classe.getCapacite())
+            nbLabel1.setTextFill(Color.RED);
+            else nbLabel1.setTextFill(Color.GREEN);
+            nbLabel1.setText(""+classe.getNbE());
+            nbLabel1.setVisible(true);
+            if ((classe.getRef_niv()/10000)==1){
+                nivLabel.setText(""+classe.getRef_niv()/10000+"ère "+classe.getRef_niv()%10000+"-"+(classe.getRef_niv()%10000+1));
+            } else
+                nivLabel.setText(""+classe.getRef_niv()/10000+"ème "+classe.getRef_niv()%10000+"-"+(classe.getRef_niv()%10000+1));
+            
+            nivLabel.setVisible(true);
             
         }
     }
@@ -472,12 +496,26 @@ public class ajoutClasseController implements Initializable {
         Classe classe = (Classe) dao.find(x);
         
         if (classe != null) {
-            nomClasse.setText(classe.getNom());
+            nomClasse.setVisible(false);
             nomClasse.setDisable(true);
-            capacite.setValue(classe.getCapacite());
+            capacite.setVisible(false);
             capacite.setDisable(true);
-            niveau.setValue(classe.getRef_niv());
+            niveau.setVisible(false);
             niveau.setDisable(true);
+            nomLabel.setText(x+" / "+classe.getNom());
+            nomLabel.setVisible(true);
+            nbLabel.setVisible(true);
+            if (classe.getNbE()==classe.getCapacite())
+            nbLabel1.setTextFill(Color.RED);
+            else nbLabel1.setTextFill(Color.GREEN);
+            nbLabel1.setText(""+classe.getNbE());
+            nbLabel1.setVisible(true);
+            if ((classe.getRef_niv()/10000)==1){
+                nivLabel.setText(""+classe.getRef_niv()/10000+"ère "+classe.getRef_niv()%10000+"-"+(classe.getRef_niv()%10000+1));
+            } else
+                nivLabel.setText(""+classe.getRef_niv()/10000+"ème "+classe.getRef_niv()%10000+"-"+(classe.getRef_niv()%10000+1));
+            
+            nivLabel.setVisible(true);
             
         }
     }

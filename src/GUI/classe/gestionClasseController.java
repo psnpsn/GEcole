@@ -370,7 +370,7 @@ Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_sel
         nbCol.setCellValueFactory(cellData -> cellData.getValue().nbEProperty().asString());
         nivCol.setCellValueFactory(cellData -> cellData.getValue().nivProperty().asString());
         capaciteCol.setCellValueFactory(cellData -> cellData.getValue().capaciteProperty().asString());
-        anneeCol.setCellValueFactory(cellData -> cellData.getValue().anneeProperty().asString());
+        anneeCol.setCellValueFactory(cellData -> cellData.getValue().anneeSProperty());
         modifCol.setCellFactory(callback_fn_editer_classe);
         cochCol.setCellFactory(callback_fn_select_classe);
 

@@ -100,4 +100,30 @@ public class MainwindowController implements Initializable  {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    private void click_gmatiere(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("matiere/listMatiere.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void click_gnotes(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("note/ajoutNote.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

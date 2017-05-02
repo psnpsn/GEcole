@@ -2,6 +2,7 @@
 package GUI.salle;
 
 import DAO.SalleDAO;
+import GUI.Tests;
 import Models.Salle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -39,6 +40,10 @@ public class add_salle implements Initializable {
     private DatePicker date_salle;
     @FXML
     private Label ldate_salle;
+    @FXML
+    private JFXTextField nom;
+    @FXML
+    private Label lnom;
 
 
     @Override
@@ -82,7 +87,7 @@ public class add_salle implements Initializable {
             SalleDAO dao = new SalleDAO();
             LocalDate ds = date_salle.getValue();
             dao.create(new Salle(-1,type_salle.getText(),Integer.parseInt(capacite.getText()),
-            Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())));
+            Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),nom.getText()));
             //
             goto_lister_salle(new ActionEvent(action, action));
         }
@@ -93,31 +98,15 @@ public class add_salle implements Initializable {
         init();
     }
     private boolean val() {
-        ltype_salle.setVisible(false);
-        lcapacite.setVisible(false);
-        if (type_salle.getText().isEmpty()){
-            ltype_salle.setText("Le type de Salle ne doit pas etre vide");
-            ltype_salle.setVisible(true);
-            return false;
-        }
-        if (capacite.getText().isEmpty()){
-            lcapacite.setText("Capacite de doit pas etre vide");
-            lcapacite.setVisible(true);
-            return false;
-        }
-        if (!capacite.getText().chars().allMatch(Character::isDigit)){
-            lcapacite.setText("La Capacite d'une classe doit etre un chiffre");
-            lcapacite.setVisible(true);
-            return false;
-        }
-         if (Integer.parseInt(capacite.getText())<1){
-            lcapacite.setText("La Capacite doit etre un chiffre strictement positive");
-            lcapacite.setVisible(true);
-            return false;
-        }
-        return true;
+        boolean success = true;
+        success=(Tests.txt_field(nom, lnom, 10, true,false)&
+                Tests.txt_field(type_salle,ltype_salle,20,false,false)&
+                Tests.capacite_field(capacite,lcapacite)
+                );
+        return success;
     }
 private int id_salle = -1;
+
     void edit_salle(int x) {
         action.setText("Modifier Salle");
         id_salle = x;

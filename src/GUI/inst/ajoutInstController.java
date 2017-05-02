@@ -102,6 +102,12 @@ public class ajoutInstController implements Initializable {
     private Label lcode_postal;
 
     private int id_instituteur;
+    @FXML
+    private Label ltelephone_parent;
+    @FXML
+    private Label lemail_parent;
+    @FXML
+    private Label idLabel;
 
 
     @Override
@@ -302,6 +308,8 @@ public class ajoutInstController implements Initializable {
     public void edit_instituteur(int x) {
 
         action.setText("Modifier Instituteur");
+        idLabel.setVisible(true);
+        idLabel.setText(idLabel.getText()+x);
         id_instituteur = x;
         action.setOnAction((e) -> {
             update_instituteur(x);

@@ -99,6 +99,10 @@ public class Classe {
         return new SimpleIntegerProperty(ref_niv.get()%10000);
     }
     
+    public SimpleStringProperty anneeSProperty(){
+        return new SimpleStringProperty(""+ref_niv.get()%10000+"-"+(ref_niv.get()%10000+1));
+    }
+    
      public SimpleIntegerProperty nbEProperty(){
         return new SimpleIntegerProperty(nbE.get());
     }
