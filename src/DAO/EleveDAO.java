@@ -6,14 +6,18 @@ import ODB.OracleDBSingleton;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EleveDAO implements DAO<Eleve> {
 
-    private String            nomTable    = "ELEVE"    ;
-    private String            nomSequence = "SEQ_ID_E" ;
+    private final String            nomTable    = "ELEVE"    ;
+    private final String            nomSequence = "SEQ_ID_E" ;
     private String            requete     = ""         ;
     private Connection        session     = null       ;
     private PreparedStatement statement   = null       ;
@@ -38,29 +42,19 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setId_e(resultat.getInt("ID_ELEVE"));
                 eleve.setNom(resultat.getString("NOM"));
                 eleve.setPrenom(resultat.getString("PRENOM"));
+                eleve.setDateNaiss(resultat.getTimestamp("DATE_NAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEU_NAISS"));
+                eleve.setSex(resultat.getString("SEX"));
                 eleve.setAdresse(resultat.getString("ADRESSE"));
                 eleve.setVille(resultat.getString("VILLE"));
                 eleve.setCodeP(resultat.getInt("CODEP"));
-                eleve.setDateNaiss(resultat.getDate("DATENAISS"));
-                eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
-                eleve.setSex(resultat.getString("SEX"));
                 eleve.setEmail(resultat.getString("EMAIL"));
-                eleve.setRef_niv(resultat.getInt("REF_NIV"));
-                eleve.setRef_c(resultat.getInt("REF_C"));
+                eleve.setDateIns(resultat.getTimestamp("DATE_INS"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
-                eleve.setDateIns(resultat.getDate("DATEINS"));
-               System.out.println("PRINT2");
                 liste.add(eleve);
-
-                System.out.println(eleve.toString()+"SOP");
-
             }
-
-
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : getAll()\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         ObservableList<Eleve> list = FXCollections.observableArrayList(liste);
         return list;
@@ -74,10 +68,8 @@ public class EleveDAO implements DAO<Eleve> {
             statement = session.prepareStatement(requete);
            if ( statement.executeUpdate()!=0)
                 valide = true;
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : delAll()\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -86,8 +78,8 @@ public class EleveDAO implements DAO<Eleve> {
     public int create(Eleve instance) {
     seq = -1;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATENAISS , LIEUNAISS , SEX , EMAIL , REF_NIV , REF_C , REF_P ,DATEINS)  "
-                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , TO_DATE(SYSDATE, 'DD-MM-YYYY') )";
+            requete = "INSERT INTO " + nomTable + " (ID_ELEVE , NOM , PRENOM , ADRESSE , VILLE , CODEP , DATE_NAISS , LIEU_NAISS , SEX , EMAIL , REF_P ,DATE_INS)  "
+                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , SYSDATE )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setString(2, instance.getPrenom());
@@ -98,16 +90,12 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8,instance.getSex());
             statement.setString(9, instance.getEmail());
-            statement.setInt(10, instance.getRef_niv());
-            statement.setInt(11, instance.getRef_c());
-            statement.setInt(12, instance.getRef_p());
+            statement.setInt(10, instance.getRef_p());
             if (statement.executeUpdate() != 0) {
                 seq = seq_id_curr();
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : create(Eleve instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return seq;
@@ -130,19 +118,16 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setAdresse(resultat.getString("ADRESSE"));
                 eleve.setVille(resultat.getString("VILLE"));
                 eleve.setCodeP(resultat.getInt("CODEP"));
-                eleve.setDateNaiss(resultat.getDate("DATENAISS"));
-                eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
+                eleve.setDateNaiss(resultat.getTimestamp("DATE_NAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEU_NAISS"));
                 eleve.setSex(resultat.getString("SEX"));
                 eleve.setEmail(resultat.getString("EMAIL"));
-                eleve.setRef_niv(resultat.getInt("REF_NIV"));
-                eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
+                eleve.setDateIns(resultat.getTimestamp("DATE_INS"));
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : findByID()\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return eleve;
     }
@@ -157,12 +142,10 @@ public class EleveDAO implements DAO<Eleve> {
                     + "ADRESSE      =  ?  ,"
                     + "VILLE         =  ?  ,"
                     + "CODEP    =  ?  ,"
-                    + "DATENAISS =  ?  ,"
-                    + "LIEUNAISS =  ?  ,"
+                    + "DATE_NAISS =  ?  ,"
+                    + "LIEU_NAISS =  ?  ,"
                     + "SEX          =  ?  ,"
                     + "EMAIL  =  ?  ,"
-                    + "REF_NIV    =  ?  ,"
-                    + "REF_C    =  ?  ,"
                     + "REF_P   =  ? "
                     + "WHERE  ID_ELEVE = ? ";
             statement = session.prepareStatement(requete);
@@ -175,18 +158,14 @@ public class EleveDAO implements DAO<Eleve> {
             statement.setString(7, instance.getLieuNaiss());
             statement.setString(8, instance.getSex());
             statement.setString(9, instance.getEmail());
-            statement.setInt(10, instance.getRef_niv());
-            statement.setInt(11, instance.getRef_c());
-            statement.setInt(12, instance.getRef_p());
-            statement.setInt(13, instance.getId_e());
+            statement.setInt(10, instance.getRef_p());
+            statement.setInt(11, instance.getId_e());
 
             if(statement.executeUpdate()!=0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : update(Eleve instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -201,31 +180,28 @@ public class EleveDAO implements DAO<Eleve> {
             if (statement.executeUpdate() != 0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : delete(Eleve instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
 
     public boolean updateRef_c(Eleve instance) {
+        // a modifier !
     valide = false;
         try {
             requete = "UPDATE " + nomTable + " SET   "
                     + "REF_C    =  ?  "
                     + "WHERE  ID_ELEVE = ? ";
             statement = session.prepareStatement(requete);
-            statement.setInt(1, instance.getRef_c());
+          //  statement.setInt(1, instance.getRef_c());
             statement.setInt(2, instance.getId_e());
 
             if(statement.executeUpdate()!=0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : updateRef_c(Eleve instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -237,16 +213,13 @@ public class EleveDAO implements DAO<Eleve> {
                     + "REF_C    =  NULL  "
                     + "WHERE  ID_ELEVE = ? ";
             statement = session.prepareStatement(requete);
-            //statement.setString(1, "NULL");
             statement.setInt(1, instance.getId_e());
 
             if(statement.executeUpdate()!=0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : nullRef_c(Eleve instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -260,10 +233,8 @@ public class EleveDAO implements DAO<Eleve> {
                 seq=resultat.getInt("NEXTVAL");
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : seq_id_next\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("sequence nextval "+seq);
         return seq;
@@ -278,10 +249,8 @@ public class EleveDAO implements DAO<Eleve> {
                 seq=resultat.getInt("CURRVAL");
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : seq_id_curr\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         System.out.println("sequence curr  "+seq);
@@ -302,26 +271,16 @@ public class EleveDAO implements DAO<Eleve> {
                 eleve.setAdresse(resultat.getString("ADRESSE"));
                 eleve.setVille(resultat.getString("VILLE"));
                 eleve.setCodeP(resultat.getInt("CODEP"));
-                eleve.setDateNaiss(resultat.getDate("DATENAISS"));
-                eleve.setLieuNaiss(resultat.getString("LIEUNAISS"));
+                eleve.setDateNaiss(resultat.getDate("DATE_NAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEU_NAISS"));
                 eleve.setSex(resultat.getString("SEX"));
                 eleve.setEmail(resultat.getString("EMAIL"));
-                eleve.setRef_niv(resultat.getInt("REF_NIV"));
-                eleve.setRef_c(resultat.getInt("REF_C"));
                 eleve.setRef_p(resultat.getInt("REF_P"));
-                eleve.setDateIns(resultat.getDate("DATEINS"));
-               System.out.println("PRINT2");
+                eleve.setDateIns(resultat.getDate("DATE_INS"));
                 liste.add(eleve);
-
-                System.out.println(eleve.toString()+"SOP");
-
             }
-
-
-        } catch (Exception exception) {
-            System.out.println("Classe : EleveDAO.java\n"
-                    + "Methode : getAll()\n"
-                    + "Exception : " + exception);
+        }catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         ObservableList<Eleve> list = FXCollections.observableArrayList(liste);
         return list;

@@ -1,4 +1,4 @@
-package GUI.centre;
+package GUI.eleve;
 
 
 import DAO.ClasseDAO;
@@ -31,7 +31,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import static javafx.print.PrintColor.COLOR;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -39,7 +38,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -78,8 +76,7 @@ public class ajoutEleveController implements Initializable {
     private JFXTextField code_postal;
     @FXML
     private JFXComboBox<String> ville;
-    @FXML
-    private JFXComboBox<String> niveau;
+
     @FXML
     private Label lnom;
     @FXML
@@ -94,8 +91,7 @@ public class ajoutEleveController implements Initializable {
     private Label lville;
     @FXML
     private Label lcode_postal;
-    @FXML
-    private Label lniveau;
+
     @FXML
     private Label lemail;
     @FXML
@@ -115,11 +111,6 @@ public class ajoutEleveController implements Initializable {
     @FXML JFXButton action;
 
     private int id_el = -1,id_pa=-1;
-    private ArrayList<Classe> liste_des_classes;
-    @FXML
-    private JFXComboBox<String> classe;
-    private ObservableList<Classe> ob_class_list;
-    private ObservableList<Eleve> ob_eleve_list;
     @FXML
     private JFXButton pressedbtn;
     @FXML
@@ -134,29 +125,6 @@ public class ajoutEleveController implements Initializable {
         init();
     }
 
-    private void set_class(){
-        classe.getItems().clear();
-
-        ClasseDAO daoc = new ClasseDAO();
-        ob_class_list = daoc.getAll();
-        EleveDAO daoe = new EleveDAO();
-        ob_eleve_list = daoe.getAll();
-
-        for (int i = 0; i < ob_class_list.size(); i++) {
-            int count = 0;
-            for (int ei = 0; ei < ob_eleve_list.size(); ei++) {
-                if (ob_eleve_list.get(ei).getRef_c() == ob_class_list.get(i).getId_c()) {
-                    count++;
-                }
-            }
-            if (count < ob_class_list.get(i).getCapacite()
-                    && ob_class_list.get(i).getRef_niv()
-                    == Integer.parseInt(niveau.getSelectionModel().getSelectedItem())){
-                classe.getItems().add(ob_class_list.get(i).getNom()+" - "+count + "/"+ob_class_list.get(i).getCapacite());
-            }
-
-        }
-    }
     private void init(){
         date_naissance.getEditor().setEditable(false);
         date_naissance.setEditable(false);
@@ -172,11 +140,6 @@ public class ajoutEleveController implements Initializable {
         ville.setValue("");
         ville.setPromptText("Ville Naissance");
         lville.setVisible(false);
-        niveau.getSelectionModel().clearSelection();
-        niveau.setItems(FXCollections.observableArrayList("1","2","3","4","5","6"));
-        niveau.setValue("");
-        niveau.setPromptText("Niveau");
-        lniveau.setVisible(false);
         addresse.setText("");
         laddresse.setVisible(false);
         lieu_naissance.setText("");
@@ -207,7 +170,6 @@ public class ajoutEleveController implements Initializable {
     public void edit_eleve(int x) {
 
         action.setText("Modifier");
-        pressedbtn.setStyle("maintbn");
         idLabel.setVisible(true);
         idLabel.setText(idLabel.getText()+x);
         id_el = x;
@@ -230,7 +192,6 @@ public class ajoutEleveController implements Initializable {
             }
             email.setText(eleve.getEmail());
             ville.setValue(eleve.getVille());
-            niveau.setValue(Integer.toString(eleve.getRef_niv()));
             code_postal.setText("" + eleve.getCodeP());
             lieu_naissance.setText(eleve.getLieuNaiss());
             ParentDAO daop = new ParentDAO();
@@ -286,7 +247,7 @@ public class ajoutEleveController implements Initializable {
             if (id_el != -1) {
                 LocalDate d = date_naissance.getValue();
                 String sex = garcon.isSelected() ? "H" : "F";
-                Eleve eleve = new Eleve(id_el, nom.getText(), prenom.getText(), addresse.getText(),ville.getSelectionModel().getSelectedItem(),Integer.parseInt(code_postal.getText()) , Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),lieu_naissance.getText(), sex,  email.getText(), Integer.parseInt(niveau.getSelectionModel().getSelectedItem()),-1,id_pa , null);
+                Eleve eleve = new Eleve(id_el, nom.getText(), prenom.getText(), addresse.getText(),ville.getSelectionModel().getSelectedItem(),Integer.parseInt(code_postal.getText()) , Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),lieu_naissance.getText(), sex,  email.getText(), id_pa , null);
 
                 daoe.update(eleve);
                 try {
@@ -310,16 +271,7 @@ public class ajoutEleveController implements Initializable {
             if (id_parents != -1) {
                 EleveDAO daoe = new EleveDAO();
                 LocalDate d = date_naissance.getValue();
-                Eleve eleve = new Eleve(id_el, nom.getText(), prenom.getText(), addresse.getText(),ville.getSelectionModel().getSelectedItem(),Integer.parseInt(code_postal.getText()) , Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),lieu_naissance.getText(), (garcon.isSelected() ? "H" : "F"),  email.getText(), Integer.parseInt(niveau.getSelectionModel().getSelectedItem()),-1,id_parents , null);
-                if (classe.getSelectionModel().getSelectedIndex()!=-1){
-                    for (int i = 0;i < ob_class_list.size();i++)
-                    {
-                        if (ob_class_list.get(i).getNom().equals(classe.getSelectionModel().getSelectedItem()))
-                               {
-                            eleve.setRef_c(ob_class_list.get(i).getId_c());
-                        }
-                    }
-                }
+                Eleve eleve = new Eleve(id_el, nom.getText(), prenom.getText(), addresse.getText(),ville.getSelectionModel().getSelectedItem(),Integer.parseInt(code_postal.getText()) , Date.from(d.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),lieu_naissance.getText(), (garcon.isSelected() ? "H" : "F"),  email.getText(), id_parents , null);
                 int id_eleve = daoe.create(eleve);
                 if (id_eleve != -1) {
                     eleve.setRef_p(id_parents);
@@ -392,7 +344,6 @@ public class ajoutEleveController implements Initializable {
                 Tests.txt_field(addresse,laddresse,20,true,false)&
                 Tests.code_postal_field(code_postal,lcode_postal)&
                 Tests.ville_field(ville, lville)&
-                Tests.niveau_field(niveau,lniveau)&
                 Tests.txt_field(nom_pere,lnom_pere,20,false,false)&
                 Tests.txt_field(nom_mere,lnom_mere,20,false,false)&
                 Tests.txt_field(profession_pere,lprofession_pere,20,false,false)&
@@ -401,11 +352,5 @@ public class ajoutEleveController implements Initializable {
                 Tests.telephone_field(telephone_parents,ltelephone_parent)
                 );
         return success;
-    }
-
-    @FXML
-    private void niv_selected(ActionEvent event) {
-        classe.setDisable(false);
-        this.set_class();
     }
 }

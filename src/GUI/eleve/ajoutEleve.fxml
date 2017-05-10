@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.ajoutEleveController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.eleve.ajoutEleveController">
         <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -161,8 +161,7 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <JFXComboBox fx:id="niveau" labelFloat="true" onAction="#niv_selected" prefHeight="25.0" prefWidth="112.0" promptText="Niveau" />
-                        <JFXComboBox fx:id="classe" disable="true" labelFloat="true" layoutX="10.0" layoutY="19.0" prefHeight="27.0" prefWidth="106.0" promptText="Classe" GridPane.columnIndex="1" />
+
                      </children>
                   </GridPane>
                   <Label fx:id="lnom" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
@@ -190,11 +189,7 @@
                         <Insets left="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="lniveau" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
-                     <GridPane.margin>
-                        <Insets left="8.0" />
-                     </GridPane.margin>
-                  </Label>
+                 
                   <Label fx:id="lemail" contentDisplay="CENTER" prefHeight="20.0" prefWidth="189.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets left="8.0" />

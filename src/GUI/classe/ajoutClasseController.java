@@ -387,6 +387,7 @@ public class ajoutClasseController implements Initializable {
     }
     
     private void ajoutEleves(int id){
+        // a modifier !
         int i=0;
         boolean valide=false;
         Eleve eleve=new Eleve();
@@ -395,7 +396,7 @@ public class ajoutClasseController implements Initializable {
         while(i<selected_ids.size()){
             tableView.getSelectionModel().select(i);
             eleve = tableView.getSelectionModel().getSelectedItem();
-            eleve.setRef_c(id);
+           //  eleve.setRef_c(id);
             if(elevedao.updateRef_c(eleve))
                 valide=true;
             else valide=false;

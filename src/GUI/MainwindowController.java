@@ -35,7 +35,7 @@ public class MainwindowController implements Initializable  {
     @FXML
     void click_geleves(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("centre/gestionEleve.fxml");
+            URL loader = getClass().getResource("eleve/gestionEleve.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
 
             BorderPane border = Main_class.getRoot();

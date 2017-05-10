@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.centre;
+package GUI.eleve;
 
 import DAO.DAO;
 import DAO.EleveDAO;
@@ -21,11 +21,16 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -49,11 +54,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import main_pack.Main_class;
 
-/**
- * FXML Controller class
- *
- * @author DELL
- */
 public class GestionEleveController implements Initializable {
 
     @FXML
@@ -61,17 +61,15 @@ public class GestionEleveController implements Initializable {
     @FXML
     private TableColumn<Eleve, String> nomCol;
     @FXML
-    private TableColumn<Eleve, Date> dateCol;
+    private TableColumn<Eleve, String> dateCol;
     @FXML
     private TableColumn<Eleve, String> sexCol;
     @FXML
-    private TableColumn<Eleve, Date> dateinsCol;
-    @FXML
-    private TableColumn<Eleve, String> classeCol;
+    private TableColumn<Eleve, String> dateinsCol;
     @FXML
     private TableColumn<Eleve, String> modifCol;
     @FXML
-    private TableColumn<Eleve, String> cochCol;
+    private TableColumn<Eleve, String> cochCol,idCol;
 
     private ObservableList<Eleve> masterData = FXCollections.observableArrayList();
     @FXML
@@ -82,10 +80,6 @@ public class GestionEleveController implements Initializable {
     private JFXTextField dateNaissF;
     @FXML
     private JFXTextField dateInsF;
-    @FXML
-    private JFXTextField nivF;
-    @FXML
-    private JFXTextField classeF;
 
 private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
 
@@ -203,10 +197,7 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
 
 
     private void refresh(){
-        EleveDAO dao = new EleveDAO();
-        tableView.getItems().clear();
-        masterData = dao.getAll();
-        tableView.setItems(masterData);
+            click_chercher(new ActionEvent(nomCol,nomCol));
     }
     @FXML
     private void click_retour(ActionEvent event) {
@@ -233,8 +224,6 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
         idEleveF.setText("");
         dateNaissF.setText("");
         dateInsF.setText("");
-        nivF.setText("");
-        classeF.setText("");
         
         
         
@@ -283,7 +272,7 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
 
                 String idFilter = newValue;
 
-                if (eleve.id_eProperty().toString().contains(idFilter)){
+                if (eleve.dateNaissProperty().toString().contains(idFilter)){
                     return true;
                 }
                 return false;
@@ -299,47 +288,14 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
 
                 String idFilter = newValue;
 
-                if (eleve.id_eProperty().toString().contains(idFilter)){
+                if (eleve.dateInsProperty().toString().contains(idFilter)){
                     return true;
                 }
                 return false;
             });
         });
          
-         nivF.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(eleve -> {
-
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String idFilter = newValue;
-
-                if (eleve.id_eProperty().toString().contains(idFilter)){
-                    return true;
-                }
-                return false;
-            });
-        });
-         
-         classeF.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(eleve -> {
-
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String fullnameFilter = newValue.toLowerCase();
-
-                if (eleve.getNom().toLowerCase().contains(fullnameFilter)) {
-                    return true;
-                } else if (eleve.getPrenom().toLowerCase().contains(fullnameFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-
+ 
         // 3. Wrap the FilteredList in a SortedList.
         SortedList<Eleve> sortedData = new SortedList<>(filteredData);
 
@@ -377,7 +333,9 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
             EleveDAO dao = new EleveDAO();
             ObservableList<Eleve> liste = tableView.getSelectionModel().getSelectedItems();
             for (Eleve l : liste) {
+                System.out.println("suppression de "+l.getId_e()+" ..");
                 dao.delete(l.getId_e());
+                System.out.println("suppression ok");
                 try {
                     Path path = FileSystems.getDefault().getPath("data/eleve/" + l.getId_e() + ".png");
                     Files.deleteIfExists(path);
@@ -409,12 +367,22 @@ Callback<TableColumn<Eleve, String>, TableCell<Eleve, String>> callback_fn_selec
         tableView.getSelectionModel().setCellSelectionEnabled(false);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         nomCol.setCellValueFactory(cellData -> cellData.getValue().fullnomProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateNaissProperty());
+        dateCol.setCellValueFactory(cellData -> {
+            Date d = cellData.getValue().getDateNaiss();
+          return new SimpleStringProperty(String.valueOf(d).substring(0,String.valueOf(d).indexOf(" ")));  
+        });
         sexCol.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
-        dateinsCol.setCellValueFactory(cellData -> cellData.getValue().dateInsProperty());
-        classeCol.setCellValueFactory(cellData -> cellData.getValue().ref_nProperty().asString());
+        
+        dateinsCol.setCellValueFactory(cellData -> {
+          return new SimpleStringProperty(cellData.getValue().getSDateIns().substring(0,cellData.getValue().getSDateIns().indexOf(" ")));  
+        });
+        
         modifCol.setCellFactory(callback_fn_editer_eleve);
         cochCol.setCellFactory(callback_fn_select_eleve);
+        
+        idCol.setCellValueFactory( cellData -> {
+            return new SimpleStringProperty(""+cellData.getValue().getId_e());
+        });
 
 
     }
