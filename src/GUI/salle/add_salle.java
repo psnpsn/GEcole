@@ -86,9 +86,13 @@ public class add_salle implements Initializable {
         if(val()){
             SalleDAO dao = new SalleDAO();
             LocalDate ds = date_salle.getValue();
-            dao.create(new Salle(-1,type_salle.getText(),Integer.parseInt(capacite.getText()),
-            Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),nom.getText()));
-            //
+            Salle s = new Salle();
+            s.setIdentifiant(-1);
+            s.setCapacite(Integer.parseInt(capacite.getText()));
+            s.setDate_creation(Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            s.setNom(nom.getText());
+            s.setType_salle(type_salle.getText());
+            dao.create(s);
             goto_lister_salle(new ActionEvent(action, action));
         }
     }
@@ -116,6 +120,7 @@ private int id_salle = -1;
         SalleDAO dao = new SalleDAO();
         Salle salle = (Salle) dao.find(x);
         if (salle != null) {
+            nom.setText(salle.getNom());
             type_salle.setText(salle.getType_salle());
             capacite.setText(""+salle.getCapacite());
             Instant instant = Instant.ofEpochMilli(salle.getDate_creation().getTime());
@@ -128,11 +133,14 @@ private int id_salle = -1;
          if (val()) {
             SalleDAO dao = new SalleDAO();
             Salle salle = new Salle();
+            
             salle.setCapacite(Integer.parseInt(capacite.getText()));
             salle.setIdentifiant(x);
+            salle.setNom(nom.getText());
             salle.setType_salle(type_salle.getText());
             LocalDate ds = date_salle.getValue();
             salle.setDate_creation(Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            
             dao.update(salle);
             goto_lister_salle(new ActionEvent(action, action));
         }

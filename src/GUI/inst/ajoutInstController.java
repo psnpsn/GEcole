@@ -116,8 +116,7 @@ public class ajoutInstController implements Initializable {
         garcon.setToggleGroup(group);
         fille.setToggleGroup(group);
         new File("data/instituteur").mkdirs();
-        init();
-        
+        init();   
     }
 
     private void init() {

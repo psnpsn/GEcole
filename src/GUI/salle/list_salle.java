@@ -1,5 +1,6 @@
 package GUI.salle;
 
+import DAO.DAO;
 import DAO.SalleDAO;
 import Models.Salle;
 import com.jfoenix.controls.JFXButton;
@@ -14,6 +15,8 @@ import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,7 +43,7 @@ public class list_salle implements Initializable {
     @FXML
     private TableColumn<Salle,String> colonne_identifiant;
     @FXML
-    private TableColumn<Salle,String> colonne_nom;
+    private TableColumn<Salle,String> colonne_nom,colonne_type;
     @FXML
     private TableColumn<Salle,String> colonne_capacite;
     @FXML
@@ -64,12 +67,17 @@ public class list_salle implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         table_salle.getSelectionModel().setCellSelectionEnabled(false);
         table_salle.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        
         colonne_cocher.setCellFactory(callback_fn_select_salle);
         colonne_modifier.setCellFactory(callback_fn_editer_salle);
         colonne_identifiant.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(""+cellData.getValue().getIdentifiant());
         });
         colonne_nom.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getNom());
+        });
+        colonne_type.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getType_salle());
         });
         colonne_capacite.setCellValueFactory(cellData -> {
@@ -78,11 +86,9 @@ public class list_salle implements Initializable {
         colonne_date_creation.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getDate_creation().toString());
         });
-        Label firstNameColHeader = new Label("Cocher");
-      //  firstNameColHeader.setOnMouseClicked(e -> select_all());
-        colonne_cocher.setGraphic(firstNameColHeader);
-
         refresh();
+        init_filters();
+       
     }
 Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_editer_salle = new Callback<TableColumn<Salle, String>, TableCell<Salle, String>>() {
         @Override
@@ -200,10 +206,71 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
        update_selection();
     }
 */
-    @FXML
-    private void chercher_salle(ActionEvent event) {
-        refresh();
+    
+    private void init_filters(){
+        DAO sdao = new SalleDAO();
+        data = sdao.getAll();
+        table_salle.setItems(data);
+        nom.setText("");
+        capacite.setText("");
+        dateS.setText("");
+        type.setText("");
+        
+        FilteredList<Salle> filteredData = new FilteredList<>(data, p -> true);
+        
+        nom.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (salle.getNom().toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+        type.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (salle.getType_salle().toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+        capacite.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (String.valueOf(salle.getCapacite()).toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+         dateS.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (String.valueOf(salle.getDate_creation()).toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+         SortedList<Salle> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(table_salle.comparatorProperty());
+        table_salle.setItems(sortedData);
     }
+    
 
     @FXML
     private void supprimer_salle(ActionEvent event) {
