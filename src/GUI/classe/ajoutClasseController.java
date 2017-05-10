@@ -388,6 +388,7 @@ public class ajoutClasseController implements Initializable {
     
     private void ajoutEleves(int id){
         // a modifier !
+        
         int i=0;
         boolean valide=false;
         Eleve eleve=new Eleve();
