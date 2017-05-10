@@ -123,9 +123,11 @@ public class ajoutEleveController implements Initializable {
         garcon.setToggleGroup(group);
         fille.setToggleGroup(group);
         init();
+        new File("data/eleve").mkdirs();
     }
 
     private void init(){
+        
         date_naissance.getEditor().setEditable(false);
         date_naissance.setEditable(false);
         garcon.setSelected(true);
