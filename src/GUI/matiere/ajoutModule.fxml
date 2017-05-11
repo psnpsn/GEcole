@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.ajoutMatiereController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.ajoutModuleController">
         <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -45,13 +45,13 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton layoutX="21.0" layoutY="21.0" onAction="#ajoutMod" prefHeight="50.0" prefWidth="178.0" styleClass="mainbtn" text="Ajouter un Module">
+                  <JFXButton layoutX="21.0" layoutY="21.0" onAction="#listMat" prefHeight="50.0" prefWidth="178.0" styleClass="mainbtn" text="Ajouter un Module">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton fx:id="action" onAction="#ajouter_matiere" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Ajouter la matière">
+                  <JFXButton fx:id="action" onAction="#ajouter_matiere" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Ajouter ce Module">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
@@ -95,12 +95,11 @@
                   <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField fx:id="coef" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="189.0" promptText="Coeficient*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="lcoef" styleClass="labels" text="erreur" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin></Label>
-                  <JFXTextField fx:id="nom" labelFloat="true" promptText="Nom matière*" GridPane.columnIndex="1" />
+                  <JFXTextField fx:id="nom" labelFloat="true" promptText="Nom du Module*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="lnom" styleClass="labe" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets top="15.0" />
@@ -114,8 +113,7 @@
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <JFXTextArea fx:id="desc" prefHeight="244.0" prefWidth="408.0" promptText="Description" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2" />
-                  <JFXComboBox fx:id="module" prefHeight="25.0" prefWidth="230.0" promptText="Module*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXComboBox fx:id="niveau" prefHeight="25.0" prefWidth="299.0" promptText="Niveau*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </center>

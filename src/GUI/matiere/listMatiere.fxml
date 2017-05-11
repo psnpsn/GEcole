@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
@@ -17,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.listMatiereController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.listMatiereController">
     <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -75,17 +82,19 @@
                         <TableView fx:id="tableView" onMouseClicked="#user_selection" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                             <columns>
                                 <TableColumn fx:id="idCol" prefWidth="84.0" text="ID" />
-                                <TableColumn fx:id="nomCol" prefWidth="294.0" text="Nom matière" />
-                                <TableColumn fx:id="coefCol" minWidth="0.0" prefWidth="71.0" text="Coeficient" />
-                                <TableColumn fx:id="descCol" prefWidth="404.0" text="Description" />
-                                <TableColumn fx:id="modCol" editable="false" prefWidth="85.0" sortable="false" text="Modifier" />
-                                <TableColumn fx:id="cochCol" editable="false" prefWidth="61.0" text="Cocher" />
+                                <TableColumn fx:id="nomCol" prefWidth="177.0" text="Nom matière" />
+                                <TableColumn fx:id="coefCol" minWidth="0.0" prefWidth="135.0" text="Coeficient" />
+                                <TableColumn fx:id="descCol" prefWidth="256.0" text="Description" />
+                                <TableColumn fx:id="moduleCol" editable="false" prefWidth="119.0" sortable="false" text="Module" />
+                        <TableColumn fx:id="modifol" editable="false" prefWidth="162.0" sortable="false" text="Modifier" />
+                                <TableColumn fx:id="cochCol" editable="false" maxWidth="66.0" minWidth="-1.0" prefWidth="64.0" text="Cocher" />
                             </columns>
                         </TableView>
                         <GridPane>
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -101,6 +110,7 @@
                                         <Insets left="50.0" right="50.0" />
                                     </GridPane.margin>
                                 </JFXTextField>
+                        <JFXComboBox fx:id="module" prefHeight="25.0" prefWidth="264.0" promptText="Module" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                             </children>
                         </GridPane>
                     </children>

@@ -10,6 +10,7 @@ import GUI.LoginController;
 import GUI.Tests;
 import Models.Matiere;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -47,8 +48,9 @@ public class ajoutMatiereController implements Initializable {
     @FXML
     private JFXTextArea desc;
     private int id_mat=-1;
-    @FXML
     private Label idLabel;
+    @FXML
+    private JFXComboBox<String> module;
 
     /**
      * Initializes the controller class.
@@ -189,6 +191,18 @@ public class ajoutMatiereController implements Initializable {
                 conf.setContentText("Aucune matière n'a été modifié.");
                 conf.showAndWait();
             }
+        }
+    }
+
+    @FXML
+    private void ajoutMod(ActionEvent event) {
+                try {
+            URL loader = getClass().getResource("ajoutModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

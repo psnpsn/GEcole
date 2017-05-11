@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class OracleDBSingleton {
@@ -41,20 +43,17 @@ public class OracleDBSingleton {
             OracleDBSingleton.getSession();
         }
         if (OracleDBSingleton.session != null) {
-            sql_cmd = "SELECT * FROM ELEVE";
+            sql_cmd = "SELECT * FROM DUAL";
             try {
                 PreparedStatement statement = OracleDBSingleton.getSession().prepareStatement(sql_cmd);
                 ResultSet r = statement.executeQuery();
                 if (r.next()) {
                     System.out.println("Connection a la BD reussie :") ;
-                             //  + "Username = " + username );
                     return true;
                 }
                 return false;
-            } catch (SQLException exception) {
-                System.out.println("Classe : OracleDB.java\n"
-                        + "Methode :seConnecter()\n"
-                        + "Exception : " + exception);
+            } catch (SQLException ex) {
+               Logger.getLogger(OracleDBSingleton.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return false;
@@ -76,4 +75,19 @@ public class OracleDBSingleton {
         }
     }
 
+    public static int inst(int cin){
+        String requete = "SELECT ID_INST FROM INST WHERE NCIN = " + cin ;
+        try {
+            PreparedStatement ps = OracleDBSingleton.getSession().prepareStatement(requete);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                return rs.getInt("ID_INST");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OracleDBSingleton.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+        return -1;
+    }
 }

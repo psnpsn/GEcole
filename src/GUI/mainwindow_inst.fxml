@@ -11,8 +11,11 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="584.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainwindowinstController">
-    <stylesheets>
-        <URL value="@/GUI/CSS/mainwindow.css" />
+     <stylesheets>
+       <URL value="@css/dress.css" />
+       <URL value="@css/mainStage.css" />
+       <URL value="@css/mainwindow.css" />
+       <URL value="@css/menusdef.css" />
     </stylesheets>
     <children>
       <GridPane alignment="TOP_CENTER" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -27,7 +30,7 @@
           <RowConstraints maxHeight="213.0" minHeight="10.0" prefHeight="140.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" graphicTextGap="2.0" onAction="#goto_list_classes" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@../common/style.css" text="Mes Classes" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" graphicTextGap="2.0" onAction="#goto_list_classes" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC"  text="Mes Classes" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Voir la liste des Classes." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -36,7 +39,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#goto_list_emplois" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC" stylesheets="@../common/style.css" text="Mes Emplois" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#goto_list_emplois" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC"  text="Mes Emplois" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulter la liste des emplois." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -63,7 +66,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton disable="true" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@../common/style.css" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton disable="true" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot des absences et justifications." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -72,7 +75,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton disable="true"  alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@../common/style.css" text="Salles" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <JFXButton disable="true"  alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC"  text="Salles" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot de notes et des appréciations et génération des livrets scolaires." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>

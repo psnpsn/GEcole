@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +28,8 @@ public class LoginController implements Initializable {
     @FXML private Label lconnexion;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        username.setPromptText("Username/CIN");
+        password.setPromptText("Password/CIN");
         usertypes.setItems(FXCollections.observableArrayList("Administrateur","Instituteur"));
     }
 
@@ -72,10 +76,10 @@ public class LoginController implements Initializable {
             if (password.getText().equalsIgnoreCase("GECOLE")) {
                 try {
                     border.setCenter(FXMLLoader.load(getClass().getResource("mainwindow.fxml")));
-                } catch (IOException exception) {
-                    System.out.println("erreur i/o 2: " + exception);
-                }
-            }else{
+                } catch (Exception ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            } else {
                 lconnexion.setVisible(true);
                 lconnexion.setText("Combinaison username/mot de passe incorrectes.");
                 lconnexion.setStyle("-fx-background-color:red");
@@ -84,10 +88,12 @@ public class LoginController implements Initializable {
             }
         }
         if (usertypes.getSelectionModel().getSelectedIndex() == 1) {
+
             try {
+                System.out.println(ODB.OracleDBSingleton.inst(Integer.parseInt(username.getText())));
                 border.setCenter(FXMLLoader.load(getClass().getResource("mainwindow_inst.fxml")));
-            } catch (IOException exception) {
-                System.out.println("erreur i/o 1: " + exception);
+            } catch (Exception ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

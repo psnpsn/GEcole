@@ -54,9 +54,9 @@ public class MatiereDAO implements DAO<Matiere> {
                     liste.add(mat);
                 }
                 
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
+            } catch (SQLException ex) {
+            Logger.getLogger(MatiereDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
             ObservableList<Matiere> list = FXCollections.observableArrayList(liste);
                 return list;
             
@@ -70,10 +70,8 @@ public class MatiereDAO implements DAO<Matiere> {
             statement = session.prepareStatement(requete);
            if ( statement.executeUpdate()!=0)
                 valide = true;
-        } catch (Exception exception) {
-            System.out.println("Classe : MatiereDAO.java\n"
-                    + "Methode : delAll()\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(MatiereDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -84,19 +82,24 @@ public class MatiereDAO implements DAO<Matiere> {
         try {
             
             requete = "INSERT INTO Matiere (ID_MATIERE , NOM , COEF , DESCRIPTION) " +
-                             " VALUES ( " + seq_id_next() + " , ? , ? , ?)";
+                             " VALUES ( SEQ_ID_MODULE.NEXTVAL , ? , ? , ?)";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setFloat(2, instance.getCoef());
             statement.setString(3, instance.getDesc());
             if (statement.executeUpdate() != 0) {
-                seq=seq_id_curr();
-            }
+                    requete = "Select ID_MatierE from Matiere where rowid=(select max(rowid) from Matiere )";
+                    statement = session.prepareStatement(requete);
+                    ResultSet resultat = statement.executeQuery();
+                    while (resultat.next()) {
+                        return resultat.getInt("ID_MATIERE");
+                    }
+                }
                 
         } catch (SQLException ex) {
-            Logger.getLogger(SalleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MatiereDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return seq;
+        return -1;
     }
 
   
@@ -111,10 +114,8 @@ public class MatiereDAO implements DAO<Matiere> {
             if (statement.executeUpdate() != 0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : MatiereDAO.java\n"
-                    + "Methode : delete(matiere instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(MatiereDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -138,10 +139,8 @@ public class MatiereDAO implements DAO<Matiere> {
             if(statement.executeUpdate()!=0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : MatiereDAO.java\n"
-                    + "Methode : update(matiere instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(MatiereDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -164,49 +163,9 @@ public class MatiereDAO implements DAO<Matiere> {
                 
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : MatiereDAO.java\n"
-                    + "Methode : findByID()\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(MatiereDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mat;
     }
-
-    private int seq_id_next(){
-        try {
-            requete = "SELECT " +nomSequence+ ".nextval FROM DUAL";
-            statement = session.prepareStatement(requete);
-            resultat = statement.executeQuery();
-            while (resultat.next()) {
-                seq=resultat.getInt("NEXTVAL");
-            }
-
-        } catch (Exception exception) {
-            System.out.println("Classe : MatiereDAO.java\n"
-                    + "Methode : seq_id_next\n"
-                    + "Exception : " + exception);
-        }
-        System.out.println("sequence nextval "+seq);
-        return seq;
-    }
-
-    public int seq_id_curr(){
-    try {
-            String requete = "SELECT " +nomSequence+ ".currval FROM DUAL";
-            statement = session.prepareStatement(requete);
-            resultat = statement.executeQuery();
-            while (resultat.next()) {
-                seq=resultat.getInt("CURRVAL");
-            }
-
-        } catch (Exception exception) {
-            System.out.println("Classe : MatiereDAO.java\n"
-                    + "Methode : seq_id_curr\n"
-                    + "Exception : " + exception);
-        }
-
-        System.out.println("sequence curr  "+seq);
-        return seq;
-    }
-    
 }
