@@ -128,7 +128,7 @@ public class gestionClasseController implements Initializable {
                                         ajoutClasseController controller = loader.getController();
                                         border.setCenter((AnchorPane) root);
                                         if (controller != null) {
-                                            controller.ajouter_eleves(item.getId_c());
+                                           // controller.ajouter_eleves(item.getId_c());
                                         }
                                         else System.out.println("nul: ");
                                     } catch (Exception exception) {
@@ -153,7 +153,7 @@ public class gestionClasseController implements Initializable {
                                         ajoutClasseController controller = loader.getController();
                                         border.setCenter((AnchorPane) root);
                                         if (controller != null) {
-                                            controller.retirer_eleves(item.getId_c());
+                                          //  controller.retirer_eleves(item.getId_c());
                                         }
                                         else System.out.println("nul: ");
                                     } catch (Exception exception) {
@@ -390,7 +390,7 @@ Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_sel
     }
  
     private void refresh(){
-        ClasseDAO dao = new ClasseDAO();
+        DAO dao = new ClasseDAO();
         tableView.getItems().clear();
         masterData = dao.getAll();
         tableView.setItems(masterData);

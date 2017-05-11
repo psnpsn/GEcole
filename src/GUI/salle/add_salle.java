@@ -5,6 +5,7 @@ import DAO.SalleDAO;
 import GUI.Tests;
 import Models.Salle;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -20,31 +21,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
 public class add_salle implements Initializable {
 
-    @FXML
-    private JFXButton action;
-    @FXML
-    private JFXTextField capacite;
-    @FXML
-    private Label lcapacite;
-    @FXML
-    private JFXTextField type_salle;
-    @FXML
-    private Label ltype_salle;
-    @FXML
-    private DatePicker date_salle;
-    @FXML
-    private Label ldate_salle;
-    @FXML
-    private JFXTextField nom;
-    @FXML
-    private Label lnom;
-
+    @FXML private JFXButton action;
+    @FXML private JFXTextField nom,type_salle,capacite;
+    @FXML private JFXDatePicker date_salle;
+    @FXML private Label lnom,ltype_salle,lcapacite;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -55,6 +42,9 @@ public class add_salle implements Initializable {
       capacite.setText("");
       ltype_salle.setVisible(false);
       lcapacite.setVisible(false);
+      date_salle.setValue(LocalDate.now());
+      date_salle.getEditor().setEditable(false);
+      date_salle.setEditable(false);
     }
 
     @FXML
@@ -101,15 +91,60 @@ public class add_salle implements Initializable {
     private void re_init(ActionEvent event) {
         init();
     }
-    private boolean val() {
-        boolean success = true;
-        success=(Tests.txt_field(nom, lnom, 10, true,false)&
-                Tests.txt_field(type_salle,ltype_salle,20,false,false)&
-                Tests.capacite_field(capacite,lcapacite)
-                );
-        return success;
+    
+    private void set_e(JFXTextField n, Label l, String s) {
+        n.setUnFocusColor(Color.RED);
+        n.getStyleClass().add("fielderror");
+        l.setText(s);
+        l.setVisible(true);
     }
-private int id_salle = -1;
+    private void unset_e(JFXTextField n, Label l) {
+        n.setUnFocusColor(Color.GREEN);
+        n.getStyleClass().add("txtfield");
+        n.getStyleClass().remove("fielderror");
+        l.setText("");
+        l.setVisible(false);
+    }
+    private boolean val() {
+        unset_e(nom, lnom);
+        unset_e(type_salle, ltype_salle);
+        unset_e(capacite, lcapacite);
+        boolean success = true;
+        // nom salle
+        if (nom.getText().isEmpty() || nom.getText().matches("^\\s*$"))
+           {success = false;set_e(nom, lnom , "Nom de Salle ne doit pa etre vide");}
+        if (!nom.getText().matches("[a-zA-Z0-9]*"))
+            {success = false;set_e(nom, lnom , "Nom de Salle ne doit contenir que des lettres et des chiffres seulement");}
+        if (nom.getText().length()  > 19)
+            {success = false;set_e(nom, lnom , "Nom de Salle trop long!");}
+        // type salle
+        if (type_salle.getText().isEmpty() || type_salle.getText().matches("^\\s*$"))
+           {success = false;set_e(type_salle, ltype_salle , "Type de Salle ne doit pas etre vide.");}
+        
+        if (type_salle.getText().length() > 19)
+           {success = false;set_e(type_salle, ltype_salle , "Type de Salle trop long.");}
+        
+        if (!type_salle.getText().matches(".*[a-zA-Z]*") || type_salle.getText().matches("[0-9]*") )
+            {success = false;set_e(type_salle, ltype_salle , "Type de Salle ne doit contenir que des lettres.");}
+        
+        // capacite salle
+        if (capacite.getText().isEmpty() || capacite.getText().matches("^\\s*$"))
+            {success = false;set_e(capacite, lcapacite , "Capacite de Salle ne doit contenir que des chiffres.");}
+        else {
+            try {
+                int x = Integer.parseInt(capacite.getText());
+                if (x<1 || x > 99) 
+                    {success = false;set_e(capacite, lcapacite , "une Salle doit avoir une capacite dans l'intervalle  1 - 99 .");}
+
+                        
+            }catch(Exception ex){
+                {success = false;set_e(capacite, lcapacite , "Capacite de Salle ne doit contenir que des chiffres.");}
+            }
+        }
+       return success;
+    }
+    
+    private int id_salle = -1;
 
     void edit_salle(int x) {
         action.setText("Modifier Salle");
@@ -133,14 +168,12 @@ private int id_salle = -1;
          if (val()) {
             SalleDAO dao = new SalleDAO();
             Salle salle = new Salle();
-            
             salle.setCapacite(Integer.parseInt(capacite.getText()));
             salle.setIdentifiant(x);
             salle.setNom(nom.getText());
             salle.setType_salle(type_salle.getText());
             LocalDate ds = date_salle.getValue();
             salle.setDate_creation(Date.from(ds.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-            
             dao.update(salle);
             goto_lister_salle(new ActionEvent(action, action));
         }

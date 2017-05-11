@@ -1,11 +1,9 @@
 package GUI.eleve;
 
 
-import DAO.ClasseDAO;
 import DAO.EleveDAO;
 import DAO.ParentDAO;
 import GUI.Tests;
-import Models.Classe;
 import Models.Eleve;
 import Models.Parent;
 import com.jfoenix.controls.JFXButton;
@@ -21,11 +19,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -127,7 +123,7 @@ public class ajoutEleveController implements Initializable {
     }
 
     private void init(){
-        
+        date_naissance.setValue(LocalDate.now());
         date_naissance.getEditor().setEditable(false);
         date_naissance.setEditable(false);
         garcon.setSelected(true);

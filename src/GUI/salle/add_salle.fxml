@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -92,10 +93,9 @@
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin></Label>
-                  <DatePicker fx:id="date_salle" prefHeight="25.0" prefWidth="222.0" promptText="Date de Construction Salle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label fx:id="ldate_salle" layoutX="498.0" layoutY="92.0" styleClass="labels" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <JFXDatePicker fx:id="date_salle" prefHeight="25.0" prefWidth="222.0" promptText="Date de Construction Salle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <JFXTextField fx:id="nom" labelFloat="true" promptText="Nom de la Salle*" GridPane.columnIndex="1" />
-                  <Label fx:id="lnom" styleClass="labe" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2">
+                  <Label fx:id="lnom" styleClass="labels" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin>

@@ -1,64 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DAO;
 
 import Models.Classe;
-import ODB.OracleDBSingleton;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- *
- * @author DELL
- */
-public class ClasseDAO implements DAO<Classe> {
+public class ClasseDAO implements DAO<Classe>{
     
-     private String            nomTable    = "CLASSE"    ;
-    private String            nomSequence = "SEQ_ID_C" ;
-    private String            requete     = ""         ;
-    private String            requete2     = ""         ;
-    private Connection        session     = null       ;
-    private PreparedStatement statement   = null       ;
-    private PreparedStatement statement2   = null       ;
-    private ResultSet         resultat    = null       ;
-    private ResultSet         resultat2    = null       ;
-    private boolean           valide      = false      ;
-    private int               seq         =-1          ;
-    
-    
-    
-    public ClasseDAO(){
-      session = OracleDBSingleton.getSession();
-    }
-
     @Override
     public ObservableList<Classe> getAll() {
         ObservableList<Classe> liste = FXCollections.observableArrayList();
+        String requete  = "SELECT * FROM CLASSE";
         try {
-            requete = "SELECT * FROM " + nomTable ;
-            statement = session.prepareStatement(requete);
-            resultat = statement.executeQuery();
-            while (resultat.next()) {
-                Classe classe = new Classe();
-                classe.setId_c(resultat.getInt("ID_CLASSE"));
-                classe.setNom(resultat.getString("NOMC"));
-                classe.setCapacite(resultat.getInt("CAPACITE"));
-                classe.setRef_niv(resultat.getInt("REF_NIV")); 
-                classe.setNbE(countEleves(classe.getId_c()));
-                liste.add(classe);
-
-            }
-        } catch (Exception exception) {
-            System.out.println("Classe : ClasseDAO.java\n"
-                    + "Methode : getAll()\n"
-                    + "Exception : " + exception);
+            PreparedStatement ps = ODB.OracleDBSingleton.getSession().prepareStatement(requete);
+            ResultSet rs = ps.executeQuery();
+             while (rs.next()) {
+                 Classe c = new Classe();
+                 c.setId_c(rs.getInt("ID_CLASSE"));
+                 c.setNom(rs.getString("NOM"));
+                 c.setCapacite(rs.getInt("CAPACITE"));
+                 c.setNbE(rs.getInt("NB_ELEVES"));
+                 c.setRef_niv(rs.getInt("REF_NIV"));
+                 liste.add(c);
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return liste;
     }
@@ -70,140 +41,40 @@ public class ClasseDAO implements DAO<Classe> {
 
     @Override
     public int create(Classe instance) {
-        seq =-1 ;
+        int id = -1;
+        String requete = "INSERT INTO CLASSE ( ID_CLASSE , NOM , CAPACITE , REF_NIV ) VALUES ( SEQ_ID_C.NEXTVAL , ? , ? , ? )" ;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_CLASSE , NOMC , CAPACITE , REF_NIV )  "
-                      + "  VALUES ( " + seq_id_next() + " , ? , ? , ? )";
-            statement = session.prepareStatement(requete);
-            statement.setString(1, instance.getNom());
-            statement.setInt(2, instance.getCapacite());
-            statement.setInt(3, instance.getRef_niv());
-            
-            if (statement.executeUpdate() != 0) {
-                seq=seq_id_curr();
+            PreparedStatement p2,ps = ODB.OracleDBSingleton.getSession().prepareStatement(requete);
+            ps.setString(1,instance.getNom());
+            ps.setInt(2, instance.getCapacite());
+            ps.setInt(3, instance.getRef_niv());
+            if (ps.executeUpdate() > 0) {
+                p2 = ODB.OracleDBSingleton.getSession().prepareStatement("Select ID_CLASSE from CLASSE where rowid=(select max(rowid) from CLASSE) ");
+                ResultSet resultat = p2.executeQuery();
+                while (resultat.next()) {
+                    return resultat.getInt("ID_CLASSE");
+                }
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : Classe.java\n"
-                    + "Methode : create(Classe instance)\n"
-                    + "Exception : " + exception);
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return seq;
+     return id;   
     }
 
     @Override
     public Classe find(int id) {
-        Classe classe= null;
-        try {
-            requete = "SELECT * FROM " + nomTable +" WHERE ( ID_CLASSE = ? )";
-            statement = session.prepareStatement(requete);
-            statement.setInt(1, id);
-            resultat = statement.executeQuery();
-            while (resultat.next()) {
-                valide = true;
-                classe = new Classe();
-                classe.setId_c(resultat.getInt("ID_CLASSE"));
-                classe.setNom(resultat.getString("NOMC"));
-                classe.setCapacite(resultat.getInt("CAPACITE"));
-                classe.setRef_niv(resultat.getInt("REF_NIV"));
-                classe.setNbE(countEleves(classe.getId_c()));
-            }
-
-        } catch (Exception exception) {
-            System.out.println("Classe : ClasseDAO.java\n"
-                    + "Methode : findByID()\n"
-                    + "Exception : " + exception);
-        }
-        return classe;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean update(Classe instance) {
-        valide = false;
-        try {
-            requete = "UPDATE " + nomTable + " SET   "
-                    + "NOMC           =  ?  ,"
-                    + "CAPACITE       =  ?  ,"
-                    + "REF_NIV =  ?  "
-                    + "WHERE  ID_CLASSE = ? ";
-            statement = session.prepareStatement(requete);
-            statement.setString(1, instance.getNom());
-            statement.setInt(2, instance.getCapacite());
-            statement.setInt(3, instance.getRef_niv());
-            statement.setInt(4, instance.getId_c());
-            if(statement.executeUpdate()!=0){
-                valide = true;
-            }
-        } catch (Exception exception) {
-            System.out.println("Classe : ClasseDAO.java\n"
-                    + "Methode : update(Classe instance)\n"
-                    + "Exception : " + exception);
-        }
-        return valide;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    private int seq_id_next(){
-        try {
-            requete = "SELECT " +nomSequence+ ".nextval FROM DUAL";
-            statement = session.prepareStatement(requete);
-            resultat = statement.executeQuery();
-            while (resultat.next()) {
-                seq=resultat.getInt("NEXTVAL");
-            }
-
-        } catch (Exception exception) {
-            System.out.println("Classe : ClasseDAO.java\n"
-                    + "Methode : seq_id_next\n"
-                    + "Exception : " + exception);
-        }
-        System.out.println("sequence nextval "+seq);
-        return seq;
-    }
-    
-    public int seq_id_curr(){
-    try {
-            requete = "SELECT " +nomSequence+ ".currval FROM DUAL";
-            statement = session.prepareStatement(requete);
-            resultat = statement.executeQuery();
-            while (resultat.next()) {
-                seq=resultat.getInt("CURRVAL");
-            }
-
-        } catch (Exception exception) {
-            System.out.println("Classe : ClasseDAO.java\n"
-                    + "Methode : seq_id_curr\n"
-                    + "Exception : " + exception);
-        }
-       
-        System.out.println("sequence curr  "+seq);
-        return seq;
-    }
-    
-    public int countEleves(int id){
-        int nbE=0;
-    try {
-            requete2 = "SELECT COUNT(DISTINCT ID_ELEVE) AS "+"NBELEVES"+" FROM ELEVE WHERE REF_C="+id;
-            statement2 = session.prepareStatement(requete2);
-            resultat2 = statement2.executeQuery();
-            while (resultat2.next()) {
-                nbE=resultat2.getInt("NBELEVES");
-            }
-
-        } catch (Exception exception) {
-            System.out.println("Classe : ClasseDAO.java\n"
-                    + "Methode : countEleves\n"
-                    + "Exception : " + exception);
-        }
-       
-        System.out.println("Nombre d'eleves  "+nbE);
-        return nbE;
-    }
-    
-    
     
 }
