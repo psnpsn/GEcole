@@ -44,6 +44,7 @@ public class ajoutClasseController implements Initializable {
     private Label lcapacite;
     @FXML
     private Label lniveau;
+    private int id_classe = -1;
 
     /**
      * Initializes the controller class.
@@ -103,13 +104,13 @@ public class ajoutClasseController implements Initializable {
     @FXML
     private void click_ajouter_classe(ActionEvent event) {
         init_labls();
-        DAO dao = new ClasseDAO();
-        Classe c = new Classe();
-        c.setCapacite(Integer.parseInt(capacite.getText()));
-        c.setNom(nom.getText());
-        c.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem()+"2017"));
-        
         if (saisie_valide()) {
+            DAO dao = new ClasseDAO();
+            Classe c = new Classe();
+            c.setCapacite(Integer.parseInt(capacite.getText()));
+            c.setNom(nom.getText());
+            c.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem() + "2017"));
+
             int rs = dao.create(c);
             System.out.println("rs = " + rs);
             if (rs != -1) {
@@ -117,9 +118,34 @@ public class ajoutClasseController implements Initializable {
             }
         }
     }
-
+    private void update_classe(int x) {
+         if (saisie_valide()) {
+            ClasseDAO dao = new ClasseDAO();
+            Classe c = new Classe();
+            c.setCapacite(Integer.parseInt(capacite.getText()));
+            c.setId_c(x);
+            c.setNom(nom.getText());
+            c.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem()+"2017"));
+             if (dao.update(c)) {
+                 click_trouver(new ActionEvent(action, action));
+             }
+        }
+    }
     void edit_classe(int id_c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        id_classe = id_c;
+        
+        action.setText("Modifier Classe");
+        action.setOnAction((e) -> {
+            update_classe(id_c);
+        });
+        ClasseDAO dao = new ClasseDAO();
+        Classe c = dao.find(id_c);
+        if (c != null) {
+            nom.setText(c.getNom());
+            capacite.setText(""+c.getCapacite());
+            char niv = String.valueOf(c.getRef_niv()).charAt(0);
+            niveau.getSelectionModel().select(niv);
+    }
     }
 
     private void init_labls(){

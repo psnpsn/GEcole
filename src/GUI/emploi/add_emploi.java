@@ -83,9 +83,9 @@ public class add_emploi implements Initializable {
         init_label_events();
         init_emp();
         init_listview_salle();
-        init_listview_matiere();
+      //  init_listview_matiere();
         
-        init_combobox_niveaux();
+       // init_combobox_niveaux();
 
 
     }

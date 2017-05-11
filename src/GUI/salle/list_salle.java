@@ -5,8 +5,6 @@ import DAO.SalleDAO;
 import Models.Salle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +24,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -50,7 +47,7 @@ public class list_salle implements Initializable {
     private TableColumn<Salle,String> colonne_modifier;
     @FXML
     private TableColumn<Salle,String> colonne_cocher;
-    private ObservableList<Salle> data = FXCollections.observableArrayList();
+    private ObservableList<Salle> data = null;
     private ArrayList<Integer> selected_ids = new ArrayList<Integer>();
     @FXML
     private TableColumn<Salle,String> colonne_date_creation;
@@ -65,6 +62,7 @@ public class list_salle implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        data = FXCollections.observableArrayList();
         table_salle.getSelectionModel().setCellSelectionEnabled(false);
         table_salle.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
@@ -193,6 +191,17 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
             System.out.println("erreur i/o: " + exception);
         }
     }
+        @FXML
+    private void goto_lister_salle(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Scene scene = (Scene) source.getScene();
+        BorderPane border = (BorderPane) scene.getRoot();
+        try {
+            border.setCenter(FXMLLoader.load(getClass().getResource("list_salle.fxml")));
+        } catch (IOException exception) {
+            System.out.println("erreur i/o: " + exception);
+        }
+    }
 /*
     private void select_all(){
       //  table_salle.getSelectionModel().clearSelection();
@@ -280,7 +289,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
             liste.forEach((l) -> {
                 dao.delete(l.getIdentifiant());
             });
-            refresh();
+            goto_lister_salle(event);
         }
     }
 
@@ -288,9 +297,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
     private void supprimer_salles(ActionEvent event) {
         SalleDAO dao = new SalleDAO();
         dao.delAll();
-        table_salle.getItems().clear();
-        data = (ObservableList<Salle>) dao.getAll();
-        table_salle.setItems(data);
+        goto_lister_salle(event);
     }
 
     @FXML
@@ -306,9 +313,9 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
     }
 
     private void refresh() {
-        SalleDAO dao = new SalleDAO();
-        table_salle.getItems().clear();
-        data = (ObservableList<Salle>) dao.getAll();
-        table_salle.setItems(data);
+            SalleDAO dao = new SalleDAO();
+            table_salle.getItems().clear();
+            data = (ObservableList<Salle>) dao.getAll();
+            table_salle.setItems(data);
     }
 }

@@ -29,7 +29,7 @@
             <left>
                 <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
                     <children>
-                        <JFXButton prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" text="Trouver une Salle">
+                        <JFXButton onAction="#goto_lister_salle" prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" text="Trouver une Salle">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </VBox.margin>

@@ -36,7 +36,15 @@ public class ClasseDAO implements DAO<Classe>{
 
     @Override
     public boolean delAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean valide = false;
+        try {
+            PreparedStatement statement = ODB.OracleDBSingleton.getSession().prepareStatement("DELETE FROM CLASSE");
+           if ( statement.executeUpdate()!=0)
+                valide = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valide;
     }
 
     @Override
@@ -64,17 +72,65 @@ public class ClasseDAO implements DAO<Classe>{
 
     @Override
     public Classe find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Classe c = null;
+        try {
+            String requete = "SELECT * FROM CLASSE WHERE  ID_CLASSE = ? ";
+            PreparedStatement ps = ODB.OracleDBSingleton.getSession().prepareStatement(requete);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                c = new Classe();
+                c.setId_c(id);
+                c.setNom(rs.getString("NOM"));
+                c.setCapacite(rs.getInt("CAPACITE"));
+                c.setNbE(rs.getInt("NB_ELEVES"));
+                c.setRef_niv(rs.getInt("REF_NIV"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
     }
 
     @Override
     public boolean update(Classe instance) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Boolean valide = false;
+        try {
+            String requete = "UPDATE CLASSE SET   "
+                    + "NOM           =  ?  ,"
+                    + "CAPACITE        =  ?  ,"
+                    + "REF_NIV =  ?  ,"
+                    + "NB_ELEVES = ? "
+                    + "WHERE  ID_CLASSE = ? ";
+            PreparedStatement statement = ODB.OracleDBSingleton.getSession().prepareStatement(requete);
+            statement.setString(1, instance.getNom());
+            statement.setInt(2, instance.getCapacite());
+            statement.setInt(3, instance.getRef_niv());
+            statement.setInt(4, instance.getNbE());
+            statement.setInt(5, instance.getId_c());
+            if(statement.executeUpdate()!=0){
+                valide = true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valide;
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean valide = false;
+        try {
+            String requete = "DELETE FROM CLASSE WHERE ( ID_CLASSE = ? )";
+            PreparedStatement statement = ODB.OracleDBSingleton.getSession().prepareStatement(requete);
+            statement.setInt(1, id);
+            if (statement.executeUpdate() != 0) {
+                valide = true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valide;
     }
     
 }
