@@ -21,7 +21,6 @@ public class AppartientDAO {
     // assigne un ou plusieur eleve a une classe
     public int assigner(int id_classe, int ... id_eleves) {
         int s = 0;
-        EleveDAO daoe = new EleveDAO();
         for (int i = 0; i < id_eleves.length; i++) {
             String requete = "INSERT INTO APPARTIENT (REF_C  , REF_E ) VALUES ( ? , ? )";
             PreparedStatement ps;
@@ -34,6 +33,24 @@ public class AppartientDAO {
                 Logger.getLogger(AppartientDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //mettre_a_jour_nb_eleves();
+        return s;
+    }
+        public int retirer(int id_classe, int ... id_eleves) {
+        int s = 0;
+        for (int i = 0; i < id_eleves.length; i++) {
+            String requete = "DELETE FROM APPARTIENT WHERE ( REF_C  = ? AND  REF_E = ? )";
+            PreparedStatement ps;
+            try {
+                ps = session.prepareStatement(requete);
+                ps.setInt(1,id_classe);
+                ps.setInt(2, id_eleves[i]);
+                s += ps.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(AppartientDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        //mettre_a_jour_nb_eleves();
         return s;
     }
     

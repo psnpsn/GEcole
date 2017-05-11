@@ -7,13 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-//
-//There are two forms of singleton design pattern
-//
-//  Early Instantiation: creation of instance at load time.
-//  Lazy Instantiation : creation of instance when required. (X)
-//
-// Class Singleton simple
 
 public class OracleDBSingleton {
     private static String username;
@@ -22,6 +15,17 @@ public class OracleDBSingleton {
     private static String driver = "";
     private static String sql_cmd = "";
     private static Connection session;
+
+    public static void seDeconnecter() {
+        try {
+            if (OracleDBSingleton.getSession() != null) {
+                OracleDBSingleton.getSession().close();
+                System.out.println("Session Oracle Terminer.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erreur Terminaison Session Oracle. :" + ex.getMessage());
+        }
+    }
 
     private OracleDBSingleton() {
 
