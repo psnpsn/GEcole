@@ -1,21 +1,33 @@
 package main_pack;
 
+import Models.Eleve;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDFontLike;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 public class Main_class extends Application {
+
     // -1 = non connecter
     // 0 = administrateur
     // >0 = id de l'instituteur connecter
-    public static int user_id = -1 ; 
+    public static int user_id = -1;
 
     public static double xOffset = 0;
     public static double yOffset = 0;
@@ -29,8 +41,9 @@ public class Main_class extends Application {
         return root;
     }
 
-     @Override
+    @Override
     public void start(Stage primaryStage) throws IOException {
+        primaryStage.getIcons().add(new Image("GUI/image/icone.png"));
         stage = primaryStage;
         URL upper = getClass().getResource(MENU_UP);
         HBox barup = FXMLLoader.load(upper);
@@ -46,9 +59,18 @@ public class Main_class extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
     public static void main(String[] args) {
+        p();
         //ODB.OracleDBSingleton.seConnecter("jdbc:oracle:thin:@localhost:1521:XE","oracle.jdbc.driver.OracleDriver","gecole","gecole");
         launch(args);
     }
 
+    public static void p() {
+        Eleve e = new Eleve();
+        e.setId_e(26);
+        e.setNom("CHAKARON");
+        e.setPrenom("MAKARON");
+        Print.print_eleve(e);
+    }
 }

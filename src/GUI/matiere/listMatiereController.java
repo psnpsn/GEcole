@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.matiere;
 
 import DAO.MatiereDAO;
 import GUI.LoginController;
 import Models.Matiere;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -55,9 +51,7 @@ public class listMatiereController implements Initializable {
     @FXML
     private TableColumn<Matiere, String> coefCol;
     @FXML
-    private TableColumn<Matiere, String> descCol;
-    @FXML
-    private TableColumn<Matiere, String> modCol;
+    private TableColumn<Matiere, String> descCol,modCol;
     @FXML
     private TableColumn<Matiere, String> cochCol;
     @FXML
@@ -153,6 +147,12 @@ public class listMatiereController implements Initializable {
             return cell;
         }
     };
+    @FXML
+    private TableColumn<?, ?> moduleCol;
+    @FXML
+    private TableColumn<?, ?> modifol;
+    @FXML
+    private JFXComboBox<?> module;
      
      private void update_selection() {
         tableView.getSelectionModel().clearSelection();
@@ -282,10 +282,10 @@ public class listMatiereController implements Initializable {
     private void initCol() {
         idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asString());
         nomCol.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
-        coefCol.setCellValueFactory(cellData -> cellData.getValue().coefProperty().asString());
-        descCol.setCellValueFactory(cellData -> cellData.getValue().descProperty());
-        modCol.setCellFactory(callback_fn_editer_matiere);
-        cochCol.setCellFactory(callback_fn_select_matiere);
+         coefCol.setCellValueFactory(cellData -> cellData.getValue().coefProperty().asString());
+         descCol.setCellValueFactory(cellData -> cellData.getValue().descProperty());
+         modCol.setCellFactory(callback_fn_editer_matiere);
+      //  cochCol.setCellFactory(callback_fn_select_matiere);
     }
     
     private void refresh() {
@@ -293,6 +293,14 @@ public class listMatiereController implements Initializable {
         tableView.getItems().clear();
         masterData = (ObservableList<Matiere>) dao.getAll();
         tableView.setItems(masterData);
+    }
+
+    @FXML
+    private void listMod(ActionEvent event) {
+    }
+
+    @FXML
+    private void ajoutMod(ActionEvent event) {
     }
     
 }

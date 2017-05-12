@@ -76,6 +76,7 @@ public class LoginController implements Initializable {
             if (password.getText().equalsIgnoreCase("GECOLE")) {
                 try {
                     border.setCenter(FXMLLoader.load(getClass().getResource("mainwindow.fxml")));
+                    main_pack.Main_class.user_id = 0;
                 } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,7 +91,7 @@ public class LoginController implements Initializable {
         if (usertypes.getSelectionModel().getSelectedIndex() == 1) {
 
             try {
-                System.out.println(ODB.OracleDBSingleton.inst(Integer.parseInt(username.getText())));
+                main_pack.Main_class.user_id = ODB.OracleDBSingleton.inst(Integer.parseInt(username.getText()));
                 border.setCenter(FXMLLoader.load(getClass().getResource("mainwindow_inst.fxml")));
             } catch (Exception ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);

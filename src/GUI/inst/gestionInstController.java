@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -96,7 +98,8 @@ public class gestionInstController implements Initializable {
         });
         colonne_modifier.setCellFactory(callback_fn_editer_instituteur);
         colonne_cocher.setCellFactory(callback_fn_select_instituteur);
-        refresh();
+        
+        refresh();init_filters();
     }
 
     Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>> callback_fn_select_instituteur = new Callback<TableColumn<Instituteur, String>, TableCell<Instituteur, String>>() {
@@ -203,7 +206,69 @@ public class gestionInstController implements Initializable {
     }
 
     @FXML
-    private void chercher_instituteur(ActionEvent event) {
+    private void chercher_instituteur(ActionEvent event) {}
+    private void init_filters(){
+         InstituteurDAO sdao = new InstituteurDAO();
+        data = sdao.getAll();
+        table_instituteur.setItems(data);
+        nom.setText("");
+        identifiant.setText("");
+        //date_embauchement.setText("");
+        nom.setText("");
+        
+        FilteredList<Instituteur> filteredData = new FilteredList<>(data, p -> true);
+        
+        identifiant.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(inst -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (String.valueOf(inst.getId_i()).toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+        nom.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (salle.getNom().toLowerCase().contains(fullnameFilter.toLowerCase()) || salle.getPrenom().toLowerCase().contains(fullnameFilter.toLowerCase())) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+       /* capacite.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (String.valueOf(salle.getCapacite()).toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });
+         dateS.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(salle -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String fullnameFilter = newValue.toLowerCase();
+                if (String.valueOf(salle.getDate_creation()).toLowerCase().contains(fullnameFilter)) {
+                    return true;
+                } 
+                return false;
+            });
+        });*/
+        SortedList<Instituteur> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(table_instituteur.comparatorProperty());
+        table_instituteur.setItems(sortedData);
     }
 
     @FXML

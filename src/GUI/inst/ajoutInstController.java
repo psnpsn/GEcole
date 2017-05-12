@@ -120,6 +120,8 @@ public class ajoutInstController implements Initializable {
     }
 
     private void init() {
+        date_naissance.setValue(LocalDate.now());
+        date_embauchement.setValue(LocalDate.now());
         date_naissance.getEditor().setEditable(false);
         date_naissance.setEditable(false);
          date_embauchement.getEditor().setEditable(false);
