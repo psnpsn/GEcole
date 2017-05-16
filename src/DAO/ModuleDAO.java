@@ -52,6 +52,36 @@ public class ModuleDAO implements DAO<Module> {
 
     }
 
+    public static int nbr_matiere(int id_module){
+        int n = 0 ;
+        String requete = "SELECT COUNT(*) as nbr FROM MATIERE WHERE REF_MODULE = " + id_module ;
+        try {
+            ResultSet rs = ODB.OracleDBSingleton.getSession().prepareStatement(requete).executeQuery();
+            while (rs.next()){
+                n = rs.getInt("nbr");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ModuleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    public static double total_coefs(int id_module){
+        double tot = 0.0f;
+        String requete = "SELECT *  FROM MATIERE WHERE REF_MODULE = " + id_module ;
+        try {
+            ResultSet rs = ODB.OracleDBSingleton.getSession().prepareStatement(requete).executeQuery();
+            while (rs.next()){
+                tot += rs.getDouble("COEF");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ModuleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tot;
+    }
+    
+    
+    
+    
     @Override
     public boolean delAll() {
        valide = false;

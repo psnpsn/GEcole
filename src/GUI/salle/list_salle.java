@@ -202,19 +202,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
             System.out.println("erreur i/o: " + exception);
         }
     }
-/*
-    private void select_all(){
-      //  table_salle.getSelectionModel().clearSelection();
-        for (int i = 0; i < table_salle.getItems().size(); i++) {
-            selected_ids.add(i);
-            Salle item = table_salle.getItems().get(i);
 
-            //System.out.println(table_salle.getItems().get(i).getIdentifiant());
-
-        }
-       update_selection();
-    }
-*/
     
     private void init_filters(){
         DAO sdao = new SalleDAO();

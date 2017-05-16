@@ -51,6 +51,7 @@ public class MatiereDAO implements DAO<Matiere> {
                     mat.setNom(resultat.getString("NOM"));
                     mat.setCoef(resultat.getFloat("COEF"));
                     mat.setDesc(resultat.getString("DESCRIPTION"));
+                    mat.setRef_module(resultat.getInt("REF_MODULE"));
                     liste.add(mat);
                 }
                 
@@ -81,12 +82,13 @@ public class MatiereDAO implements DAO<Matiere> {
         
         try {
             
-            requete = "INSERT INTO Matiere (ID_MATIERE , NOM , COEF , DESCRIPTION) " +
-                             " VALUES ( SEQ_ID_MODULE.NEXTVAL , ? , ? , ?)";
+            requete = "INSERT INTO Matiere (ID_MATIERE , NOM , COEF , DESCRIPTION , REF_MODULE) " +
+                             " VALUES ( SEQ_ID_MODULE.NEXTVAL , ? , ? , ? , ?)";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
             statement.setFloat(2, instance.getCoef());
             statement.setString(3, instance.getDesc());
+            statement.setInt(4, instance.getRef_module());
             if (statement.executeUpdate() != 0) {
                     requete = "Select ID_MatierE from Matiere where rowid=(select max(rowid) from Matiere )";
                     statement = session.prepareStatement(requete);
@@ -127,14 +129,16 @@ public class MatiereDAO implements DAO<Matiere> {
             requete = "UPDATE " + nomTable + " SET   "
                     + "NOM           =  ?  ,"
                     + "COEF        =  ?  ,"
+                    + "REF_MODULE =   ?   ,"
                     + "DESCRIPTION     =  ? "
                     + "WHERE  ID_MATIERE     =  ? ";
             statement = session.prepareStatement(requete);
 
             statement.setString(1, instance.getNom());
             statement.setFloat(2, instance.getCoef());
-            statement.setString(3,instance.getDesc());
-            statement.setInt(4, instance.getId_m());
+            statement.setInt(3,instance.getRef_module());
+            statement.setString(4,instance.getDesc());
+            statement.setInt(5, instance.getId_m());
 
             if(statement.executeUpdate()!=0){
                 valide = true;
@@ -160,6 +164,7 @@ public class MatiereDAO implements DAO<Matiere> {
                 mat.setNom(resultat.getString("NOM"));
                 mat.setCoef(resultat.getFloat("COEF"));
                 mat.setDesc(resultat.getString("DESCRIPTION"));
+                mat.setRef_module(resultat.getInt("REF_MODULE"));
                 
             }
 

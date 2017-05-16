@@ -6,126 +6,116 @@
 package GUI.matiere;
 
 import DAO.MatiereDAO;
-import GUI.LoginController;
-import GUI.Tests;
+import DAO.ModuleDAO;
 import Models.Matiere;
+import Models.Module;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import main_pack.Main_class;
 
-/**
- * FXML Controller class
- *
- * @author DELL
- */
 public class ajoutMatiereController implements Initializable {
 
-    @FXML
-    private JFXButton action;
-    @FXML
-    private JFXTextField coef;
-    @FXML
-    private JFXTextField nom;
-    @FXML
-    private Label lnom;
-    @FXML
-    private Label lcoef;
-    @FXML
-    private JFXTextArea desc;
-    private int id_mat=-1;
-    private Label idLabel;
-    @FXML
-    private JFXComboBox<String> module;
+    @FXML private JFXButton action;
+    @FXML private JFXTextField coef,nom;
+    @FXML private JFXTextArea desc;
+    @FXML private Label lnom,lcoef;
+    @FXML private JFXComboBox<String> module;
+    
+    ArrayList<Integer> ids_mods = new ArrayList<Integer>();
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         init();
+       init_mods();
+       module.getSelectionModel().select(0);
     }    
 
     @FXML
     private void goto_admin_main(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("../GUI/mainwindow.fxml");
+            URL loader = getClass().getResource("../mainwindow.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
-
             BorderPane border = Main_class.getRoot();
             border.setCenter(middle);
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ajoutMatiereController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void listMat(ActionEvent event) {
+    private void listMod(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("listModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(ajoutMatiereController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void ajoutMod(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("ajoutModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(ajoutMatiereController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML private void listMat(ActionEvent event) {
         try {
             URL loader = getClass().getResource("listMatiere.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
-
             BorderPane border = Main_class.getRoot();
             border.setCenter(middle);
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ajoutMatiereController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @FXML
-    private void ajoutMat(ActionEvent event) {
+    @FXML private void ajoutMat(ActionEvent event) {
         try {
             URL loader = getClass().getResource("ajoutMatiere.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
-
             BorderPane border = Main_class.getRoot();
             border.setCenter(middle);
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ajoutMatiereController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @FXML
-    private void ajouter_matiere(ActionEvent event) {
-        if (val()){
-            Matiere mat=new Matiere();
-            mat.setNom(nom.getText());
-            mat.setCoef(Float.parseFloat(coef.getText()));
-            mat.setDesc(desc.getText());
-            MatiereDAO matdao= new MatiereDAO();
-            id_mat = matdao.create(mat);
-        }
-        if (id_mat!=-1) {
-                Alert conf = new Alert(Alert.AlertType.INFORMATION);
-                conf.setTitle("Success!");
-                conf.setHeaderText("L'operation de l'ajout de la matière est effectuée avec succés");
-                conf.setContentText("La matière est ajoutée avec l'id "+id_mat+".\n");
-                conf.showAndWait();
-                
-                
-               
-            } else if(!val()) {
-                Alert conf = new Alert(Alert.AlertType.INFORMATION);
-                conf.setTitle("Erreur!");
-                conf.setHeaderText("Une erreur s'est produite lors de l'ajout de la matière.");
-                conf.setContentText("Aucune matière n'a été ajouté.");
-                conf.showAndWait();
-            }
+    @FXML private void ajouter_matiere(ActionEvent event) {
+        Matiere mat = new Matiere();
+        mat.setNom(nom.getText());
+        mat.setCoef(Float.parseFloat(coef.getText()));
+        mat.setDesc(desc.getText());
+        mat.setRef_module(ids_mods.get(module.getSelectionModel().getSelectedIndex()));
+        MatiereDAO matdao = new MatiereDAO();
+       int id_mat = matdao.create(mat);
 
+        System.out.println("Identifiant matiere = " + id_mat);
     }
 
     @FXML
@@ -136,6 +126,30 @@ public class ajoutMatiereController implements Initializable {
         init();
     }
 
+    void edit_matiere(int id_m) {
+        action.setText("Modifier Matiere");
+        action.setOnAction((e) -> {
+            update_matiere(id_m);
+        });
+        MatiereDAO dao = new MatiereDAO();
+        Matiere mat = dao.find(id_m);
+        if (mat != null) {
+            nom.setText(mat.getNom());
+            desc.setText(mat.getDesc());
+            coef.setText(mat.getCoef() + "");
+        }
+    }
+    private void update_matiere(int x) {
+        MatiereDAO dao = new MatiereDAO();
+        Matiere mat = new Matiere();
+        mat.setId_m(x);
+        mat.setNom(nom.getText());
+        mat.setCoef(Float.parseFloat(coef.getText()));
+        mat.setDesc(desc.getText());
+        if (dao.update(mat)) {
+
+        }
+    }
     private void init() {
         lcoef.setVisible(false);
         lcoef.setText("");
@@ -143,69 +157,23 @@ public class ajoutMatiereController implements Initializable {
         lnom.setText("");
     }
 
-    private boolean val() {
-        boolean v=false;
-        v=Tests.txt_field(nom, lnom, 30, false, false)
-                
-                ;
-        return v;
-    }
-    
-    public void edit_matiere(int x){
-        action.setText("Modifier Matiere");
-        idLabel.setVisible(true);
-        idLabel.setText(idLabel.getText()+x);
-        id_mat = x;
-        action.setOnAction((e) -> {
-            update_matiere(x);
-        });
-        MatiereDAO dao = new MatiereDAO();
-        Matiere mat = (Matiere) dao.find(x);
-        nom.setText(mat.getNom());
-        desc.setText(mat.getDesc());
-        coef.setText(mat.getCoef()+"");
-        
-    }
-
-    private void update_matiere(int x) {
-        if (val()){
-            MatiereDAO dao = new MatiereDAO();
-            Matiere mat = new Matiere();
-            mat.setId_m(x);
-            mat.setNom(nom.getText());
-            mat.setCoef(Float.parseFloat(coef.getText()));
-            mat.setDesc(desc.getText());
-            if (dao.update(mat)) {
-                Alert conf = new Alert(Alert.AlertType.INFORMATION);
-                conf.setTitle("Success!");
-                conf.setHeaderText("L'operation de la modification de la matière est effectuée avec succés");
-                conf.setContentText("La matière est modifiée .\n");
-                conf.showAndWait();
-                
-                
-               
-            } else {
-                Alert conf = new Alert(Alert.AlertType.INFORMATION);
-                conf.setTitle("Erreur!");
-                conf.setHeaderText("Une erreur s'est produite lors de la modification de la matière.");
-                conf.setContentText("Aucune matière n'a été modifié.");
-                conf.showAndWait();
+    private void init_mods() {
+        ModuleDAO dao = new ModuleDAO();
+        ObservableList<Module> all = dao.getAll();
+        if (all.size() != 0) {
+            for (Module m : all) {
+                module.getItems().add(m.getNom());
+                ids_mods.add(m.getId());
             }
+        } else {
+            Alert conf = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
+            conf.setTitle("Erreur ajout matiere");
+            conf.setHeaderText("Aucun Module trouve pour associer des matieres");
+            conf.setContentText("Chaque matiere doit appartenir a un module"
+                    + "\nL'ajout sera desactive jusqu'a au mois un Module est Crees.");
+            conf.showAndWait();
+            action.setStyle("-fx-strikethrough: true;");
+            action.setDisable(true);
         }
     }
-
-    @FXML
-    private void ajoutMod(ActionEvent event) {
-                try {
-            URL loader = getClass().getResource("ajoutModule.fxml");
-            AnchorPane middle = FXMLLoader.load(loader);
-            BorderPane border = Main_class.getRoot();
-            border.setCenter(middle);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
-    
 }

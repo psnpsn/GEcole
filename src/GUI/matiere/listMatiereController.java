@@ -1,8 +1,10 @@
 package GUI.matiere;
 
 import DAO.MatiereDAO;
+import DAO.ModuleDAO;
 import GUI.LoginController;
 import Models.Matiere;
+import Models.Module;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -97,8 +100,8 @@ public class listMatiereController implements Initializable {
                                             controller.edit_matiere(item.getId_m());
                                         }
                                         else System.out.println("nul: ");
-                                    } catch (Exception exception) {
-                                        System.out.println("erreur i/o: " + exception);
+                                    } catch (Exception ex) {
+                                        Logger.getLogger(listMatiereController.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
                             }
@@ -148,7 +151,7 @@ public class listMatiereController implements Initializable {
         }
     };
     @FXML
-    private TableColumn<?, ?> moduleCol;
+    private TableColumn<Matiere, String> moduleCol;
     @FXML
     private TableColumn<?, ?> modifol;
     @FXML
@@ -172,13 +175,13 @@ public class listMatiereController implements Initializable {
     @FXML
     private void goto_admin_main(ActionEvent event) {
         try {
-            URL loader = getClass().getResource("../GUI/mainwindow.fxml");
+            URL loader = getClass().getResource("../mainwindow.fxml");
             AnchorPane middle = FXMLLoader.load(loader);
 
             BorderPane border = Main_class.getRoot();
             border.setCenter(middle);
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(listMatiereController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @FXML
@@ -285,7 +288,18 @@ public class listMatiereController implements Initializable {
          coefCol.setCellValueFactory(cellData -> cellData.getValue().coefProperty().asString());
          descCol.setCellValueFactory(cellData -> cellData.getValue().descProperty());
          modCol.setCellFactory(callback_fn_editer_matiere);
-      //  cochCol.setCellFactory(callback_fn_select_matiere);
+         cochCol.setCellFactory(callback_fn_select_matiere);
+        moduleCol.setCellValueFactory(cellData -> {
+            int ref = cellData.getValue().getRef_module();
+            if (ref != -1 && ref != 0) {
+                ModuleDAO dao = new ModuleDAO();
+                Module m = dao.find(ref);
+                if (m != null) {
+                    return new SimpleStringProperty(m.getNom());
+                }
+            }
+            return new SimpleStringProperty("aucun.");
+        });
     }
     
     private void refresh() {
@@ -297,10 +311,27 @@ public class listMatiereController implements Initializable {
 
     @FXML
     private void listMod(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("listModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void ajoutMod(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("ajoutModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     
 }

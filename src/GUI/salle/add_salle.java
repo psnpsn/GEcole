@@ -178,4 +178,5 @@ public class add_salle implements Initializable {
             goto_lister_salle(new ActionEvent(action, action));
         }
     }
+
 }

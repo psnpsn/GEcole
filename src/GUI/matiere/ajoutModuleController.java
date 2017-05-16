@@ -26,11 +26,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import main_pack.Main_class;
 
-/**
- * FXML Controller class
- *
- * @author h2oo2
- */
 public class ajoutModuleController implements Initializable {
 
     @FXML
@@ -44,9 +39,6 @@ public class ajoutModuleController implements Initializable {
     @FXML
     private JFXComboBox<String> niveau;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         niveau.getItems().addAll("1","2","3","4","5","6");
@@ -99,12 +91,59 @@ public class ajoutModuleController implements Initializable {
         m.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem() + "2017"));
         ModuleDAO dao = new ModuleDAO();
         if (dao.create(m) != 1) {
-            listMat(event);
+            listMod(event);
         }
     }
 
     @FXML
     private void reinit(ActionEvent event) {
     }
+    @FXML
+    private void listMod(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("listModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
 
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+        @FXML
+    private void ajoutMod(ActionEvent event) {
+        try {
+            URL loader = getClass().getResource("ajoutModule.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    void edit_module(int id) {
+        action.setText("Modifier Module");
+        action.setOnAction((e) -> {
+            update_module(id);
+        });
+        ModuleDAO dao = new ModuleDAO();
+        Module mod = dao.find(id);
+        if (mod != null) {
+            nom.setText(mod.getNom());
+            niveau.setValue("" + String.valueOf(mod.getRef_niv()).charAt(0));
+        }
+    }
+    private void update_module(int x) {
+        if (x != -1) {
+            ModuleDAO dao = new ModuleDAO();
+            Module mod = new Module();
+            mod.setRef_niv(Integer.parseInt(niveau.getSelectionModel().getSelectedItem() + "2017"));
+            mod.setId(x);
+            mod.setNom(nom.getText());
+            dao.update(mod);
+            listMod(new ActionEvent(action, action));
+        }
+    }
 }
