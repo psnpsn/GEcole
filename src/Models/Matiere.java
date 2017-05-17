@@ -1,24 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Models;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-/**
- *
- * @author DELL
- */
 public class Matiere {
     
     private SimpleIntegerProperty id_m;
     private SimpleStringProperty nom;
     private SimpleFloatProperty coef;
     private SimpleStringProperty desc;
+    private int ref_module = -1;
 
     public Matiere(int id_m, String nom, float coef, String desc) {
         this.id_m = new SimpleIntegerProperty(id_m);
@@ -34,6 +27,12 @@ public class Matiere {
         this.desc = new SimpleStringProperty("");
     }
 
+    public void setRef_module(int ref){
+        ref_module = ref;
+    }
+    public int getRef_module(){
+        return ref_module;
+    }
     public int getId_m() {
         return id_m.get();
     }

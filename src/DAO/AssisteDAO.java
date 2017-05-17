@@ -10,6 +10,9 @@ import ODB.OracleDBSingleton;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -58,7 +61,16 @@ public class AssisteDAO implements DAO<Assiste> {
 
     @Override
     public boolean delAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean valide = false;
+        try {
+            PreparedStatement statement = ODB.OracleDBSingleton.getSession().prepareStatement("DELETE FROM ASSISTE");
+            if (statement.executeUpdate() != 0) {
+                valide = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valide;
     }
 
     @Override

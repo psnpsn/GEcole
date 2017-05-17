@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.centre.GestionEleveController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.eleve.GestionEleveController">
    <children>
       <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -72,14 +72,13 @@
                <children>
                   <TableView fx:id="tableView" onMouseClicked="#user_selection" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <columns>
+                        <TableColumn fx:id="idCol" prefWidth="30.0" text="Id" />
                         <TableColumn fx:id="nomCol" prefWidth="262.0" text="Eleve" />
                         <TableColumn fx:id="dateCol" prefWidth="170.0" text="Date de Naissance" />
                         <TableColumn fx:id="sexCol" minWidth="0.0" prefWidth="59.0" text="Sex" />
-                        <TableColumn fx:id="dateinsCol" prefWidth="163.0" text="Date d'Inscription" />
-                        <TableColumn fx:id="classeCol" prefWidth="151.0" text="Classe" />
+                        <TableColumn fx:id="dateinsCol" prefWidth="100.0" text="Date d'Inscription" />
                         <TableColumn fx:id="modifCol" editable="false" prefWidth="132.0" sortable="false" text="Modifier" />
                         <TableColumn fx:id="cochCol" editable="false" prefWidth="62.0" text="Cocher" />
-                        <TableColumn prefWidth="75.0" text="Id élève" />
                      </columns>
                   </TableView>
                   <GridPane>
@@ -103,10 +102,9 @@
                               <Insets left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="nivF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="Niveau" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <JFXTextField fx:id="dateNaissF" labelFloat="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Date de Naissance" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <JFXTextField fx:id="classeF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" promptText="Classe" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <JFXTextField fx:id="dateInsF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Date de d'Inscription" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <JFXTextField fx:id="dateNaissF" labelFloat="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Date de Naissance" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+
+                        <JFXTextField fx:id="dateInsF" labelFloat="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Date de d'Inscription" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.salle.add_salle">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.ajoutModuleController">
         <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -28,23 +34,34 @@
       <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXButton onAction="#goto_lister_salle" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" text="Trouver une Salle">
+                    <children>
+                  <JFXButton onAction="#listMod" prefHeight="40.0" prefWidth="212.0" styleClass="mainbtn" text="Trouven un Module">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" text="Ajouter une Salle">
+                  <JFXButton onAction="#ajoutMod" prefHeight="40.0" prefWidth="212.0" styleClass="pressedbtn" text="Ajouter un Module">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
                      </VBox.margin>
                   </JFXButton>
+                  <Separator layoutX="11.0" layoutY="243.0" prefHeight="11.0" prefWidth="200.0" />
+                        <JFXButton onAction="#listMat" prefHeight="40.0" prefWidth="212.0" styleClass="mainbtn" text="Trouver une matière">
+                            <VBox.margin>
+                                <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
+                            </VBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#ajoutMat" prefHeight="40.0" prefWidth="212.0" styleClass="mainbtn" text="Ajouter une matière">
+                            <VBox.margin>
+                                <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
+                            </VBox.margin>
+                        </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton fx:id="action" onAction="#ajouter_salle" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Ajouter la Salle">
+                  <JFXButton fx:id="action" onAction="#ajouter_matiere" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Ajouter ce Module">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
-                  <JFXButton onAction="#re_init" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Réinitialiser les champs">
+                  <JFXButton onAction="#reinit" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Réinitialiser les champs">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
@@ -58,7 +75,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="217.0" text="Gestion des Salles">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="217.0" text="Gestion des Matières">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -77,30 +94,24 @@
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="101.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="208.0" minHeight="0.0" prefHeight="110.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="101.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="104.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="102.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="208.0" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="168.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField fx:id="type_salle" labelFloat="true" promptText="Type de la Salle*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="capacite" labelFloat="true" promptText="Capacité de la Salle*" stylesheets="@../css/menusdef.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="ltype_salle" styleClass="labels" text="erreur" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="lcoef" styleClass="labels" text="erreur" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="lcapacite" styleClass="labels" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin></Label>
-                  <JFXDatePicker fx:id="date_salle" prefHeight="25.0" prefWidth="222.0" promptText="Date de Construction Salle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <JFXTextField fx:id="nom" labelFloat="true" promptText="Nom de la Salle*" GridPane.columnIndex="1" />
-                  <Label fx:id="lnom" styleClass="labels" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2">
+                  <JFXTextField fx:id="nom" labelFloat="true" promptText="Nom du Module*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="lnom" styleClass="labe" stylesheets="@../css/menusdef.css" text="erreur" visible="false" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label styleClass="legendtext" text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                  <Label styleClass="legendtext" text="les champs marqué avec une étoile (*) sont obligatoire." GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
                      <font>
                         <Font size="9.0" />
                      </font>
@@ -108,6 +119,7 @@
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </Label>
+                  <JFXComboBox fx:id="niveau" prefHeight="25.0" prefWidth="299.0" promptText="Niveau*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </center>

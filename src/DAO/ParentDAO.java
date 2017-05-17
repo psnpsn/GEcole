@@ -5,7 +5,10 @@ import ODB.OracleDBSingleton;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 public class ParentDAO implements DAO<Parent>{
 
@@ -36,7 +39,7 @@ public class ParentDAO implements DAO<Parent>{
     public int create(Parent instance) {
             seq=-1;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID_PARENT , NOMP , PROFP , NOMM , PROFM , TELP , EMAILP)  "
+            requete = "INSERT INTO " + nomTable + " (ID_PARENT , NOM_PERE , PROF_P , NOM_MERE , PROF_M , TEL_P , EMAIL_P)  "
                       + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ?  )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNOMP());
@@ -48,10 +51,8 @@ public class ParentDAO implements DAO<Parent>{
             if (statement.executeUpdate() != 0) {
                 seq=seq_id_curr();
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : create(Parent instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return seq;
@@ -66,10 +67,8 @@ public class ParentDAO implements DAO<Parent>{
             while (resultat.next()) {
                 id = resultat.getInt("ID_PARENT");
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : dernier(Parent instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -86,18 +85,16 @@ public class ParentDAO implements DAO<Parent>{
                 valide = true;
                 parent = new Parent();
                 parent.setID_PARENT(resultat.getInt("ID_PARENT"));
-                parent.setNOMP(resultat.getString("NOMP"));
-                parent.setPROFP(resultat.getString("PROFP"));
-                parent.setNOMM(resultat.getString("NOMM"));
-                parent.setPROFM(resultat.getString("PROFM"));
-                parent.setEMAILP(resultat.getString("EMAILP"));
-                parent.setTELP(resultat.getString("TELP"));
+                parent.setNOMP(resultat.getString("NOM_PERE"));
+                parent.setPROFP(resultat.getString("PROF_P"));
+                parent.setNOMM(resultat.getString("NOM_MERE"));
+                parent.setPROFM(resultat.getString("PROF_M"));
+                parent.setEMAILP(resultat.getString("EMAIL_P"));
+                parent.setTELP(resultat.getString("TEL_P"));
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : find()\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return parent;
     }
@@ -107,12 +104,12 @@ public class ParentDAO implements DAO<Parent>{
     valide = false;
         try {
             requete = "UPDATE " + nomTable + " SET   "
-                    + "NOMP           =  ?  ,"
-                    + "NOMM        =  ?  ,"
-                    + "PROFP      =  ?  ,"
-                    + "PROFM         =  ?  ,"
-                    + "TELP    =  ?  ,"
-                    + "EMAILP =  ?  "
+                    + "NOM_PERE        =  ?  ,"
+                    + "NOM_MERE        =  ?  ,"
+                    + "PROF_P          =  ?  ,"
+                    + "PROF_M          =  ?  ,"
+                    + "TEL_P           =  ?  ,"
+                    + "EMAIL_P         =  ?  "
                     + "WHERE  ID_PARENT = ? ";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNOMP());
@@ -126,10 +123,8 @@ public class ParentDAO implements DAO<Parent>{
             if(statement.executeUpdate()!=0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : update(Parent instance)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
 
@@ -145,10 +140,8 @@ public class ParentDAO implements DAO<Parent>{
             if (statement.executeUpdate() != 0){
                 valide = true;
             }
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : delete(id)\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valide;
     }
@@ -162,10 +155,8 @@ private int seq_id_next(){
                 seq=resultat.getInt("NEXTVAL");
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : seq_id_next\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("sequence nextval "+seq);
         return seq;
@@ -180,10 +171,8 @@ private int seq_id_next(){
                 seq=resultat.getInt("CURRVAL");
             }
 
-        } catch (Exception exception) {
-            System.out.println("Classe : ParentDAO.java\n"
-                    + "Methode : seq_id_curr\n"
-                    + "Exception : " + exception);
+        } catch (SQLException ex) {
+            Logger.getLogger(ParentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
        
         System.out.println("sequence curr  "+seq);

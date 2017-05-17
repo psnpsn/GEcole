@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="584.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainwindowinstController">
+     <stylesheets>
+       <URL value="@css/dress.css" />
+       <URL value="@css/mainStage.css" />
+       <URL value="@css/mainwindow.css" />
+       <URL value="@css/menusdef.css" />
+    </stylesheets>
+    <children>
+      <GridPane alignment="TOP_CENTER" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="169.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="301.0" minHeight="10.0" prefHeight="149.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="213.0" minHeight="10.0" prefHeight="140.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" graphicTextGap="2.0" onAction="#goto_list_classes" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC"  text="Mes Classes" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Voir la liste des Classes." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#goto_list_emplois" prefHeight="55.0" prefWidth="155.0" ripplerFill="#ffffff00" styleClass="buttonC"  text="Mes Emplois" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulter la liste des emplois." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#goto_list_appreciation" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" text="Mes Appreciations" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Lister la totalite des appreciation accorder au eleves." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#goto_list_reunion" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" text="Agenda Conseils et Reunions" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Voir les Reunions et Conseils." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton disable="true" alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot des absences et justifications." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <JFXButton disable="true"  alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC"  text="Salles" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot de notes et des appréciations et génération des livrets scolaires." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+            <Pane prefHeight="157.0" prefWidth="460.0" style="-fx-background-color: lightblue;" GridPane.columnSpan="3" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

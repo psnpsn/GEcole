@@ -1,7 +1,6 @@
 package Models;
 
 import java.util.Date;
-import java.util.Objects;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -23,8 +22,6 @@ public class Eleve {
     private SimpleStringProperty lieuNaiss;
     private SimpleStringProperty sex;
     private SimpleStringProperty email;
-    private SimpleIntegerProperty ref_niv;
-    private SimpleIntegerProperty ref_c;
     private SimpleIntegerProperty ref_p;
     private SimpleObjectProperty<Date> dateIns;
 
@@ -43,8 +40,6 @@ public class Eleve {
         this.lieuNaiss = new SimpleStringProperty();
         this.sex = new SimpleStringProperty();
         this.email = new SimpleStringProperty();
-        this.ref_niv = new SimpleIntegerProperty();
-        this.ref_c = new SimpleIntegerProperty();
         this.ref_p = new SimpleIntegerProperty();
         this.dateIns = new SimpleObjectProperty<Date>();
 
@@ -52,7 +47,7 @@ public class Eleve {
     }
 
 
-    public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, String email, int ref_niv, int ref_c, int ref_p, Date dateIns) {
+    public Eleve(int id_e, String nom, String prenom, String adresse, String ville, int codeP, Date dateNaiss, String lieuNaiss, String sex, String email, int ref_p, Date dateIns) {
         this.id_e = new SimpleIntegerProperty(id_e);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
@@ -63,8 +58,6 @@ public class Eleve {
         this.lieuNaiss = new SimpleStringProperty(lieuNaiss);
         this.sex = new SimpleStringProperty(sex);
         this.email = new SimpleStringProperty(email);
-        this.ref_niv = new SimpleIntegerProperty(ref_niv);
-        this.ref_c = new SimpleIntegerProperty(ref_c);
         this.ref_p = new SimpleIntegerProperty(ref_p);
         this.dateIns = new SimpleObjectProperty<Date>(dateIns);
 
@@ -113,15 +106,6 @@ public class Eleve {
 
     public String getEmail() {
         return email.get();
-    }
-
-    public int getRef_niv() {
-        return ref_niv.get();
-    }
-    
-
-    public int getRef_c() {
-        return ref_c.get();
     }
 
     public int getRef_p() {
@@ -177,14 +161,6 @@ public class Eleve {
         this.email.set(email);
     }
 
-    public void setRef_niv(int ref_n) {
-        this.ref_niv.set(ref_n);
-    }
-
-    public void setRef_c(int ref_c) {
-        this.ref_c.set(ref_c);
-    }
-
     public void setRef_p(int ref_p) {
         this.ref_p.set(ref_p);
     }
@@ -229,15 +205,7 @@ public class Eleve {
     public SimpleStringProperty emailProperty(){
         return email;
     }
-    public SimpleIntegerProperty ref_nivProperty(){
-        return ref_niv;
-    }
-    public SimpleIntegerProperty ref_nProperty(){
-        return new SimpleIntegerProperty(ref_niv.get()/10000);
-    }
-    public SimpleIntegerProperty ref_cProperty(){
-        return ref_c;
-    }
+
     public SimpleIntegerProperty ref_pProperty(){
         return ref_p;
     }
@@ -260,58 +228,13 @@ public class Eleve {
 
 
 
-
-    // methodes utiles...
-    public boolean equals(Eleve other) {
-        if (other == null) {
-            return false;
-        }
-        if (this.codeP != other.codeP) {
-            return false;
-        }
-        if (this.sex != other.sex) {
-            return false;
-        }
-
-        if (this.ref_niv != other.ref_niv) {
-            return false;
-        }
-        if (this.ref_c != other.ref_c) {
-            return false;
-        }
-        if (this.ref_p != other.ref_p) {
-            return false;
-        }
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        if (!Objects.equals(this.prenom, other.prenom)) {
-            return false;
-        }
-        if (!Objects.equals(this.adresse, other.adresse)) {
-            return false;
-        }
-        if (!Objects.equals(this.ville, other.ville)) {
-            return false;
-        }
-        if (!Objects.equals(this.lieuNaiss, other.lieuNaiss)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.dateNaiss, other.dateNaiss)) {
-            return false;
-        }
-        if (!Objects.equals(this.dateIns, other.dateIns)) {
-            return false;
-        }
-        return true;
-}
-
     @Override
     public String toString() {
-        return "Eleve{" + "id_e=" + id_e.toString() + ", nom=" + nom.toString() + ", prenom=" + prenom + ", adresse=" + adresse + ", ville=" + ville + ", codeP=" + codeP + ", dateNaiss=" + dateNaiss + ", lieuNaiss=" + lieuNaiss + ", sex=" + sex + ", email=" + email + ", ref_niv=" + ref_niv + ", ref_c=" + ref_c + ", ref_p=" + ref_p + ", dateIns=" + dateIns + '}';
+        return "Eleve{" + "id_e=" + id_e.toString() + ", nom=" + nom.toString() + ", prenom=" + prenom + ", adresse=" + adresse + ", ville=" + ville + ", codeP=" + codeP + ", dateNaiss=" + dateNaiss + ", lieuNaiss=" + lieuNaiss + ", sex=" + sex + ", email=" + email + ", ref_p=" + ref_p + ", dateIns=" + dateIns + '}';
+    }
+
+    public String getSDateIns() {
+        return String.valueOf(dateIns.getValue());
     }
 
 }

@@ -115,10 +115,13 @@ public class ajoutInstController implements Initializable {
         ToggleGroup group = new ToggleGroup();
         garcon.setToggleGroup(group);
         fille.setToggleGroup(group);
-        init();
+        new File("data/instituteur").mkdirs();
+        init();   
     }
 
     private void init() {
+        date_naissance.setValue(LocalDate.now());
+        date_embauchement.setValue(LocalDate.now());
         date_naissance.getEditor().setEditable(false);
         date_naissance.setEditable(false);
          date_embauchement.getEditor().setEditable(false);

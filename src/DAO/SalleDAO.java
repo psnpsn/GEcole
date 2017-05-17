@@ -26,10 +26,11 @@ public class SalleDAO implements DAO<Salle> {
                 while (resultat.next()) {
                     Salle salle = new Salle();
                     salle.setIdentifiant(resultat.getInt("ID_SALLE"));
+                    salle.setNom(resultat.getString("NOM"));
                     salle.setType_salle(resultat.getString("TYPE"));
                     salle.setCapacite(resultat.getInt("CAPACITE"));
-                    salle.setDate_creation(resultat.getDate("DATEC"));
-                    salle.setNom(resultat.getString("NOM"));
+                    salle.setDate_creation(resultat.getDate("DATE_CONSTRUCTION"));
+                    
                     liste.add(salle);
                 }
                 ObservableList<Salle> list = FXCollections.observableArrayList(liste);
@@ -57,8 +58,8 @@ public class SalleDAO implements DAO<Salle> {
     @Override
     public int create(Salle instance) {
         try {
-            String requete = "INSERT INTO Salle (ID_SALLE , TYPE , CAPACITE , DATEC , NOM) " +
-                             " VALUES ( SEQ_ID_S.NEXTVAL , ? , ? , ? , ?)";
+            String requete = "INSERT INTO Salle (ID_SALLE , TYPE , CAPACITE , DATE_CONSTRUCTION , NOM) " +
+                             " VALUES ( SEQ_ID_SALLE.NEXTVAL , ? , ? , ? , ?)";
             Connection session = ODB.OracleDBSingleton.getSession();
             PreparedStatement statement = session.prepareStatement(requete);
             statement.setString(1, instance.getType_salle());
@@ -92,7 +93,8 @@ public class SalleDAO implements DAO<Salle> {
                     c.setIdentifiant(resultat.getInt("ID_SALLE"));
                     c.setType_salle(resultat.getString("TYPE"));
                     c.setCapacite(resultat.getInt("CAPACITE"));
-                    c.setDate_creation(resultat.getDate("DATEC"));
+                    c.setDate_creation(resultat.getDate("DATE_CONSTRUCTION"));
+                    c.setNom(resultat.getString("NOM"));
                     return c;
                 }
         } catch (SQLException ex) {
@@ -104,11 +106,11 @@ public class SalleDAO implements DAO<Salle> {
     @Override
     public boolean update(Salle instance) {
         String  requete = "UPDATE SALLE SET   "
-                    + "TYPE        =  ?  ," // 1
-                    + "CAPACITE    =  ?  ," // 2
-                    + "DATEC       =  ?  ,"    // 3
-                    + "NOM       =  ?   "    // 4
-                    + "WHERE  ID_SALLE = ? "; // 5
+                    + "TYPE              =  ?  ," // 1
+                    + "CAPACITE          =  ?  ," // 2
+                    + "DATE_CONSTRUCTION =  ?  ,"    // 3
+                    + "NOM               =  ?   "    // 4
+                    + "WHERE  ID_SALLE   = ? "; // 5
         try {
             Connection session = ODB.OracleDBSingleton.getSession();
             PreparedStatement statement = session.prepareStatement(requete);
@@ -119,8 +121,8 @@ public class SalleDAO implements DAO<Salle> {
                 statement.setString(4, instance.getNom());
                 statement.setInt(5, instance.getIdentifiant());
                 return (statement.executeUpdate() != 0);
-            } catch (Exception exception) {
-                System.out.println("exception update salle:" + exception);
+            } catch (Exception ex) {
+                Logger.getLogger(SalleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         return false;
     }
@@ -133,8 +135,8 @@ public class SalleDAO implements DAO<Salle> {
             PreparedStatement statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             return (statement.executeUpdate() > 0);
-        } catch (Exception exception) {
-            System.out.println("exception suppression salle:" + exception);
+        } catch (Exception ex) {
+            Logger.getLogger(SalleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }

@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.listMatiereController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.matiere.listModuleController">
     <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -36,7 +36,7 @@
             <left>
                 <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
                     <children>
-                  <JFXButton onAction="#listMod" prefHeight="40.0" prefWidth="212.0" styleClass="mainbtn" text="Trouven un Module">
+                  <JFXButton onAction="#listMod" prefHeight="40.0" prefWidth="212.0" styleClass="pressedbtn" text="Trouven un Module">
                      <VBox.margin>
                         <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
                      </VBox.margin>
@@ -47,7 +47,7 @@
                      </VBox.margin>
                   </JFXButton>
                   <Separator layoutX="11.0" layoutY="243.0" prefHeight="11.0" prefWidth="200.0" />
-                        <JFXButton onAction="#listMat" prefHeight="40.0" prefWidth="212.0" styleClass="pressedbtn" text="Trouver une matière">
+                        <JFXButton onAction="#listMat" prefHeight="40.0" prefWidth="212.0" styleClass="mainbtn" text="Trouver une matière">
                             <VBox.margin>
                                 <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
                             </VBox.margin>
@@ -58,7 +58,6 @@
                             </VBox.margin>
                         </JFXButton>
                         <Separator prefHeight="15.0" prefWidth="200.0" />
-                        <JFXButton onAction="#chercher" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Chercher" />
                         <JFXButton onAction="#supprimer" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Supprimer" />
                         <JFXButton onAction="#supprimerTout" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Supprimer tout" />
                     </children>
@@ -92,13 +91,13 @@
                     <children>
                         <TableView fx:id="tableView" onMouseClicked="#user_selection" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                             <columns>
-                                <TableColumn fx:id="idCol" prefWidth="84.0" text="ID" />
-                                <TableColumn fx:id="nomCol" prefWidth="177.0" text="Nom matière" />
-                                <TableColumn fx:id="coefCol" minWidth="0.0" prefWidth="135.0" text="Coeficient" />
-                                <TableColumn fx:id="descCol" prefWidth="256.0" text="Description" />
-                                <TableColumn fx:id="moduleCol" editable="false" prefWidth="119.0" sortable="false" text="Module" />
+                                <TableColumn fx:id="id" prefWidth="84.0" text="ID" />
+                                <TableColumn fx:id="nom" prefWidth="177.0" text="Nom module" />
+                                <TableColumn fx:id="niveau" minWidth="0.0" prefWidth="135.0" text="Niveau" />
+                                <TableColumn fx:id="nbr_matieres" prefWidth="256.0" text="Nombre de Matiere de ce Module" />
+                                <TableColumn fx:id="total_coef" editable="false" prefWidth="119.0" sortable="false" text="Total Coefficient" />
                                 <TableColumn fx:id="modCol" editable="false" prefWidth="162.0" sortable="false" text="Modifier" />
-                                <TableColumn fx:id="cochCol" editable="false" maxWidth="66.0" minWidth="-1.0" prefWidth="64.0" text="Cocher" />
+                                <TableColumn fx:id="cocher" editable="false" maxWidth="66.0" minWidth="-1.0" prefWidth="64.0" text="Cocher" />
                             </columns>
                         </TableView>
                         <GridPane>
@@ -110,19 +109,6 @@
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
-                            <children>
-                                <JFXTextField fx:id="identifiant" labelFloat="true" prefHeight="25.0" prefWidth="296.0" promptText="Id Matière" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets left="50.0" right="50.0" />
-                                    </GridPane.margin>
-                                </JFXTextField>
-                                <JFXTextField fx:id="nom" labelFloat="true" prefHeight="6.0" prefWidth="344.0" promptText="Nom Matière" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <GridPane.margin>
-                                        <Insets left="50.0" right="50.0" />
-                                    </GridPane.margin>
-                                </JFXTextField>
-                        <JFXComboBox fx:id="module" prefHeight="25.0" prefWidth="264.0" promptText="Module" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                            </children>
                         </GridPane>
                     </children>
                 </GridPane>

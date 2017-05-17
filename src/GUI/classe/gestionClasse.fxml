@@ -82,7 +82,7 @@
                         <TableColumn fx:id="nbCol" minWidth="0.0" prefWidth="111.0" text="Nombre d'élèves" />
                         <TableColumn fx:id="capaciteCol" prefWidth="111.0" text="Capacité" />
                         <TableColumn fx:id="anneeCol" prefWidth="151.0" text="Année Scolaire" />
-                        <TableColumn fx:id="modifCol" editable="false" prefWidth="132.0" sortable="false" text="Modifier" />
+                        <TableColumn fx:id="modifCol" editable="false" prefWidth="132.0" sortable="false" text="Actions" />
                         <TableColumn fx:id="cochCol" editable="false" prefWidth="62.0" text="Cocher" />
                         <TableColumn prefWidth="75.0" text="Id élève" />
                      </columns>

@@ -6,14 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-//
-//There are two forms of singleton design pattern
-//
-//  Early Instantiation: creation of instance at load time.
-//  Lazy Instantiation : creation of instance when required. (X)
-//
-// Class Singleton simple
 
 public class OracleDBSingleton {
     private static String username;
@@ -22,6 +17,17 @@ public class OracleDBSingleton {
     private static String driver = "";
     private static String sql_cmd = "";
     private static Connection session;
+
+    public static void seDeconnecter() {
+        try {
+            if (OracleDBSingleton.getSession() != null) {
+                OracleDBSingleton.getSession().close();
+                System.out.println("Session Oracle Terminer.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erreur Terminaison Session Oracle. :" + ex.getMessage());
+        }
+    }
 
     private OracleDBSingleton() {
 
@@ -37,20 +43,17 @@ public class OracleDBSingleton {
             OracleDBSingleton.getSession();
         }
         if (OracleDBSingleton.session != null) {
-            sql_cmd = "SELECT * FROM ELEVE";
+            sql_cmd = "SELECT * FROM DUAL";
             try {
                 PreparedStatement statement = OracleDBSingleton.getSession().prepareStatement(sql_cmd);
                 ResultSet r = statement.executeQuery();
                 if (r.next()) {
                     System.out.println("Connection a la BD reussie :") ;
-                             //  + "Username = " + username );
                     return true;
                 }
                 return false;
-            } catch (SQLException exception) {
-                System.out.println("Classe : OracleDB.java\n"
-                        + "Methode :seConnecter()\n"
-                        + "Exception : " + exception);
+            } catch (SQLException ex) {
+               Logger.getLogger(OracleDBSingleton.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return false;
@@ -72,4 +75,19 @@ public class OracleDBSingleton {
         }
     }
 
+    public static int inst(int cin){
+        String requete = "SELECT ID_INST FROM INST WHERE NCIN = " + cin ;
+        try {
+            PreparedStatement ps = OracleDBSingleton.getSession().prepareStatement(requete);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                return rs.getInt("ID_INST");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OracleDBSingleton.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+        return -1;
+    }
 }

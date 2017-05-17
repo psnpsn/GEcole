@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.classe.assignerClasseController">
+   <children>
+      <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#click_trouver" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" stylesheets="@../css/menusdef.css" text="Trouver une classe">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" stylesheets="@../css/menusdef.css" text="Créer une classe">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <Separator prefHeight="29.0" prefWidth="200.0" />
+                  <JFXButton fx:id="assigner" onAction="#click_assigner" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Assigner">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></JFXButton>
+               </children></VBox>
+         </left>
+         <top>
+            <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#click_retour" prefHeight="71.0" prefWidth="62.0" styleClass="backbtn" stylesheets="@../css/menusdef.css" text="&lt;-">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="217.0" text="Gestion des Classes">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="253.0" minHeight="4.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="409.0" minHeight="10.0" prefHeight="369.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="253.0" minHeight="10.0" prefHeight="99.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TableView fx:id="tableView" onMouseClicked="#user_selection" prefHeight="332.0" prefWidth="1000.0" GridPane.rowIndex="1">
+                     <columns>
+                        <TableColumn fx:id="nomCol" prefWidth="182.0" text="Nom" />
+                        <TableColumn fx:id="idCol" prefWidth="104.0" text="ID" />
+                        <TableColumn fx:id="dateCol" prefWidth="146.0" text="Date de Naissance" />
+                        <TableColumn fx:id="adresseCol" prefWidth="295.0" text="Adresse" />
+                        <TableColumn fx:id="cochCol" prefWidth="72.0" text="Cocher" />
+                     </columns>
+                  </TableView>
+                  <VBox spacing="6.0" GridPane.rowIndex="2">
+                     <children>
+                        <HBox GridPane.rowIndex="2">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Classe Selectionnee  : " wrappingWidth="122.13671875" GridPane.rowIndex="2" />
+                              <Text fx:id="txt_classe" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" wrappingWidth="83.13671875" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Capacite Classe        :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
+                              <Text fx:id="txt_capacite" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" wrappingWidth="83.13671875" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="27.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place disponible       :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
+                              <Text fx:id="txt_dispo" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" wrappingWidth="83.13671875" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="44.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre d'eleve       :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
+                              <Text fx:id="txt_nb_eleve" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" wrappingWidth="83.13671875" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </GridPane.margin>
+                  </VBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

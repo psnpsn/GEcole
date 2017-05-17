@@ -34,18 +34,18 @@ public class InstituteurDAO implements DAO<Instituteur>  {
                 Instituteur instituteur = new Instituteur();
 
 
-                instituteur.setId_i(resultat.getInt("ID"));
+                instituteur.setId_i(resultat.getInt("ID_INST"));
                 instituteur.setNom(resultat.getString("NOM"));
                 instituteur.setPrenom(resultat.getString("PRENOM"));
                 instituteur.setNCIN(resultat.getInt("NCIN"));
-                instituteur.setDateNaiss(resultat.getDate("DATENAISS"));
-                instituteur.setDateEmb(resultat.getDate("DATEEMB"));
+                instituteur.setDateNaiss(resultat.getDate("DATE_NAISS"));
+                instituteur.setDateEmb(resultat.getDate("DATE_EMB"));
                 instituteur.setSex(resultat.getString("SEX"));
                 instituteur.setGrade(resultat.getString("GRADE"));
                 instituteur.setAdresse(resultat.getString("ADRESSE"));
                 instituteur.setVille(resultat.getString("VILLE"));
                 instituteur.setCodeP(resultat.getInt("CODEP"));
-                instituteur.setImmatricul(resultat.getInt("IMM"));
+                instituteur.setImmatricul(resultat.getInt("IMMATRICULE"));
                 instituteur.setEmail(resultat.getString("EMAIL"));
                 instituteur.setTel1(resultat.getInt("TEL"));
                 instituteur.setTel2(resultat.getInt("TEL2"));
@@ -79,7 +79,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
     public int create(Instituteur instance) {
     valide = false;
         try {
-            requete = "INSERT INTO " + nomTable + " (ID , NOM , PRENOM , DATENAISS ,NCIN, DATEEMB , SEX , IMM , GRADE , ADRESSE ,VILLE , CODEP , TEL, TEL2, EMAIL  )  "
+            requete = "INSERT INTO " + nomTable + " (ID_INST , NOM , PRENOM , DATE_NAISS ,NCIN, DATE_EMB , SEX , IMMATRICULE , GRADE , ADRESSE ,VILLE , CODEP , TEL, TEL2, EMAIL  )  "
                       + "  VALUES ( " + seq_id_next() + " , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
             statement = session.prepareStatement(requete);
             statement.setString(1, instance.getNom());
@@ -112,25 +112,25 @@ public class InstituteurDAO implements DAO<Instituteur>  {
     public Instituteur find(int id) {
       Instituteur instituteur = null;
         try {
-            requete = "SELECT * FROM INST WHERE  ID = ? ";
+            requete = "SELECT * FROM INST WHERE  ID_INST = ? ";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             resultat = statement.executeQuery();
             while (resultat.next()) {
                 valide = true;
                 instituteur = new Instituteur();
-                instituteur.setId_i(resultat.getInt("ID"));
+                instituteur.setId_i(resultat.getInt("ID_INST"));
                 instituteur.setNom(resultat.getString("NOM"));
                 instituteur.setPrenom(resultat.getString("PRENOM"));
                 instituteur.setNCIN(resultat.getInt("NCIN"));
-                instituteur.setDateNaiss(resultat.getDate("DATENAISS"));
-                instituteur.setDateEmb(resultat.getDate("DATEEMB"));
+                instituteur.setDateNaiss(resultat.getDate("DATE_NAISS"));
+                instituteur.setDateEmb(resultat.getDate("DATE_EMB"));
                 instituteur.setSex(resultat.getString("SEX"));
                 instituteur.setGrade(resultat.getString("GRADE"));
                 instituteur.setAdresse(resultat.getString("ADRESSE"));
                 instituteur.setVille(resultat.getString("VILLE"));
                 instituteur.setCodeP(resultat.getInt("CODEP"));
-                instituteur.setImmatricul(resultat.getInt("IMM"));
+                instituteur.setImmatricul(resultat.getInt("IMMATRICULE"));
                 instituteur.setEmail(resultat.getString("EMAIL"));
                 instituteur.setTel1(resultat.getInt("TEL"));
                 instituteur.setTel2(resultat.getInt("TEL2"));
@@ -151,9 +151,9 @@ public class InstituteurDAO implements DAO<Instituteur>  {
             requete = "UPDATE " + nomTable + " SET   "
                     + "NOM           =  ?  ,"
                     + "PRENOM        =  ?  ,"
-                    + "DATENAISS     =  ?  ,"
+                    + "DATE_NAISS     =  ?  ,"
                     + "NCIN          =  ?  ,"
-                    + "DATEEMB       =  ?  ,"
+                    + "DATE_EMB       =  ?  ,"
                     + "SEX           =  ?  ,"
                     + "IMM           =  ?  ,"
                     + "GRADE         =  ?  ,"
@@ -163,7 +163,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
                     + "TEL           =  ?  ,"
                     + "TEL2          =  ?  ,"
                     + "EMAIL         =  ? "
-                    + "WHERE  ID     =  ? ";
+                    + "WHERE  ID_INST     =  ? ";
             statement = session.prepareStatement(requete);
 
             statement.setString(1, instance.getNom());
@@ -201,7 +201,7 @@ public class InstituteurDAO implements DAO<Instituteur>  {
     public boolean delete(int id) {
         valide = false;
         try {
-            requete = "DELETE FROM " + nomTable + " WHERE ( ID= ? )";
+            requete = "DELETE FROM " + nomTable + " WHERE ( ID_INST = ? )";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0){
