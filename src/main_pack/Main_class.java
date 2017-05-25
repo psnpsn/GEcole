@@ -2,10 +2,7 @@ package main_pack;
 
 import Models.Eleve;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,12 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDFontLike;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 public class Main_class extends Application {
 
@@ -57,6 +48,7 @@ public class Main_class extends Application {
         root.setBottom(barlow);
         Scene scene = new Scene(root, 1200, 650);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("     Gestion Ecole   ");
         primaryStage.show();
     }
 

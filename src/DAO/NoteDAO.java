@@ -23,7 +23,6 @@ import javafx.collections.ObservableList;
  */
 public class NoteDAO implements DAO<Note> {
     
-    private String            nomTable    = "NOTE"    ;
     private String            nomSequence = "SEQ_ID_N" ;
     private String            requete     = ""         ;
     private Connection        session     = null       ;
@@ -42,7 +41,7 @@ public class NoteDAO implements DAO<Note> {
         ArrayList<Note> liste = new ArrayList<Note>();
 
             try {
-                requete = "SELECT * FROM "+nomTable;
+                requete = "SELECT * FROM Note";
                 statement = session.prepareStatement(requete);
                 resultat = statement.executeQuery();
                 while (resultat.next()) {
@@ -50,7 +49,7 @@ public class NoteDAO implements DAO<Note> {
                     note.setId_note(resultat.getInt("ID_NOTE"));
                     note.setNote(resultat.getFloat("NOTE"));
                     note.setType(resultat.getString("TYPE"));
-                    note.setRef_ass(resultat.getInt("REF_AS"));
+                    note.setRef_ass(resultat.getInt("REF_INST"));
                     note.setRef_e(resultat.getInt("REF_E"));
                     liste.add(note);
                 }
@@ -67,7 +66,7 @@ public class NoteDAO implements DAO<Note> {
     public boolean delAll() {
        valide = false;
         try {
-            requete = "DELETE FROM " + nomTable;
+            requete = "DELETE FROM Note";
             statement = session.prepareStatement(requete);
            if ( statement.executeUpdate()!=0)
                 valide = true;
@@ -107,7 +106,7 @@ public class NoteDAO implements DAO<Note> {
     public boolean delete(int id) {
        valide = false;
         try {
-            requete = "DELETE FROM " + nomTable + " WHERE ( ID_NOTE= ? )";
+            requete = "DELETE FROM Note WHERE ( ID_NOTE= ? )";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0){
@@ -125,7 +124,7 @@ public class NoteDAO implements DAO<Note> {
     public boolean update(Note instance) {
         valide = false;
         try {
-            requete = "UPDATE " + nomTable + " SET   "
+            requete = "UPDATE Note SET   "
                     + "NOTE           =  ?  ,"
                     + "TYPE        =  ?  ,"
                     + "REF_AS     =  ?, "
@@ -154,7 +153,7 @@ public class NoteDAO implements DAO<Note> {
     public Note find(int id) {
         Note note= null;
         try {
-            requete = "SELECT * FROM " + nomTable +" WHERE ( ID_NOTE = ? )";
+            requete = "SELECT * FROM Note WHERE ( ID_NOTE = ? )";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             resultat = statement.executeQuery();

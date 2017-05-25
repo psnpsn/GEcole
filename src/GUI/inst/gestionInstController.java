@@ -213,7 +213,6 @@ public class gestionInstController implements Initializable {
         table_instituteur.setItems(data);
         nom.setText("");
         identifiant.setText("");
-        //date_embauchement.setText("");
         nom.setText("");
         
         FilteredList<Instituteur> filteredData = new FilteredList<>(data, p -> true);
@@ -242,30 +241,6 @@ public class gestionInstController implements Initializable {
                 return false;
             });
         });
-       /* capacite.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(salle -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String fullnameFilter = newValue.toLowerCase();
-                if (String.valueOf(salle.getCapacite()).toLowerCase().contains(fullnameFilter)) {
-                    return true;
-                } 
-                return false;
-            });
-        });
-         dateS.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(salle -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String fullnameFilter = newValue.toLowerCase();
-                if (String.valueOf(salle.getDate_creation()).toLowerCase().contains(fullnameFilter)) {
-                    return true;
-                } 
-                return false;
-            });
-        });*/
         SortedList<Instituteur> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(table_instituteur.comparatorProperty());
         table_instituteur.setItems(sortedData);
