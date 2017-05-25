@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.note.ajoutNoteController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.note.ajoutNoteC">
         <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -26,24 +34,24 @@
    <children>
       <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXButton onAction="#listNote" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" text="Trouver une note">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </JFXButton>
-                  <JFXButton onAction="#ajoutNote" prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" text="Ajouter une note">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </JFXButton>
+             <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton onAction="#listNotes" prefHeight="40.0" prefWidth="212.0" styleClass="mainbtn" text="Voir les Notes">
+                            <VBox.margin>
+                                <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
+                            </VBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#ajoutNotes" prefHeight="40.0" prefWidth="212.0" styleClass="pressedbtn" text="Affectation de Notes">
+                            <VBox.margin>
+                                <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
+                            </VBox.margin>
+                        </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton fx:id="action" onAction="#ajouter_note" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Ajouter la note">
+                  <JFXButton fx:id="action" onAction="#ajouterNotes" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Confirmer">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
-                  <JFXButton onAction="#reinit" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Réinitialiser les champs">
+                  <JFXButton onAction="#reinit" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
@@ -68,47 +76,55 @@
          <center>
          </center>
          <center>
-            <JFXTabPane BorderPane.alignment="CENTER">
-               <tabs>
-                  <Tab fx:id="tabClasse" text="Choisir la classe">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <JFXComboBox fx:id="niv" layoutX="150.0" layoutY="69.0" prefHeight="25.0" prefWidth="137.0" promptText="Niveau" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="50.0" />
-                              <JFXComboBox fx:id="classe" layoutX="79.0" layoutY="90.0" prefHeight="25.0" prefWidth="130.0" promptText="Classe" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="150.0" />
-                              <JFXButton layoutX="202.0" layoutY="308.0" onAction="#versNote" prefHeight="89.0" prefWidth="171.0" text="Ajouter les notes">
-                                 <font>
-                                    <Font name="System Bold Italic" size="18.0" />
-                                 </font>
-                              </JFXButton>
-                              <TableView fx:id="tableViewM" layoutX="618.0" layoutY="21.0" onMousePressed="#selection_mat" prefHeight="442.0" prefWidth="277.0">
-                                <columns>
-                                  <TableColumn fx:id="nomCol" prefWidth="225.0" text="Nom matière" />
-                                  <TableColumn fx:id="cochCol" prefWidth="51.0" text="Cocher" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab fx:id="tabNote" text="Ajouter les notes">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="tableViewE" layoutX="333.0" layoutY="105.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                  <TableColumn fx:id="idCol" editable="false" prefWidth="152.0" text="ID" />
-                                  <TableColumn fx:id="nompreCol" editable="false" prefWidth="272.0" text="Nom et prénom" />
-                                    <TableColumn fx:id="dateCol" editable="false" prefWidth="132.0" text="Date de naissance" />
-                                    <TableColumn fx:id="noteCol" editable="false" prefWidth="243.0" sortable="false" text="Note" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-               </tabs>
-            </JFXTabPane>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="54.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="946.0" minWidth="10.0" prefWidth="393.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="946.0" minWidth="10.0" prefWidth="597.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="381.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="271.0" minHeight="8.0" prefHeight="34.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label styleClass="legendtext" text="mettre -&quot;1&quot; ou laissez vide pour skipper cet eleve.(*) " GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="33.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="502.0" minWidth="10.0" prefWidth="346.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="345.0" minWidth="10.0" prefWidth="105.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="0.0" prefWidth="0.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXComboBox fx:id="cmb_classe" labelFloat="true" layoutX="10.0" layoutY="26.0" prefHeight="25.0" prefWidth="185.0" promptText="Classe" GridPane.columnIndex="1" />
+                        <JFXComboBox fx:id="cmb_mats" labelFloat="true" layoutX="405.0" layoutY="26.0" prefHeight="25.0" prefWidth="184.0" promptText="Matiere" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <JFXComboBox labelFloat="true" layoutX="10.0" layoutY="17.0" prefHeight="25.0" prefWidth="179.0" promptText="Instituteur" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <TableView fx:id="tableview" editable="true" maxWidth="-Infinity" pickOnBounds="false" prefHeight="371.0" prefWidth="475.0" scaleShape="false" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+                    <columns>
+                      <TableColumn fx:id="col_nom" prefWidth="250.0" text="Nom et Prenom Eleve" />
+                      <TableColumn fx:id="col_note" minWidth="8.0" prefWidth="177.0" text="Note" />
+                    </columns>
+                  </TableView>
+               </children>
+            </GridPane>
          </center>
       </BorderPane>
    </children>

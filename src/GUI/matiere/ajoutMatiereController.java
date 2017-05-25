@@ -114,8 +114,11 @@ public class ajoutMatiereController implements Initializable {
         mat.setRef_module(ids_mods.get(module.getSelectionModel().getSelectedIndex()));
         MatiereDAO matdao = new MatiereDAO();
        int id_mat = matdao.create(mat);
-
+       if (id_mat!=-1){
         System.out.println("Identifiant matiere = " + id_mat);
+           listMat(event);
+       }else
+            System.out.println("Erreur Lors de l'ajout matiere");
     }
 
     @FXML
