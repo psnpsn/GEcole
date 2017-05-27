@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.classe.assignerClasseController">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.classe.retirerClasseController">
    <children>
       <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -35,17 +35,18 @@
                      </VBox.margin>
                   </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton fx:id="assigner" onAction="#click_assigner" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Assigner les élèves">
+                  <JFXButton fx:id="assigner" onAction="#click_retirer" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Retirer les élèves">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="34.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/3.png" />
+                              <Image url="@../image/minusR.png" />
                            </image>
                         </ImageView>
                      </graphic></JFXButton>
+                  <JFXButton fx:id="assigner1" onAction="#click_retirertout" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Retirer tout les élèves" />
                </children></VBox>
          </left>
          <top>
@@ -87,8 +88,8 @@
                         <TableColumn fx:id="idCol" prefWidth="119.0" text="ID" />
                         <TableColumn fx:id="nomCol" prefWidth="262.0" text="Nom" />
                         <TableColumn fx:id="dateCol" prefWidth="252.0" text="Date de Naissance" />
-                        <TableColumn fx:id="adresseCol" prefWidth="250.0" text="Adresse" />
-                        <TableColumn fx:id="cochCol" prefWidth="116.0" text="Cocher" />
+                        <TableColumn fx:id="adresseCol" prefWidth="277.0" text="Adresse" />
+                        <TableColumn fx:id="cochCol" prefWidth="89.0" text="Cocher" />
                      </columns>
                   </TableView>
                   <VBox spacing="6.0" GridPane.rowIndex="2">
@@ -107,7 +108,7 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="27.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place disponible       :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Places disponibles    :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
                               <Text fx:id="txt_dispo" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" wrappingWidth="83.13671875">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
@@ -116,7 +117,7 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="44.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre d'eleve       :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre d'élèves       :" wrappingWidth="122.13671875" GridPane.rowIndex="2" />
                               <Text fx:id="txt_nb_eleve" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" wrappingWidth="83.13671875" />
                            </children>
                         </HBox>

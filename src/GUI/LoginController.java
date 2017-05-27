@@ -23,22 +23,18 @@ public class LoginController implements Initializable {
 
     @FXML private JFXTextField username;
     @FXML private JFXTextField password;
-    @FXML private JFXComboBox<String> usertypes;
+    
     @FXML private JFXButton se_connecter;
     @FXML private Label lconnexion;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         username.setPromptText("Username/CIN");
         password.setPromptText("Password/CIN");
-        usertypes.setItems(FXCollections.observableArrayList("Administrateur","Instituteur"));        
-        username.setText("gecole");
-        password.setText("gecole");
     }
 
     private void evaluer(){
         if (!username.getText().isEmpty()
-                && !password.getText().isEmpty()
-                && (usertypes.getSelectionModel().getSelectedIndex() != -1)) {
+                && !password.getText().isEmpty()) {
             se_connecter.setDisable(false);
         } else {
             se_connecter.setDisable(true);
@@ -74,7 +70,7 @@ public class LoginController implements Initializable {
         Node source = (Node) event.getSource();
         Scene scene = (Scene) source.getScene();
         BorderPane border = (BorderPane) scene.getRoot();
-        if (usertypes.getSelectionModel().getSelectedIndex() == 0) {
+         
             if (password.getText().equalsIgnoreCase("GECOLE")) {
                 try {
                     border.setCenter(FXMLLoader.load(getClass().getResource("mainwindow.fxml")));
@@ -89,15 +85,8 @@ public class LoginController implements Initializable {
                 username.setStyle("-fx-background-color:#00CC00");
                 password.setStyle("-fx-background-color:#00CC00");
             }
-        }
-        if (usertypes.getSelectionModel().getSelectedIndex() == 1) {
-
-            try {
-                main_pack.Main_class.user_id = ODB.OracleDBSingleton.inst(Integer.parseInt(username.getText()));
-                border.setCenter(FXMLLoader.load(getClass().getResource("mainwindow_inst.fxml")));
-            } catch (Exception ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
+        
+        
     }
 }

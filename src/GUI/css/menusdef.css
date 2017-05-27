@@ -9,9 +9,9 @@ and open the template in the editor.
 */
 
 .upperbox{
-    -fx-border-style:solid hidden solid solid;
+    -fx-border-style:hidden hidden solid hidden;
         -fx-border-width: 1px;
-        -fx-border-color:grey;
+        -fx-border-color:lightgray;
 }
 
 .backbtn:hover{
@@ -21,7 +21,7 @@ and open the template in the editor.
 .leftbox{
     -fx-border-style:hidden solid hidden solid;
         -fx-border-width: 1px;
-        -fx-border-color:grey;
+        -fx-border-color:lightgray;
        
 }
 

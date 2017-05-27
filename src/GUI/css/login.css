@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+
+.anchor{
+     -fx-background-image:url("../image/loginbackg.png");
+}
+
+    .connect:hover{
+        -fx-background-color:lightblue;
+        -fx-text-fill:white;
+        
+    }
+    
+    
+    .connect{
+        -fx-background-color:lightgrey;
+    }
