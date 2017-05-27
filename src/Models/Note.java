@@ -8,21 +8,20 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Note {
     private SimpleIntegerProperty id_note;
-    private SimpleFloatProperty note;
-    private SimpleStringProperty type;
+    private SimpleFloatProperty   note;
+    private SimpleStringProperty  type;
     private SimpleIntegerProperty ref_e;
-    private SimpleIntegerProperty ref_ass;
+    private SimpleIntegerProperty ref_inst;
     private SimpleIntegerProperty ref_mat;
-    public JFXTextField          txt_note;
-   
-    
+    public JFXTextField           txt_note;
+       
     public Note() {
        
         this.id_note = new SimpleIntegerProperty();
         this.type= new SimpleStringProperty("");
         this.note = new SimpleFloatProperty(-1);
         this.ref_e = new SimpleIntegerProperty();
-        this.ref_ass = new SimpleIntegerProperty();
+        this.ref_inst = new SimpleIntegerProperty();
         this.ref_mat = new SimpleIntegerProperty();
         this.txt_note = new JFXTextField(""+this.note.getValue());
     }
@@ -68,12 +67,12 @@ public class Note {
         this.ref_e.set(ref_e);
     }
 
-    public int getRef_ass() {
-        return ref_ass.get();
+    public int getRef_inst() {
+        return ref_inst.get();
     }
 
-    public void setRef_ass(int ref_ass) {
-        this.ref_ass.set(ref_ass);
+    public void setRef_inst(int inst) {
+        this.ref_inst.set(inst);
     }
     
     

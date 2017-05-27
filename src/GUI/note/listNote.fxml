@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.note.ajoutNoteC">
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.note.listNoteC">
         <stylesheets>
        <URL value="@../css/dress.css" />
        <URL value="@../css/mainStage.css" />
@@ -47,14 +47,11 @@
                             </VBox.margin>
                         </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton fx:id="action" onAction="#ajouterNotes" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Confirmer">
+                  <JFXButton fx:id="action" onAction="#imprimerNotes" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Imprimer">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
-                  <JFXButton onAction="#reinit" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
+                  <JFXButton layoutX="21.0" layoutY="146.0" onAction="#action_supprimer_notes" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Supprimer Notes de cette classe" />
                </children></VBox>
          </left>
          <top>
@@ -78,9 +75,8 @@
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="54.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="946.0" minWidth="10.0" prefWidth="393.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="946.0" minWidth="10.0" prefWidth="597.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="946.0" minWidth="10.0" prefWidth="27.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="973.0" minWidth="10.0" prefWidth="973.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
@@ -90,37 +86,17 @@
                   <RowConstraints maxHeight="271.0" minHeight="8.0" prefHeight="34.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label styleClass="legendtext" text="mettre -&quot;1&quot; ou laissez vide pour skipper cet eleve.(*) " GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
+                  <JFXComboBox fx:id="cmb_classe" onAction="#class_changed" labelFloat="true" prefHeight="25.0" prefWidth="279.0" promptText="Classe" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="10.0" />
+                        <Insets />
                      </GridPane.margin>
-                  </Label>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="0.0" prefWidth="33.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="502.0" minWidth="10.0" prefWidth="346.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="345.0" minWidth="10.0" prefWidth="105.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="0.0" prefWidth="0.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <JFXComboBox fx:id="cmb_classe" labelFloat="true" layoutX="10.0" layoutY="26.0" prefHeight="25.0" prefWidth="185.0" promptText="Classe" GridPane.columnIndex="1" />
-                        <JFXComboBox fx:id="cmb_mats" labelFloat="true" layoutX="405.0" layoutY="26.0" prefHeight="25.0" prefWidth="184.0" promptText="Matiere" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <JFXComboBox fx:id="cmb_inst" labelFloat="true" layoutX="10.0" layoutY="17.0" prefHeight="25.0" prefWidth="179.0" promptText="Instituteur" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                     </children>
-                  </GridPane>
-                  <TableView fx:id="tableview" editable="true" maxWidth="-Infinity" pickOnBounds="false" prefHeight="371.0" prefWidth="475.0" scaleShape="false" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </JFXComboBox>
+                  <TableView fx:id="tableview" editable="true" maxWidth="-Infinity" pickOnBounds="false" prefHeight="371.0" prefWidth="899.0" scaleShape="false" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
                     <columns>
-                      <TableColumn fx:id="col_nom" prefWidth="250.0" text="Nom et Prenom Eleve" />
-                      <TableColumn fx:id="col_note" minWidth="8.0" prefWidth="177.0" text="Note" />
+                      <TableColumn fx:id="col_nom" prefWidth="197.0" text="Nom et Prenom Eleve" />
                     </columns>
                   </TableView>
                </children>

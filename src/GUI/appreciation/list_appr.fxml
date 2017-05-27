@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.appreciation.list_appr">
+        <stylesheets>
+       <URL value="@../css/dress.css" />
+       <URL value="@../css/mainStage.css" />
+       <URL value="@../css/mainwindow.css" />
+       <URL value="@../css/menusdef.css" />
+    </stylesheets>
+    <children>
+        <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton onAction="#goto_lister_appr" prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" text="Liste des Appreciations">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </JFXButton>
+                        <JFXButton onAction="#goto_ajouter_apps" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" text="Rediger une Appreciation">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </JFXButton>
+                        <Separator prefHeight="29.0" prefWidth="200.0" />
+                        <JFXButton onAction="#supprimer_appr" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Supprimer/Justifier" />
+                        <JFXButton onAction="#supprimer_apprs" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" text="Supprimer/Justifier tout" />
+                    </children>
+                </VBox>
+            </left>
+            <top>
+                <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton onAction="#goto_admin_main" prefHeight="71.0" prefWidth="62.0" styleClass="backbtn" text="&lt;-">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                        </JFXButton>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="242.0" text="Gestion des Appreciations">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+            </top>
+            <center>
+                <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="459.0" minHeight="10.0" prefHeight="412.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="456.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <TableView fx:id="table_appr" onMouseClicked="#user_selection" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                            <columns>
+                                <TableColumn fx:id="colonne_id" prefWidth="42.0" text="ID" />
+                                <TableColumn fx:id="colonne_eleve" minWidth="0.0" prefWidth="157.0" text="ID/Nom Eleve" />
+                                <TableColumn fx:id="colonne_inst" minWidth="0.0" prefWidth="165.0" text="ID/Nom Instituteur" />
+                                <TableColumn fx:id="colonne_module" minWidth="0.0" prefWidth="133.0" text="ID/Module" />
+                        <TableColumn fx:id="colonne_contenu" minWidth="0.0" prefWidth="303.0" text="Contenu" />
+                                <TableColumn fx:id="colonne_modifier" editable="false" minWidth="5.0" prefWidth="89.0" text="Modifier" />
+                        <TableColumn fx:id="colonne_cocher" editable="false" minWidth="5.0" prefWidth="69.0" text="Cocher" />
+                            </columns>
+                     <GridPane.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </GridPane.margin>
+                        </TableView>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <JFXTextField fx:id="id_inst" labelFloat="true" prefHeight="25.0" prefWidth="296.0" promptText="ID Instituteur" unFocusColor="#009688" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                    <GridPane.margin>
+                                        <Insets left="50.0" top="10.0" />
+                                    </GridPane.margin>
+                                </JFXTextField>
+                        <JFXTextField fx:id="id_eleve" labelFloat="true" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" promptText="ID Eleve" unFocusColor="#009688" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets top="10.0" />
+                           </GridPane.margin></JFXTextField>
+                            </children>
+                        </GridPane>
+                    </children>
+                </GridPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

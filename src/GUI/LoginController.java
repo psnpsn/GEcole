@@ -30,7 +30,9 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         username.setPromptText("Username/CIN");
         password.setPromptText("Password/CIN");
-        usertypes.setItems(FXCollections.observableArrayList("Administrateur","Instituteur"));
+        usertypes.setItems(FXCollections.observableArrayList("Administrateur","Instituteur"));        
+        username.setText("gecole");
+        password.setText("gecole");
     }
 
     private void evaluer(){
