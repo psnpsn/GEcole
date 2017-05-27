@@ -8,8 +8,8 @@
     -fx-border-color:grey;
 }
 
-.anchor{
-    
+.paneup{
+    -fx-background-image:url("../image/backgroundmain.png");
 }
 .setup-hboxup{
          -fx-border-style:hidden hidden hidden hidden;

@@ -38,7 +38,14 @@
                   <JFXButton fx:id="assigner" onAction="#click_retirer" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Retirer les élèves">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="34.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/minusR.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></JFXButton>
                   <JFXButton fx:id="assigner1" onAction="#click_retirertout" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Retirer tout les élèves" />
                </children></VBox>
          </left>

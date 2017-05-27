@@ -2,6 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -55,7 +58,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <Pane prefHeight="157.0" prefWidth="460.0" style="-fx-background-color: lightblue;" GridPane.columnSpan="3" />
+            <Pane prefHeight="157.0" prefWidth="460.0" styleClass="paneup" stylesheets="@css/mainwindow.css" GridPane.columnSpan="3" />
             <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" graphicTextGap="2.0" onAction="#click_geleves" prefHeight="55.0" prefWidth="155.0" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Eleves" textFill="#0015ff" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Réaliser les modifications nécessaire sur les éleves inscrits à l'école." textAlignment="CENTER" wrappingWidth="135.13671875">
@@ -101,6 +104,70 @@
                   </Text>
                </graphic>
             </JFXButton>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@image/geleve.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="50.0" right="70.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="47.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@image/ginst.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="45.0" right="110.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@image/gemploi.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="60.0" right="70.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@image/gmatiere.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="40.0" right="70.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@image/gnote.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="30.0" right="60.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@image/gsalle.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="40.0" right="60.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@image/gclasse.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="30.0" right="70.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@image/gabs.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="35.0" right="80.0" />
+               </GridPane.margin>
+            </ImageView>
          </children>
       </GridPane>
    </children>

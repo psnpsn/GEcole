@@ -1,6 +1,6 @@
 package GUI.emploi;
 
-import DAO.AssisteDAO;
+/*
 import DAO.ClasseDAO;
 import DAO.EmploiDAO;
 import DAO.InstituteurDAO;
@@ -204,7 +204,7 @@ public class add_emploi implements Initializable {
         
         if(dao_emploi.Existe(emp.get("samedi_1"))) {ok = false;blink_node(samedi_1.getParent(),flash);} else dao_emploi.create(emp.get("samedi_1"));
         if(dao_emploi.Existe(emp.get("samedi_2"))) {ok = false;blink_node(samedi_2.getParent(),flash);} else dao_emploi.create(emp.get("samedi_2"));
-        */
+        
         if (!ok){
             //dao_emploi.loadSave(save);
         }
@@ -524,3 +524,4 @@ public class add_emploi implements Initializable {
  
 
 }
+*/

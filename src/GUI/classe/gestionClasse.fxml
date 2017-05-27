@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
@@ -10,6 +9,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -36,14 +37,28 @@
                      </VBox.margin>
                   </JFXButton>
                   <Separator prefHeight="29.0" prefWidth="200.0" />
-                  <JFXButton onAction="#click_chercher" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Chercher">
+                  <JFXButton onAction="#click_chercher" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Chercher          ">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
-                  <JFXButton onAction="#click_supprimer" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Supprimer">
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></JFXButton>
+                  <JFXButton onAction="#click_supprimer" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Supprimer        ">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="34.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/minusR.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></JFXButton>
                   <JFXButton onAction="#click_supptout" prefHeight="70.0" prefWidth="212.0" styleClass="optionbtn" stylesheets="@../css/menusdef.css" text="Supprimer tout" />
                </children></VBox>
          </left>
