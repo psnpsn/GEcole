@@ -43,6 +43,8 @@ public class Main_class extends Application {
         URL content = getClass().getResource(LOGIN);
         AnchorPane middle = FXMLLoader.load(content);
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        root.setStyle("-fx-border-style:solid solid solid solid");
+        root.setStyle("-fx-border-color:grey");
         root.setTop(barup);
         root.setCenter(middle);
         root.setBottom(barlow);

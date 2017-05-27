@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
-<?import java.net.URL?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="box" nodeOrientation="LEFT_TO_RIGHT" prefHeight="33.0" prefWidth="1200.0" styleClass="setup-hboxup" stylesheets="@CSS/mainwindow.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LowermenuController">
+<HBox fx:id="box" nodeOrientation="LEFT_TO_RIGHT" prefHeight="33.0" prefWidth="1200.0" styleClass="setup-hboxbottom" stylesheets="@CSS/mainwindow.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LowermenuController">
    <children>
       <Label alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="31.0" prefWidth="1132.0" text=" WhiteHood @ 2016-2017    " textFill="#0055ff">
          <font>
             <Font name="Arial Italic" size="10.0" />
          </font>
       </Label>
-      <JFXButton onAction="#goto_login" contentDisplay="GRAPHIC_ONLY" prefHeight="62.0" prefWidth="42.0" styleClass="buttonD" >
+      <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#goto_login" prefHeight="62.0" prefWidth="42.0" styleClass="buttonD">
           <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                <image>

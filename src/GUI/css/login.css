@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+
+.anchor{
+    
+}
+
+    .connect:hover{
+        -fx-background-color:lightblue;
+        -fx-text-fill:white;
+        
+    }
+    
+    
+    .connect{
+        -fx-background-color:lightgrey;
+    }

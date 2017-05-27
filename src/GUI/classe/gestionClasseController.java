@@ -5,6 +5,7 @@
  */
 package GUI.classe;
 
+import DAO.AppartientDAO;
 import DAO.ClasseDAO;
 import DAO.DAO;
 import GUI.LoginController;
@@ -109,10 +110,8 @@ public class gestionClasseController implements Initializable {
                         final MenuButton editer = new MenuButton("Modifier..");
                         MenuItem addStds = new MenuItem("Ajouter des élèves");
                         MenuItem delStds = new MenuItem("Retirer des élèves");
-                        MenuItem editClass = new MenuItem("Modifier cette Classe");
                         editer.getItems().add(addStds);
                         editer.getItems().add(delStds);
-                        editer.getItems().add(editClass);
                         addStds.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
@@ -149,37 +148,12 @@ public class gestionClasseController implements Initializable {
                                     BorderPane border = (BorderPane) scene.getRoot();
                                     try {//
                                         FXMLLoader loader = new FXMLLoader();
-                                        loader.setLocation(getClass().getResource("ajoutClasse.fxml"));
+                                        loader.setLocation(getClass().getResource("retirerClasse.fxml"));
                                         Parent root = loader.load();
-                                        ajoutClasseController controller = loader.getController();
+                                        retirerClasseController controller = loader.getController();
                                         border.setCenter((AnchorPane) root);
                                         if (controller != null) {
-                                          //  controller.retirer_eleves(item.getId_c());
-                                        }
-                                        else System.out.println("nul: ");
-                                    } catch (Exception exception) {
-                                        System.out.println("erreur i/o: " + exception);
-                                    }
-                                }
-                            }
-                        });
-                        editClass.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
-                                param.getTableView().getSelectionModel().select(getIndex());
-                                Classe item = tableView.getSelectionModel().getSelectedItem();
-                                if (item != null) {
-                                    MenuItem source = (MenuItem) event.getSource();
-                                    Scene scene = source.getParentPopup().getOwnerWindow().getScene();
-                                    BorderPane border = (BorderPane) scene.getRoot();
-                                    try {//
-                                        FXMLLoader loader = new FXMLLoader();
-                                        loader.setLocation(getClass().getResource("ajoutClasse.fxml"));
-                                        Parent root = loader.load();
-                                        ajoutClasseController controller = loader.getController();
-                                        border.setCenter((AnchorPane) root);
-                                        if (controller != null) {
-                                            controller.edit_classe(item.getId_c());
+                                          controller.open_for_assign(item.getId_c());
                                         }
                                         else System.out.println("nul: ");
                                     } catch (Exception exception) {
@@ -299,6 +273,7 @@ Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_sel
         DAO classedao = new ClasseDAO();
         masterData = classedao.getAll();
         tableView.getItems().setAll(masterData);
+        /*
 
         FilteredList<Classe> filteredData = new FilteredList<>(masterData, p -> true);
         
@@ -358,6 +333,8 @@ Callback<TableColumn<Classe, String>, TableCell<Classe, String>> callback_fn_sel
 
         // 5. Add sorted (and filtered) data to the table.
         tableView.setItems(sortedData);
+        */
+        
     }
 
     @FXML

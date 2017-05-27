@@ -34,7 +34,7 @@ public class Classe {
         this.ref_niv = new SimpleIntegerProperty();
         this.nbE= new SimpleIntegerProperty();
     }
-    public Classe(int id_c, String nom, int capacite, int ref_niv) {
+    public Classe(int id_c, String nom, int capacite, int ref_niv, int nbE) {
         this.id_c = new SimpleIntegerProperty(id_c);
         this.nom = new SimpleStringProperty(nom);
         this.capacite = new SimpleIntegerProperty(capacite);

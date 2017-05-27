@@ -43,10 +43,17 @@
          <top>
             <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" stylesheets="@../css/menusdef.css" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton onAction="#click_retour" prefHeight="66.0" prefWidth="63.0" styleClass="backbtn" stylesheets="@../css/menusdef.css" text="&lt;-">
+                  <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#click_retour" prefHeight="71.0" prefWidth="62.0" styleClass="backbtn" stylesheets="@../css/menusdef.css">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="55.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </JFXButton>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="212.0" text="Gestion des élèves">
                      <font>

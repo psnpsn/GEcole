@@ -4,20 +4,25 @@ import DAO.AppartientDAO;
 import DAO.ClasseDAO;
 import DAO.DAO;
 import DAO.EleveDAO;
+import GUI.LoginController;
 import Models.Classe;
 import Models.Eleve;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.SelectionMode;
@@ -25,8 +30,12 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import main_pack.Main_class;
 
 public class assignerClasseController implements Initializable {
 
@@ -116,9 +125,10 @@ public class assignerClasseController implements Initializable {
             ClasseDAO classdao = new ClasseDAO();
             Classe c = classdao.find(id_classe);
             if (c != null) {
-                txt_classe.setText(c.getNom());
+                txt_classe.setText(id_classe+"  "+c.getNom());
                 txt_capacite.setText(String.valueOf(c.getCapacite()));
                 txt_nb_eleve.setText(String.valueOf(c.getNbE()));
+                txt_dispo.setFill(Color.GREEN);
                 txt_dispo.setText(String.valueOf(c.getCapacite() - c.getNbE()));
             }
         }
@@ -132,10 +142,41 @@ public class assignerClasseController implements Initializable {
 
     @FXML
     private void click_retour(ActionEvent event) {
+         try {
+            URL loader = getClass().getResource("../mainwindow.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void click_trouver(ActionEvent event) {
+         try {
+            URL loader = getClass().getResource("gestionClasse.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     @FXML
+    private void click_ajouter(ActionEvent event) {
+         try {
+            URL loader = getClass().getResource("ajoutClasse.fxml");
+            AnchorPane middle = FXMLLoader.load(loader);
+
+            BorderPane border = Main_class.getRoot();
+            border.setCenter(middle);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -146,7 +187,8 @@ public class assignerClasseController implements Initializable {
             if (e!=null)
                 appdao.assigner(id_classe, e.getId_e());
         };
-        appdao.mettre_a_jour_nb_eleves();
+        ClasseDAO classedao = new ClasseDAO();
+        classedao.mettre_a_jour_nb_eleves(id_classe);
         maj_info_text();
     }
     
@@ -167,10 +209,21 @@ public class assignerClasseController implements Initializable {
                             @Override
                             public void handle(ActionEvent event) {
                                 if (check_box.isSelected()) {
-                                    ids.add(getIndex());
+                                    int nbE = Integer.parseInt(txt_dispo.getText());
+                                    nbE--;
+                                    if (nbE<0) {
+                                        nbE=0;
+                                        check_box.setSelected(false);
+                                    } else {
+                                        ids.add(getIndex());
                                     param.getTableView().getSelectionModel().select(getIndex());
                                     update_selection();
+                                    }
+                                    txt_dispo.setText(nbE+"");
                                 } else {
+                                    int nbE = Integer.parseInt(txt_dispo.getText());
+                                    nbE++;
+                                    txt_dispo.setText(nbE+"");
                                     ids.remove(ids.indexOf(getIndex()));
                                 }
                                 param.getTableView().getSelectionModel().clearSelection(getIndex());

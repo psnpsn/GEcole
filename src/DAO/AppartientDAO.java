@@ -90,25 +90,5 @@ public class AppartientDAO {
     
     
     // a remplacer par un trigger oracle
-    public void mettre_a_jour_nb_eleves(){
-        ClasseDAO cdao = new ClasseDAO();
-        ObservableList<Classe> class_list = cdao.getAll();
-        for (Classe c : class_list){
-            c.setNbE(0);
-            String requete = "SELECT COUNT(*) NBR FROM APPARTIENT WHERE REF_C = ? " ;
-            try {
-                PreparedStatement ps = session.prepareStatement(requete);
-                ps.setInt(1, c.getId_c());
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()){
-                    c.setNbE(rs.getInt("NBR"));
-                    System.out.println("Classe =" + c.getNom()+ " - nombre d'eleve ="+c.getNbE());
-                    cdao.update(c);
-                }
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(AppartientDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 }

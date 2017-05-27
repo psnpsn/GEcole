@@ -186,42 +186,36 @@ public class EleveDAO implements DAO<Eleve> {
         return valide;
     }
 
-    public boolean updateRef_c(Eleve instance) {
-        // a modifier !
-    valide = false;
+    public ObservableList<Eleve> getByClasse(int id) {
+        ArrayList<Eleve> liste = new ArrayList<Eleve>();
+        ArrayList<Eleve> listeid = new ArrayList<Eleve>();
         try {
-            requete = "UPDATE " + nomTable + " SET   "
-                    + "REF_C    =  ?  "
-                    + "WHERE  ID_ELEVE = ? ";
+            requete = "SELECT e.* FROM ELEVE e INNER JOIN ( "
+                            +"SELECT REF_E FROM APPARTIENT WHERE REF_C="+id+ ") app ON e.ID_ELEVE = app.REF_E";
             statement = session.prepareStatement(requete);
-          //  statement.setInt(1, instance.getRef_c());
-            statement.setInt(2, instance.getId_e());
-
-            if(statement.executeUpdate()!=0){
-                valide = true;
+            resultat = statement.executeQuery();
+             while (resultat.next()) {
+                Eleve eleve = new Eleve();
+                eleve.setId_e(resultat.getInt("ID_ELEVE"));
+                eleve.setNom(resultat.getString("NOM"));
+                eleve.setPrenom(resultat.getString("PRENOM"));
+                eleve.setDateNaiss(resultat.getTimestamp("DATE_NAISS"));
+                eleve.setLieuNaiss(resultat.getString("LIEU_NAISS"));
+                eleve.setSex(resultat.getString("SEX"));
+                eleve.setAdresse(resultat.getString("ADRESSE"));
+                eleve.setVille(resultat.getString("VILLE"));
+                eleve.setCodeP(resultat.getInt("CODEP"));
+                eleve.setEmail(resultat.getString("EMAIL"));
+                eleve.setDateIns(resultat.getTimestamp("DATE_INS"));
+                eleve.setRef_p(resultat.getInt("REF_P"));
+                liste.add(eleve);
             }
         } catch (SQLException ex) {
             Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return valide;
-    }
-    
-    public boolean nullRef_c(Eleve instance) {
-    valide = false;
-        try {
-            requete = "UPDATE " + nomTable + " SET   "
-                    + "REF_C    =  NULL  "
-                    + "WHERE  ID_ELEVE = ? ";
-            statement = session.prepareStatement(requete);
-            statement.setInt(1, instance.getId_e());
-
-            if(statement.executeUpdate()!=0){
-                valide = true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EleveDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return valide;
+        ObservableList<Eleve> list = FXCollections.observableArrayList(liste);
+        return list;
+        
     }
 
     private int seq_id_next(){
