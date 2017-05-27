@@ -30,7 +30,6 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         username.setPromptText("Username/CIN");
         password.setPromptText("Password/CIN");
-        
     }
 
     private void evaluer(){

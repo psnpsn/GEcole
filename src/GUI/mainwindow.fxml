@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -13,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="584.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainwindowController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="584.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainwindowController">
     <stylesheets>
         <URL value="@/GUI/CSS/mainwindow.css" />
     </stylesheets>
@@ -40,7 +45,7 @@
                   </Text>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_absence" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Absences" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Dépot des absences et justifications." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>
@@ -96,6 +101,16 @@
                </graphic>
             </JFXButton>
             <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" onAction="#click_gnotes" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Notes" textFill="#0015ff" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <graphic>
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Stocker les notes des élèves et appréciations." textAlignment="CENTER" wrappingWidth="135.13671875">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </JFXButton>
+
+            <JFXButton alignment="TOP_CENTER" contentDisplay="BOTTOM" layoutX="554.0" layoutY="486.0" onAction="#click_apprs" prefHeight="55.0" prefWidth="155.0" ripplerFill="WHITE" styleClass="buttonC" stylesheets="@css/mainwindow.css" text="Appreciation" textFill="#0015ff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <graphic>
                   <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="Stocker les notes des élèves et appréciations." textAlignment="CENTER" wrappingWidth="135.13671875">
                      <font>

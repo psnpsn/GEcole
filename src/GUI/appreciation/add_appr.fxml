@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.appreciation.add_appr">
+        <stylesheets>
+       <URL value="@../css/dress.css" />
+       <URL value="@../css/mainStage.css" />
+       <URL value="@../css/mainwindow.css" />
+       <URL value="@../css/menusdef.css" />
+    </stylesheets>
+   <children>
+      <BorderPane prefHeight="584.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="584.0" prefWidth="200.0" styleClass="leftbox" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#goto_lister_appr" prefHeight="70.0" prefWidth="212.0" styleClass="mainbtn" text="Liste des appreciations">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton onAction="#goto_ajout_appr" prefHeight="70.0" prefWidth="212.0" styleClass="pressedbtn" text="Rediger une Appreciation">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <Separator prefHeight="29.0" prefWidth="200.0" />
+                  <JFXButton fx:id="action" onAction="#ajout_appr" prefHeight="70.0" prefWidth="200.0" styleClass="optionbtn" text="Ajouter">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></JFXButton>
+               </children></VBox>
+         </left>
+         <top>
+            <HBox prefHeight="66.0" prefWidth="1200.0" styleClass="upperbox" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#goto_admin_main" prefHeight="71.0" prefWidth="62.0" styleClass="backbtn" text="&lt;-">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="217.0" text="Gestion des Salles">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+         </center>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="77.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="754.0" minWidth="10.0" prefWidth="521.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="401.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="208.0" minHeight="0.0" prefHeight="81.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="244.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="271.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <JFXComboBox fx:id="cmb_eleve" prefHeight="25.0" prefWidth="262.0" promptText="          Selectionner L'eleve" />
+                        <Separator orientation="VERTICAL" prefHeight="79.0" prefWidth="48.0" visible="false" />
+                        <JFXComboBox fx:id="cmb_inst" labelFloat="true" prefHeight="25.0" prefWidth="257.0" promptText="          Selectionner L'instituteur" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets top="10.0" />
+                     </opaqueInsets>
+                  </HBox>
+                  <JFXTextArea fx:id="txt_contenu" prefHeight="169.0" prefWidth="521.0" promptText="  Veuillez Ecrire le Texte de vote appreciation...." GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <children>
+                        <JFXComboBox fx:id="cmb_classe" onAction="#update_classe" prefHeight="25.0" prefWidth="263.0" promptText="          Selectionner La Classe" />
+                        <Separator orientation="VERTICAL" prefHeight="64.0" prefWidth="35.0" visible="false" />
+                        <JFXComboBox fx:id="cmb_module" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="263.0" promptText="          Selectionner un Module" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

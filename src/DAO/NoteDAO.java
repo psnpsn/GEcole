@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
+import Models.Eleve;
+import Models.Matiere;
 import Models.Note;
+import Models.Notes;
 import ODB.OracleDBSingleton;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +15,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- *
- * @author DELL
- */
 public class NoteDAO implements DAO<Note> {
     
     private String            nomSequence = "SEQ_ID_N" ;
@@ -49,8 +43,9 @@ public class NoteDAO implements DAO<Note> {
                     note.setId_note(resultat.getInt("ID_NOTE"));
                     note.setNote(resultat.getFloat("NOTE"));
                     note.setType(resultat.getString("TYPE"));
-                    note.setRef_ass(resultat.getInt("REF_INST"));
+                    note.setRef_inst(resultat.getInt("REF_INST"));
                     note.setRef_e(resultat.getInt("REF_E"));
+                    note.setRef_mat(resultat.getInt("REF_MAT"));
                     liste.add(note);
                 }
                 
@@ -80,20 +75,33 @@ public class NoteDAO implements DAO<Note> {
 
     @Override
     public int create(Note instance) {
-        
+        seq = -1;
+        requete = "DELETE FROM NOTE WHERE REF_INST = ? AND REF_E = ? AND REF_MAT = ?" ;
         try {
-            
-            requete = "INSERT INTO NOTE (ID_NOTE , NOTE , TYPE , REF_AS , REF_E) " +
-                             " VALUES ( " + seq_id_next() + " , ? , ? , ?, ?)";
+            statement = session.prepareCall(requete);
+            statement.setInt(1, instance.getRef_inst());
+            statement.setInt(2,  instance.getRef_e());
+            statement.setInt(3,  instance.getRef_mat());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(NoteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        try {            
+            requete = "INSERT INTO NOTE (ID_NOTE , NOTE , TYPE , REF_INST , REF_E , REF_MAT ) " +
+                             " VALUES ( " + seq_id_next() + " , ? , ? , ?, ? , ?)";
             statement = session.prepareStatement(requete);
             statement.setFloat(1, instance.getNote());
             statement.setString(2, instance.getType());
-            statement.setInt(3, instance.getRef_ass());
+            statement.setInt(3, instance.getRef_inst());
             statement.setInt(4, instance.getRef_e());
+            statement.setInt(5, instance.getRef_mat());
             if (statement.executeUpdate() != 0) {
                 seq=seq_id_curr();
-            }
-                
+            }                
         } catch (SQLException ex) {
             Logger.getLogger(NoteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,7 +114,7 @@ public class NoteDAO implements DAO<Note> {
     public boolean delete(int id) {
        valide = false;
         try {
-            requete = "DELETE FROM Note WHERE ( ID_NOTE= ? )";
+            requete = "DELETE FROM Note WHERE ( REF_E= ? )";
             statement = session.prepareStatement(requete);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0){
@@ -125,18 +133,19 @@ public class NoteDAO implements DAO<Note> {
         valide = false;
         try {
             requete = "UPDATE Note SET   "
-                    + "NOTE           =  ?  ,"
-                    + "TYPE        =  ?  ,"
-                    + "REF_AS     =  ?, "
-                    + "REF_E     =  ? "
+                    + "NOTE      =  ? , "
+                    + "TYPE      =  ? , "
+                    + "REF_INST    =  ? , "
+                    + "REF_E     =  ? , "
+                    + "REF_MAT   =  ? "
                     + "WHERE  ID_NOTE     =  ? ";
             statement = session.prepareStatement(requete);
-
-            statement.setString(2, instance.getType());
             statement.setFloat(1, instance.getNote());
-            statement.setInt(3,instance.getRef_ass());
+            statement.setString(2, instance.getType());
+            statement.setInt(3,instance.getRef_inst());
             statement.setInt(4, instance.getRef_e());
             statement.setInt(4, instance.getId_note());
+            
 
             if(statement.executeUpdate()!=0){
                 valide = true;
@@ -147,6 +156,20 @@ public class NoteDAO implements DAO<Note> {
                     + "Exception : " + exception);
         }
         return valide;
+    }
+    
+    public float getNote(int id_eleve , int id_mat){
+        float note = -1f;
+        try{
+            requete = "SELECT note from note where ref_e = " + id_eleve + " and ref_mat = " + id_mat ;
+            resultat = session.prepareStatement(requete).executeQuery();
+            while (resultat.next()){
+                note = resultat.getFloat("note");
+            }            
+        } catch (SQLException ex) {
+            Logger.getLogger(NoteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return note;
     }
 
     @Override
@@ -163,7 +186,7 @@ public class NoteDAO implements DAO<Note> {
                 note.setId_note(resultat.getInt("ID_NOTE"));
                 note.setType(resultat.getString("TYPE"));
                 note.setNote(resultat.getFloat("NOTE"));
-                note.setRef_ass(resultat.getInt("REF_AS"));
+                note.setRef_inst(resultat.getInt("REF_AS"));
                 note.setRef_e(resultat.getInt("REF_E"));
                 
             }
@@ -213,4 +236,29 @@ public class NoteDAO implements DAO<Note> {
         return seq;
     }
     
+    public Notes getNotes (Eleve e){
+        Notes notes = new Notes();
+        notes.setEleve(e);
+        String Requete = "SELECT * FROM NOTE WHERE REF_E = " + e.getId_e();
+        try {
+            ResultSet resultat = session.prepareCall(Requete).executeQuery();
+            while (resultat.next()){
+                Note no = new Note();
+                no.setId_note(resultat.getInt("ID_NOTE"));
+                no.setRef_inst(resultat.getInt("REF_INST"));
+                no.setRef_mat(resultat.getInt("REF_MAT"));
+                no.setNote(resultat.getFloat("NOTE"));
+                no.setRef_e(e.getId_e());
+                // trype ?
+                notes.addNote(no);
+                notes.addMatiere(new MatiereDAO().find(resultat.getInt("REF_MAT")));                
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NoteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        return notes;        
+    }
 }

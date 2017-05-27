@@ -303,7 +303,7 @@ Callback<TableColumn<Salle, String>, TableCell<Salle, String>> callback_fn_edite
     private void refresh() {
             SalleDAO dao = new SalleDAO();
             table_salle.getItems().clear();
-            data = (ObservableList<Salle>) dao.getAll();
+            data = dao.getAll();
             table_salle.setItems(data);
     }
 }
